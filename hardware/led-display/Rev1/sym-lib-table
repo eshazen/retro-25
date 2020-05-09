@@ -1,0 +1,5 @@
+(sym_lib_table
+  (lib (name LED_display)(type Legacy)(uri "$(KIPRJMOD)/LED_display.lib")(options "")(descr ""))
+  (lib (name LTC-4627JR)(type Legacy)(uri "$(KIPRJMOD)/LTC-4627JR.lib")(options "")(descr ""))
+  (lib (name ICM7218A)(type Legacy)(uri "$(KIPRJMOD)/ICM7218A.lib")(options "")(descr ""))
+)

@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name AT28C256)(type Legacy)(uri ${KIPRJMOD}/AT28C256.lib)(options "")(descr ""))
+  (lib (name z80-symbols)(type Legacy)(uri ${KIPRJMOD}/z80-symbols.lib)(options "")(descr ""))
+)

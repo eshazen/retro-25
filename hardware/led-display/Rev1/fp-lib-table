@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name sw_slide)(type KiCad)(uri ${KIPRJMOD}/sw_slide.pretty)(options "")(descr ""))
+)
