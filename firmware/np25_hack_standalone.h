@@ -1,6 +1,28 @@
+/*
 
-// inhibit extra debugging display output
-#define CLEAN_DISPLAY
+Eric Hazen May 2020
+
+Based on Eric Smith's work, and Chris Chung's "Nonpariel Physical"
+
+$Id: proc_woodstock.h 686 2005-05-26 09:06:45Z eric $
+Copyright 1995, 2003, 2004, 2005 Eric L. Smith <eric@brouhaha.com>
+
+Nonpareil is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License version 2 as
+published by the Free Software Foundation.  Note that I am not
+granting permission to redistribute or modify Nonpareil under the
+terms of any later version of the General Public License.
+
+Nonpareil is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program (in the file "COPYING"); if not, write to the
+Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+MA 02111, USA.
+*/
 
 
 #define WSIZE 14
@@ -47,19 +69,12 @@ typedef struct {		/* act_reg_t */
   reg_t a;			/* general purpose */
   reg_t b;			/* general purpose */
   reg_t c;			/* X */
-#ifdef ONLY_REG_T
+
   reg_t y;			/* Y */
   reg_t z;			/* Z */
   reg_t t;			/* T */
   reg_t m1;			/* is this the return stack? */
   reg_t m2;
-#else  
-  creg_t y;
-  creg_t z;
-  creg_t t;
-  creg_t m1;
-  creg_t m2;
-#endif
 
   digit_t f;
   digit_t p;
@@ -105,11 +120,7 @@ typedef struct {		/* act_reg_t */
 
   // RAM:
   int16_t ram_addr;  /* selected RAM address */
-#ifdef ONLY_REG_T
   reg_t ram[__USE_RAM];
-#else
-  creg_t ram[__USE_RAM];
-#endif
 } act_reg_t;
 
 #define MAX_DIGIT_POSITION 15    /* Classic, Topcat, 67, maybe 19C */
@@ -122,67 +133,6 @@ static segment_bitmap_t _display_segments[MAX_DIGIT_POSITION];
 static uint16_t last_seg_crc=0;
 
 static act_reg_t _act_reg;
-
-
-
-#ifdef DEBUG
-// dump internal state
-
-// print digit
-void dump_digit_t( digit_t d) {
-  static char buff[5];
-  sprintf(buff, "%02x ", d);
-  putstr( buff);
-}    
-
-void dump_reg_t( reg_t r) {
-  uint8_t i;
-  for( i=0; i<WSIZE; i++)
-    dump_digit_t( r[i]);
-  crlf();
-}
-
-void dump_ram() {
-  uint8_t i;
-  for( i=0; i<__USE_RAM; i++) {
-    dump_digit_t( i);
-    putch(':');
-    dump_reg_t( _act_reg.ram[i]);
-  }
-  crlf();
-}
-
-void dump_stack() {
-  putstr("a: ");
-  dump_reg_t( _act_reg.a);
-  putstr("b: ");
-  dump_reg_t( _act_reg.b);
-  putstr("X: ");
-  dump_reg_t( _act_reg.c);
-  putstr("Y: ");
-  dump_reg_t( _act_reg.y);
-  putstr("Z: ");
-  dump_reg_t( _act_reg.z);
-  putstr("T: ");
-  dump_reg_t( _act_reg.t);
-  putstr("1: ");
-  dump_reg_t( _act_reg.m1);
-  putstr("2: ");
-  dump_reg_t( _act_reg.m2);
-  dump_ram();
-}
-
-#endif
-
-
-
-
-
-
-
-
-
-
 
 static void woodstock_press_key (uint8_t keycode) {
   _act_reg.key_buf = keycode;
@@ -503,27 +453,14 @@ static void op_mx(int opcode) {
   int i;
   // what's going on here? just exchange c with target
   // complicated in original by the fact that m1 and m2 were creg_t
-#ifdef ONLY_REG_T
+
   digit_t t;
   for (i=0;i<WSIZE; i++) {
     t = _act_reg.c[i];
     _act_reg.c[i] = target[i];
     if( !opcode) target[i] = t;
   }
-#else
-  int t=0;
-  for (i=0;i<WSIZE; i++) {
-    if (i&0x01) {
-      t |= _act_reg.c[i]<<4;
-      _act_reg.c[i] = (target[i/2]>>4);
-      _act_reg.c[i-1] = (target[i/2]&0x0f);
-      if (!opcode) target[i/2] = t;
-    }//if
-    else {
-      t = _act_reg.c[i]&0x0f;
-    }//else
-  }//for
-#endif
+
 }
 
 
@@ -574,11 +511,7 @@ static void op_c_to_addr (int opcode) {
 static void op_c_to_data (int opcode) {
   int i;
   if (_act_reg.ram_addr >= __USE_RAM) return;
-#ifdef ONLY_REG_T
   for (i = 0; i < WSIZE; i++) _act_reg.ram [_act_reg.ram_addr] [i] = _act_reg.c [i];    
-#else
-  for (i=0;i<WSIZE/2;i++) _act_reg.ram[_act_reg.ram_addr][i] = (_act_reg.c[i*2+1]<<4) | (_act_reg.c[i*2]&0x0f);
-#endif
 }
 
 static void op_c_to_register (int opcode) {
@@ -586,11 +519,7 @@ static void op_c_to_register (int opcode) {
   _act_reg.ram_addr &= ~017;
   _act_reg.ram_addr += (opcode >> 6);
   if (_act_reg.ram_addr >= __USE_RAM) return;
-#ifdef ONLY_REG_T
   for (i = 0; i < WSIZE; i++) _act_reg.ram [_act_reg.ram_addr] [i] = _act_reg.c [i];
-#else
-  for (i=0;i<WSIZE/2;i++) _act_reg.ram[_act_reg.ram_addr][i] = (_act_reg.c[i*2+1]<<4) | (_act_reg.c[i*2]&0x0f);
-#endif
 }
 
 static void op_register_to_c (int opcode) {
@@ -606,14 +535,7 @@ static void op_register_to_c (int opcode) {
     for (i = 0; i < WSIZE; i++) _act_reg.c [i] = 0;
     return;
   }//if
-#ifdef ONLY_REG_T
   for (i = 0; i < WSIZE; i++) _act_reg.c [i] = _act_reg.ram [_act_reg.ram_addr] [i];
-#else
-  for (i=0;i<WSIZE/2;i++) {
-    _act_reg.c[i*2+1] = _act_reg.ram[_act_reg.ram_addr][i]>>4;
-    _act_reg.c[i*2] = _act_reg.ram[_act_reg.ram_addr][i]&0x0f;
-  }//for
-#endif
 }
 
 static void op_clear_data_regs (int opcode) {
@@ -621,32 +543,19 @@ static void op_clear_data_regs (int opcode) {
   int i, j;
   base = _act_reg.ram_addr & ~ 017;
   for (i = base; i <= base + 15; i++)
-#ifdef ONLY_REG_T
     for (j = 0; j < WSIZE; j++)   _act_reg.ram [i] [j] = 0;
-#else
-    for (j = 0; j < WSIZE/2; j++) _act_reg.ram [i] [j] = 0;
-#endif
 }
 
 static void op_c_to_stack (int opcode)
 {
   int i;
 
-#ifdef ONLY_REG_T
   for (i = 0; i < WSIZE; i++)
     {
       _act_reg.t [i] = _act_reg.z [i];
       _act_reg.z [i] = _act_reg.y [i];
       _act_reg.y [i] = _act_reg.c [i];
     }
-#else
-  for (i = 0; i < WSIZE/2; i++)
-    {
-      _act_reg.t [i] = _act_reg.z [i];
-      _act_reg.z [i] = _act_reg.y [i];
-      _act_reg.y [i] = (_act_reg.c[i*2]&0x0f) | (_act_reg.c[i*2+1]<<4);
-    }
-#endif
 }
 
 
@@ -654,22 +563,12 @@ static void op_stack_to_a (int opcode)
 {
   int i;
 
-#ifdef ONLY_REG_T
   for (i = 0; i < WSIZE; i++)
     {
       _act_reg.a [i] = _act_reg.y [i];
       _act_reg.y [i] = _act_reg.z [i];
       _act_reg.z [i] = _act_reg.t [i];
     }
-#else
-  for (i = 0; i < WSIZE/2; i++)
-    {
-      _act_reg.a [i*2] = _act_reg.y[i]&0x0f;
-      _act_reg.a [i*2+1] = _act_reg.y[i]>>4;
-      _act_reg.y [i] = _act_reg.z [i];
-      _act_reg.z [i] = _act_reg.t [i];
-    }
-#endif
 }
 
 
@@ -677,19 +576,10 @@ static void op_y_to_a (int opcode)
 {
   int i;
 
-#ifdef ONLY_REG_T
   for (i = 0; i < WSIZE; i++)
     {
       _act_reg.a [i] = _act_reg.y [i];
     }
-#else
-  for (i = 0; i < WSIZE/2; i++)
-    {
-      //_act_reg.a [i] = _act_reg.y [i];
-      _act_reg.a [i*2] = _act_reg.y[i]&0x0f;
-      _act_reg.a [i*2+1] = _act_reg.y[i]>>4;
-    }
-#endif
 }
 
 
@@ -697,7 +587,6 @@ static void op_down_rotate (int opcode)
 {
   int i, t;
 
-#ifdef ONLY_REG_T
   for (i = 0; i < WSIZE; i++)
     {
       t = _act_reg.c [i];
@@ -706,19 +595,6 @@ static void op_down_rotate (int opcode)
       _act_reg.z [i] = _act_reg.t [i];
       _act_reg.t [i] = t;
     }
-#else  
-  for (i = 0; i < WSIZE/2; i++)
-    {
-      //t = _act_reg.c [i];
-      //_act_reg.c [i] = _act_reg.y [i];
-      t = (_act_reg.c[i*2]&0x0f) | (_act_reg.c[i*2+1]<<4);
-      _act_reg.c [i*2] = _act_reg.y[i]&0x0f;
-      _act_reg.c [i*2+1] = _act_reg.y[i]>>4;
-      _act_reg.y [i] = _act_reg.z [i];
-      _act_reg.z [i] = _act_reg.t [i];
-      _act_reg.t [i] = t;
-    }
-#endif
 }
 
 
@@ -726,16 +602,9 @@ static void op_clear_reg (int opcode)
 {
   int i;
 
-#ifdef ONLY_REG_T
   for (i = 0; i < WSIZE; i++)
         _act_reg.a [i] = _act_reg.b [i] = _act_reg.c [i] = _act_reg.y [i] =
 	  _act_reg.z [i] = _act_reg.t [i] = 0;
-#else  
-  for (i = 0; i < WSIZE; i++)
-    _act_reg.a [i] = _act_reg.b [i] = _act_reg.c [i];	// = _act_reg.y [i] = _act_reg.z [i] = _act_reg.t [i] = 0;
-  for (i = 0; i < WSIZE/2; i++)
-    _act_reg.y [i] = _act_reg.z [i] = _act_reg.t [i] = 0;
-#endif
   // Apparently we're not supposed to clear F, or the HP-21 CLR function
   // resets the display format.
   // Should this clear P?  Probably not.
@@ -888,36 +757,7 @@ static void display_scan_advance () {
       //
 
       if( (_act_reg.flags & F_DISPLAY_ON) && global_display_enable) {
-
-#ifdef UPCO
 	umon_display( _display_segments);
-#else
-#ifdef Z80
-	//	led_display( _display_segments, MAX_DIGIT_POSITION);
-	putch('>');
-	for (i=0;i<MAX_DIGIT_POSITION;i++) {
-	  if (_display_segments[i]&CHAR_MINUS) putch('-');
-	  else putch(" 0123456789rFope "[_display_segments[i]&0x0f]); 
-	  putch((_display_segments[i]&CHAR_DOT) ? '.' : ' ');
-	}//for
-
-	putch('\n'); 
-	putch('\r');
-	
-#else	
-
-	putchar('>');
-	for (i=0;i<MAX_DIGIT_POSITION;i++) {
-	  if (_display_segments[i]&CHAR_MINUS) putchar('-');
-	  else putchar(" 0123456789rFope "[_display_segments[i]&0x0f]); 
-	  putchar((_display_segments[i]&CHAR_DOT) ? '.' : ' ');
-	}//for
-
-	putchar('\n'); 
-	putchar('\r');
-#endif
-#endif
-
       } else {
 	umon_blank();
       }
@@ -1080,11 +920,7 @@ static void woodstock_reset () {
 static void woodstock_clear_memory () {
   int addr;
   for (addr = 0; addr < __USE_RAM; addr++)
-#ifdef ONLY_REG_T
     reg_zero (_act_reg.ram [addr], 0, WSIZE - 1);
-#else
-    reg_zero (_act_reg.ram [addr], 0, WSIZE/2 - 1);
-#endif
 }
 
 // static uint8_t _is_spice=0;

@@ -1,7 +1,7 @@
 #ifndef _DISKEY_H
 //
-// upco hardware keyboard/display function interface
-// requires umon be loaded at 8100H
+// hardware keyboard/display function interface
+// declarations for assembly functions in diskey_sw.asm
 //
 void umon_display( unsigned char* hl) __z88dk_fastcall;
 void umon_hex( unsigned char* hl) __z88dk_fastcall;

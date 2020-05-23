@@ -1,9 +1,35 @@
-//
-// HP-25 simulator
-// irrelevant stuff stripped out
-//
+/*
 
-// #include <inttypes.h>
+Eric Hazen May 2020
+
+Based on Eric Smith's work, and Chris Chung's "Nonpariel Physical"
+
+$Id: proc_woodstock.h 686 2005-05-26 09:06:45Z eric $
+Copyright 1995, 2003, 2004, 2005 Eric L. Smith <eric@brouhaha.com>
+
+Nonpareil is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License version 2 as
+published by the Free Software Foundation.  Note that I am not
+granting permission to redistribute or modify Nonpareil under the
+terms of any later version of the General Public License.
+
+Nonpareil is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program (in the file "COPYING"); if not, write to the
+Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+MA 02111, USA.
+*/
+
+
+//
+// This is the main program for the Retro-25 calculator
+// 
+
+
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -13,14 +39,18 @@
 #include <z80.h>
 
 #include "diskey.h"
-#include "keyboard_upco.h"
+#include "key_translate.h"
 
 // not sure if this is right!
 #define __USE_RAM	32	// our highest model 33c has 32 units
 
+// flag to turn display on and off with "power" switch
+// <FIXME> currently requires a keypress before it is recognized
 static int global_display_enable = 1;
 
 #include "rom_25.h"
+
+// for historical reasons most of the code is in here...
 #include "np25_hack_standalone.h"
 
 static volatile uint8_t _pgm_run=1;
@@ -28,43 +58,22 @@ static volatile uint8_t _pgm_run=1;
 //________________________________________________________________________________
 
 void flash_write(uint8_t bank, char *src, int cnt) {
-  char buff[60];
-  sprintf( buff, "flash_write( %d, ..., %d)\r\n", bank, cnt);
-  putstr( buff);
-#ifdef UNIX_TERM
-  if( (fp = fopen( "flash.dat", "wb")) != NULL)
-    fwrite( src, 1, cnt, fp);
-  fclose( fp);
-  dump_stack();
-#endif  
+  //  char buff[60];
+  //  sprintf( buff, "flash_write( %d, ..., %d)\r\n", bank, cnt);
+  //  putstr( buff);
 }
 
 void flash_read( uint8_t bank, char *dst, int cnt) {
 
-  char buff[60];
-  sprintf( buff, "flash_read( %d, ..., %d)\r\n", bank, cnt);
-  putstr( buff);
-#ifdef UNIX_TERM
-
-  if( (fp = fopen( "flash.dat", "rb")) != NULL) {
-    fread( dst, 1, cnt, fp);
-    putstr("Read from flash\r\n");
-    fclose( fp);
-    dump_stack();
-  }
-  //  while (idx--) ((char*) act_reg->ram)[idx+RAM_OFFSET] = *((char*) (0x1040+idx));
-  
-#endif  
+  //  char buff[60];
+  //  sprintf( buff, "flash_read( %d, ..., %d)\r\n", bank, cnt);
+  //  putstr( buff);
 }
 
 
   //________________________________________________________________________________
   int main() {
 
-#ifndef Z80
-  set_conio_terminal_mode();
-#endif
-  
 #define RAM_OFFSET	(7*9)
 #define RAM_SIZE	(7*7)		// 49 program steps
 
@@ -94,7 +103,6 @@ void flash_read( uint8_t bank, char *dst, int cnt) {
 
   woodstock_set_ext_flag (3, _pgm_run);		// set run mode
 
-#ifdef UPCO
   while(1) {
     if( key = umon_kbscan() )
       woodstock_press_key( translate_key(key & 0xff));
@@ -113,50 +121,6 @@ void flash_read( uint8_t bank, char *dst, int cnt) {
     if (!woodstock_execute_instruction()) break;
 
   }
-      
-#else
-  while (!done) {
-    if (kbhit()) {
-      c = getch();
-
-      switch (c) {
-      case ']':
-	dump_stack();
-	break;
-      case 27: 			/* exit on ESC */
-	done = 1; 
-	// just save everything
-	flash_write(0, (char*)&_act_reg, sizeof( _act_reg));
-	break;
-      case '\\': 		/* Power cycle on '\' */
-	putstr("Power cycle\r\n");
-	woodstock_new_processor();
-	_pgm_run = 0;
-	break;
-      case '=':			/* pgm/run on "=" */
-	woodstock_set_ext_flag (3, _pgm_run ^= 1);		// pgm-run toggle
-	//	if (_pgm_run) flash_write(0xfc00, (char*)_act_reg.ram, WSIZE*__USE_RAM);
-	break;
-      default:
-	if ( translate_key(c)) {
-	  woodstock_press_key( translate_key(c));
-	  //	  release_in = 10;
-	  release_in = 5;	  
-	}//if
-	break;
-      }//switch
-      c = 0;
-    }//if
-    if (!woodstock_execute_instruction()) break;
-    if (release_in) {
-      if (release_in == 1) woodstock_release_key();
-      release_in--;
-    }//if
-    //    usleep(300);
-  }//while
-#endif
-    
-
   return 0;
 
 }

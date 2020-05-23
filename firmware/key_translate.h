@@ -1,13 +1,6 @@
-#ifndef _KEYBOARD_UPCO_H
-// uint8_t translate_key( uint8_t asc);
-
 #include <stdint.h>
 
 #define translate_key(a) (key_translate[(a)])
-
-void putch( char c) __z88dk_fastcall;
-void putstr( char *s) __z88dk_fastcall;
-void crlf() __z88dk_fastcall;
 
 static const uint8_t key_translate[] = {
   // new keyscan with row in bits 5:3 and column in bits 2:0
@@ -64,6 +57,3 @@ static const uint8_t key_translate[] = {
   0x91,				/* 50 -> . */
   0x90				/* 51 -> R/S */
 };
-  
-#endif
-#define _KEYBOARD_UPCO_H
