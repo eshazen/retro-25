@@ -1,3 +1,5 @@
+<img src=https://github.com/eshazen/retro-25/blob/master/photos/quarter.jpg width=300>
+
 # retro-25
 Retro-tech HP-25 calculator clone using Z80
 
