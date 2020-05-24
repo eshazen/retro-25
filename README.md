@@ -10,3 +10,9 @@ The hardware consists of two boards, a CPU board and an LED+display board.  Ther
 * BUSRQ should be tied high or pulled up.  Solder a 1k resistor (or just a wire) from the Z80 (U3) pin 25 to +5V
 
 Also, recommend to cut the trace to nWE on the EEPROM (U4, pin 27) and wire from pin 27 to pin 28.  This disables writing to the EEPROM.
+
+## Firmware
+
+See firmware/calc for calculator operating program
+
+See firmware/bootloader for boot loader supporting serial download and EEPROM load
