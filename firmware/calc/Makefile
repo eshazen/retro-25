@@ -7,7 +7,7 @@ all: main-9000.hex
 DEFINES = -DONLY_REG_T -DZ80PACK -DZ80 -DUPCO
 CFLAGS = +z80 --list $(DEFINES) -clib=sdcc_iy
 
-main.o: main.c np25_hack_standalone.h key_translate.h
+main.o: main.c np25_hack_standalone.h key_translate.h diskey.h
 	zcc $(CFLAGS) -c main.c -pragma-define:CRT_ORG_CODE=0x9000
 
 diskey_sw.o: diskey_sw.asm

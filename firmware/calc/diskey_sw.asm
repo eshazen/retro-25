@@ -4,6 +4,10 @@
 	GLOBAL _umon_hex
 	GLOBAL _umon_switches
 	GLOBAL _umon_blank
+	GLOBAL _umon_serial
+	GLOBAL _umon_putc
+	GLOBAL _umon_getc
+	GLOBAL _umon_jump
 
 ;;; ------------------------------------------------------------
 ;;; display / keyboard support
@@ -13,6 +17,29 @@
 inpt:	equ	80H
 
 	SECTION	code_compiler
+
+;;;
+;;; jump using pointer to struct:
+;;;   destination address
+;;;   return address (we should fill this in)
+;;;     ... any other useful info for the user
+;;; 
+_umon_jump:
+	;; HL points to struct
+	push	hl
+	ld	e,(hl)		;jump address to de
+	inc	hl
+	ld	d,(hl)
+	inc	hl
+	ld	bc,jump_back
+	ld	(hl),c		;return address to struct
+	inc	hl
+	ld	(hl),b
+	pop	hl
+	ex	de,hl		;DE points to struct, HL is address
+	jp	(hl)
+jump_back:
+	ret
 
 ;;; buffer for keyboard scan data
 kbuff:	db	0,0,0,0,0,0,0,0
@@ -53,6 +80,7 @@ kcol:	ld	a,c
 	inc	d		;increment column, start at 0
 	in	a,(inpt)
 	xor	0ffh
+	and	7fh		;ignore high bit (serial data)
 	jr	z,nohit
 	;; find bit number in E
 
@@ -112,7 +140,17 @@ skprsw:	bit	4,a		;test for on/off switch
 	res	1,l
 	ret
 	
-
+;;;
+;;; check serial input bit status
+;;; return 1 if low (space) or 0 if high (mark)
+;;; 
+_umon_serial:
+	ld	hl,0
+	in	a,(inpt)
+	and	80h
+	ret	nz
+	set	0,l
+	ret
 
 ;;;
 ;;; update the display
@@ -145,31 +183,6 @@ dpyblk:	equ	000h		;blank the display
 dpymod:	equ	0b0h		;no decode, data coming, not blanked
 dpyhex:	equ	0d0h		;hex decode, data coming, not blanked
 
-_umon_hex:
-	push	ix
-	push	hl
-	pop	ix
-
-	ld	b,8
-	ld	c,left_m
-	call	dohex
-
-	ld	c,right_m
-	ld	b,8
-	call	dohex
-	
-	pop	ix
-	ret
-
-dohex:	ld	a,dpyhex
-	out	(c),a
-	dec	c
-dohx1:	ld	a,(ix)
-	inc	ix
-	out	(c),a
-	djnz	dohx1
-	
-	ret
 
 
 _umon_display:
@@ -220,6 +233,38 @@ do73:	out	(c),a
 
 	ret
 
+;;;------------------------------------------------------------
+;;; display in hex
+;;; 12 digits from (hl)
+;;; no blanking supported so all digits lit
+;;;------------------------------------------------------------
+
+_umon_hex:
+	push	ix
+	push	hl
+	pop	ix
+
+	ld	b,8
+	ld	c,left_m
+	call	dohex
+
+	ld	c,right_m
+	ld	b,8
+	call	dohex
+	
+	pop	ix
+	ret
+
+dohex:	ld	a,dpyhex
+	out	(c),a
+	dec	c
+dohx1:	ld	a,(ix)
+	inc	ix
+	out	(c),a
+	djnz	dohx1
+	
+	ret
+	
 ;;;
 ;;; blank the display
 ;;;
@@ -229,6 +274,184 @@ _umon_blank:
 	out	(right_m),a
 	ret
 	
+;;; ------------------------------------------------------------------------
+;;; serial port
+;;; umon_putc:  send a character
+;;; umon_getc:  receive a character
+;;;
+;;; 
+
+
+serial_port:	equ	80H	;input port
+led_port:	equ	0	;port 0 for LED/keyboard output
+	
+data_bit:	equ	80H	;input data mask
+	
+;;; serial port timing macros
+;;; 23/10 seem to be OK for 4800 baud (4MHz CPU) or 19200 (16MHz CPU)
+
+;;; UGH - z80asm doesn't support macros
+
+full:	equ	22
+half:	equ	9
+
+;;;;; delay macro:  uses B
+;;delay	macro	p1
+;;	local	dilly
+;;	ld	b,p1		;7T
+;;
+;;;;; 33T per loop / 28T for last
+;;dilly:	nop			;4T
+;;	nop			;4T
+;;	nop			;4T
+;;	nop			;4T
+;;	nop			;4T
+;;	djnz	dilly		;13T / 8T
+;;	endm
+
+;;bitdly	macro			;766T
+;;	delay	full
+;;	endm
+
+;;; there are an additional 70T in the rest of the code,
+;;; 833T is ideal 19200 baud, so 833-70 = 763 target
+;;; 763 - 27 (call/ret) - 7 (ld) = 729
+;;; 23* loop = 721T so add 2 NOPs and we're good
+
+;;; delay exactly 763T (hopefully)?
+;;; full=22: 27T+7T+28T+21*33T = 755 + 8 = 763
+                                ;27T (call+ret)
+bitdly:	ld	b,full          ;7T
+dilly:	nop			;4T
+	nop			;4T
+	nop			;4T
+	nop			;4T
+	nop			;4T
+	djnz	dilly		;13T / 8T
+	nop			;4T
+	nop			;4T
+	ret
+
+;;; old version was 332T
+;;; this one is 330T
+                                ;27T (call+ret)
+halfdly: ld	b,half		;7T
+dally:	nop			;4T
+	nop			;4T
+	nop			;4T
+	nop			;4T
+	nop			;4T
+	djnz	dally		;13T / 8T
+	nop			;4T
+	ret
+
+;mark	macro
+;	ld	a,data_bit
+;	out	(led_port),a
+;	endm
+
+;spc	macro
+;	ld	a,0
+;	out	(led_port),a
+;	endm
+
+
+
+;;; 
+;;; receive a character to HL
+;;; 
+_umon_getc:	
+	push	bc
+	push	de
+	
+	ld	e,9		; bit count (start + 8 data)
+	
+	;; wait for high
+ci0:	in	a,(serial_port)
+	and	data_bit
+	jr	z,ci0		;loop if/while low
+	
+ci1:	in	a,(serial_port) ; read serial line
+	and	data_bit	; isolate serial bit
+	jr	nz,ci1		; loop while high
+	call 	halfdly		;delay to middle of first (start) bit
+
+ci3:
+	call	bitdly	       ;delay to middle of LSB data bit    766
+	in	a,(serial_port) ; read serial character              12
+	and	data_bit	; isolate serial data                 7
+	jr	z,ci6		; j if data is 0                  7 / 12
+	inc	a		; now register A=serial data          4
+ci6:	rra			; rotate it into carry                4
+	dec	e		; dec bit count                       4
+	jr	z,ci5		; j if last bit                   7 / 12
+	
+	ld	a,c		; this is where we assemble char      4
+	rra			; rotate it into the character from c 4
+	ld	c,a		;                                     4
+
+	jr	ci3		; do next bit                        12
+	
+	;; total loop ~ 836T = 52.3 uS or 19139 Hz (0.3% error, not bad!)
+
+ci5:	ld	l,c
+	ld	h,0
+	pop	de
+	pop	bc
+
+	ret
+
+;;;
+;;; send character in HL
+;;; saves all
+;;; 
+_umon_putc:
+	push	bc
+	push	de
+	push	af
+	ld	c,l
+
+	ld	e,8		;bit counter
+	
+;	mark			;ensure a stop bit
+	ld	a,data_bit
+	out	(led_port),a
+	call	bitdly
+	
+;	spc			;start bit
+	ld	a,0
+	out	(led_port),a
+	call	bitdly
+	
+	;; loop here for bits
+rrot:	rr	c		;shift out LSB
+	jr	c,one
+	
+;	spc
+	ld	a,0
+	out	(led_port),a
+	jr	bite
+one:
+;	mark
+	ld	a,data_bit
+	out	(led_port),a
+bite:
+	call	bitdly
+	
+	dec	e
+	jr	nz,rrot
+;	mark
+	ld	a,data_bit
+	out	(led_port),a
+	call	bitdly		; stop bit
+	
+	pop	af
+	pop	de
+	pop	bc
+	ret
+	
+	
+
 
 	SECTION IGNORE
 	

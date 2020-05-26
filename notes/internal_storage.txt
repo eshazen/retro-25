@@ -1,0 +1,112 @@
+Internal storage in HP-25
+
+---------- data storage ----------
+
+Registers are stored sequentially (at least in the emulator)
+as A, B, C(X), Y, Z, T, M1, M2
+
+A+B together control the display.
+There are 14 positions in the registers, of which 12 are used for display.
+ A has 0-9 for digits display, "F" for blank
+ B has 2 (sign) or 1 (decimal) or 0 (nothing) as flags for each digit
+  If B=2, then A has 0 for no sign or 9 for "-"
+  If B=1, then a decimal appears after the corresponding A digit
+
+In the stack registers X/Y/Z/T:
+
+  Sign digits at positions 2, 13 are 0 for "+" or 9 for "-"
+  Mantissa is in positions 3-12
+
+Values are stored normalized with mantissa in range 0 <= m < 1.
+Negative mantissa indicated by "9" in position 13
+Negative exponent is coded as 100-exp, so 10^-3^ is coded as 97
+with the sign flag set ("9" for negative exponent)
+
+---------- program storage ----------
+
+At "RAM" location:
+  R0...R7 use first 8 locations
+  one mystery register
+  7 registers used for program steps
+
+Encoding seems a bit haphazard since we haven't found the code,
+but one program step consumes two successive digits. Interpreted
+as hex pairs:
+
+Digits 0-9 are C0...C9
+
+f fix 3 = 53   f sci 2 = 62  f eng 1 = 71
+
+X/Y = FA  RDN  = FB
+E+  = FC  f E- = DC  g E- = EC (invalid)
+
+------------------------------------ first digit ---------------------------------
+    0    1    2    3    4    5    6    7    8    9    A    B    C    D    E    F
+  +----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+
+  | GTO| GTO| GTO| GTO| GTO| f  | f  | f  |    |    | f  | g  |    | f  | g  |    |
+0 | 00 | 10 | 20 | 30 | 40 | fix| sci| eng|    |    | 0  | 0  | 0  | -  | -  | -  |
+  |    |    |    |    |    | 0  | 0  | 0  |    |    |>HMS|>H  |    |    |    |    |
+  +----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+
+  | GTO| GTO| GTO| GTO| GTO| f  | f  | f  |    |    | f  | g  |    | f  | g  |    |
+1 | 01 | 11 | 21 | 31 | 41 | fix| sci| eng|    |    | 1  | 1  | 1  | +  | +  | +  |
+  |    |    |    |    |    | 1  | 1  | 1  |    |    | INT|FRAC|    |    |    |    |
+  +----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+
+  | GTO| GTO| GTO| GTO| GTO| f  | f  | f  |    |    | f  | g  |    | f  | g  |    |
+2 | 02 | 12 | 22 | 32 | 42 | fix| sci| eng|    |    | 2  | 2  | 2  | x  | x  | x  |
+  |    |    |    |    |    | 2  | 2  | 2  |    |    |SQRT| X^2|    |    |    |    |
+  +----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+
+  | GTO| GTO| GTO| GTO| GTO| f  | f  | f  |    |    | f  | g  |    | f  | g  |    |
+3 | 03 | 13 | 23 | 33 | 43 | fix| sci| eng|    |    | 3  | 3  | 3  | /  | /  | /  |
+  |    |    |    |    |    | 3  | 3  | 3  |    |    | Y^X| ABS|    |    |    |    |
+  +----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+
+  | GTO| GTO| GTO| GTO| GTO| f  | f  | f  |    |    | f  | g  |    | f  | g  |    |
+4 | 04 | 14 | 24 | 34 | 44 | fix| sci| eng|    |    | 4  | 4  | 4  | .  | .  | .  |
+  |    |    |    |    |    | 4  | 4  | 4  |    |    |    |    |    |    |    |    |
+  +----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+
+  | GTO| GTO| GTO| GTO| GTO| f  | f  | f  |    |    | f  | g  |    | f  | g  |    |
+5 | 05 | 15 | 25 | 35 | 45 | fix| sci| eng|    |    | 5  | 5  | 5  | R/S| R/S|    |
+  |    |    |    |    |    | 5  | 5  | 5  |    |    |    |    |    |    |    |    |
+  +----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+
+  | GTO| GTO| GTO| GTO| GTO| f  | f  | f  |    |    | f  | g  |    |    |    | ENT|
+6 | 06 | 16 | 26 | 36 | 46 | fix| sci| eng|    |    | 6  | 6  | 6  |    |    |    |
+  |    |    |    |    |    | 6  | 6  | 6  |    |    |    |    |    |    |    |    |
+  +----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+
+  | GTO| GTO| GTO| GTO| GTO| f  | f  | f  |    |    | f  | g  |    |    | g  |    |
+7 | 07 | 17 | 27 | 37 | 47 | fix| sci| eng|    |    | 7  | 7  | 7  |    | CHS| CHS|
+  |    |    |    |    |    | 7  | 7  | 7  |    |    |    |    |    |    |    |    |
+  +----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+
+  | GTO| GTO| GTO| GTO| GTO| f  | f  | f  |    |    | f  | g  |    | f  | g  |    |
+8 | 08 | 18 | 28 | 38 | 48 | fix| sci| eng|    |    | 8  | 8  | 8  | EEX| EEX| EEX|
+  |    |    |    |    |    | 8  | 8  | 8  |    |    |    |    |    |    |    |    |
+  +----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+
+  | GTO| GTO| GTO| GTO| GTO| f  | f  | f  |    |    | f  | g  |    | f  | g  |    |
+9 | 09 | 19 | 29 | 39 | 49 | fix| sci| eng|    |    | 9  | 9  | 9  | CLX| CLX| CLX|
+  |    |    |    |    |    | 9  | 9  | 9  |    |    |    |    |    |    |    |    |
+  +----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+
+  |    |    |    |    |    |    |    |    |    |    |    |    |    | f  | g  |    |
+A | STO| STO| STO| STO| STO| STO| STO| STO|    |    |    |    |    | X/Y| X/Y| X/Y|
+  | 0  | 1  | 2  | 3  | 4  | 5  | 6  | 7  |    |    |    |    |    |    |    |    |
+  +----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+
+  |    |    |    |    |    |    |    |    |    |    |    |    |    | f  | g  |    |
+B | RCL| RCL| RCL| RCL| RCL| RCL| RCL| RCL|    |    |    |    |    | RDN| RDN| RDN|
+  | 0  | 1  | 2  | 3  | 4  | 5  | 6  | 7  |    |    |    |    |    |    |    |    |
+  +----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+
+  | STO| STO| STO| STO| STO| STO| STO| STO|    |    |    |    |    | f  | g  |    |
+C | -  | -  | -  | -  | -  | -  | -  | -  |    |    |    |    |    | E+ | E+ | E+ |
+  | 0  | 1  | 2  | 3  | 4  | 5  | 6  | 7  |    |    |    |    |    |    |    |    |
+  +----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+
+  | STO| STO| STO| STO| STO| STO| STO| STO|    |    |    |    |    |    |    |    |
+D | +  | +  | +  | +  | +  | +  | +  | +  |    |    |    |    |    |    |    |    |
+  | 0  | 1  | 2  | 3  | 4  | 5  | 6  | 7  |    |    |    |    |    |    |    |    |
+  +----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+
+  | STO| STO| STO| STO| STO| STO| STO| STO|    |    |    |    |    |    |    |    |
+E | x  | x  | x  | x  | x  | x  | x  | x  |    |    |    |    |    |    |    |    |
+  | 0  | 1  | 2  | 3  | 4  | 5  | 6  | 7  |    |    |    |    |    |    |    |    |
+  +----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+
+  | STO| STO| STO| STO| STO| STO| STO| STO|    |    |    |    |    |    |    |    |
+F | /  | /  | /  | /  | /  | /  | /  | /  |    |    |    |    |    |    |    |    |
+  | 0  | 1  | 2  | 3  | 4  | 5  | 6  | 7  |    |    |    |    |    |    |    |    |
+  +----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+----+
+
+
+

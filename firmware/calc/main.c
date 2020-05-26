@@ -29,7 +29,6 @@ MA 02111, USA.
 // This is the main program for the Retro-25 calculator
 // 
 
-
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -52,6 +51,14 @@ static int global_display_enable = 1;
 
 // for historical reasons most of the code is in here...
 #include "np25_hack_standalone.h"
+
+// some info to help locate things in assembly
+struct {
+  uint16_t jump_to;		/* UMON jump address 0x8121 */
+  uint16_t jump_back;		/* return address filled in by assembly */
+  uint16_t regs;		/* address of registers */
+  uint16_t ram;			/* address of RAM */
+} reg_info;
 
 static volatile uint8_t _pgm_run=1;
 
@@ -101,13 +108,32 @@ void flash_read( uint8_t bank, char *dst, int cnt) {
   uint16_t switches;
   uint16_t last_sw;
 
+  uint16_t chr;
+  char buff[20];
+  char *bp;
+
   woodstock_set_ext_flag (3, _pgm_run);		// set run mode
 
+  reg_info.jump_to = 0x8121;
+  reg_info.jump_back = 0x9000;
+  reg_info.regs = (uint16_t) & _act_reg;
+  reg_info.ram = (uint16_t) & _act_reg.ram;
+
   while(1) {
-    if( key = umon_kbscan() )
+    if( umon_serial()) {	/* check for serial action */
+      // wait for it to go away
+      while( umon_serial())
+	;
+      umon_jump( (uint16_t) &reg_info);	/* jump to umon state saver */
+    }
+
+    key = umon_kbscan();
+    
+    if( key)
       woodstock_press_key( translate_key(key & 0xff));
     else
       woodstock_release_key();
+    
 
     switches = umon_switches();
 
