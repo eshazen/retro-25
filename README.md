@@ -6,6 +6,31 @@ Retro-tech HP-25 calculator clone using Z80
 ## Hardware
 The hardware consists of two boards, a CPU board and an LED+display board.  There are a few mistakes in the RevA/Rev1 boards:
 
+### Memory and I/O map
+
+The memory map is very simple:
+
+EEPROM | 0000-7FFF
+RAM    | 8000-FFFF
+
+There are four I/O ports:
+
+00 | KB (write only) | bit 0 | KB column 1
+   |                 | bit 1 | KB column 2
+   |                 | bit 2 | KB column 3
+   |                 | bit 3 | KB column 4
+   |                 | bit 4 | KB column 5
+   |                 | bit 5 | -not used-
+   |                 | bit 6 | LED on CPU board
+   |                 | bit 7 | Serial output
+-- | --------------- | ----- | -----------
+40 | KB (write only) | bit 0 | KB column 1
+-- | --------------- | ----- | -----------
+80 | KB (write only) | bit 0 | KB column 1
+-- | --------------- | ----- | -----------
+c0 | KB (write only) | bit 0 | KB column 1
+
+
 ### CPU board ECOs
 * D2 in the reset circuit - silkscreen is backwards
 * U1 pin 11 must be wired to J17 pin 11
