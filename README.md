@@ -10,11 +10,14 @@ The hardware consists of two boards, a CPU board and an LED+display board.  Ther
 
 The memory map is very simple:
 
+```
 EEPROM | 0000-7FFF
 RAM    | 8000-FFFF
+```
+There are six decoded I/O ports:
 
-There are four I/O ports:
-
+port | name          | bits  | description
+--- | ------------- | ------ | ---------
 00 | KB (write only) | bit 0 | KB column 1
    |                 | bit 1 | KB column 2
    |                 | bit 2 | KB column 3
@@ -23,11 +26,8 @@ There are four I/O ports:
    |                 | bit 5 | -not used-
    |                 | bit 6 | LED on CPU board
    |                 | bit 7 | Serial output
--- | --------------- | ----- | -----------
-40 | KB (write only) | bit 0 | KB column 1
--- | --------------- | ----- | -----------
+40 | LED digits 0-7  | bit 0 | KB column 1
 80 | KB (write only) | bit 0 | KB column 1
--- | --------------- | ----- | -----------
 c0 | KB (write only) | bit 0 | KB column 1
 
 
