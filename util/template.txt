@@ -1,0 +1,52 @@
+#
+# programming template file
+#
+ 1  : GTO 00
+ 2  : GTO 00
+ 3  : GTO 00
+ 4  : GTO 00
+ 5  : GTO 00
+ 6  : GTO 00
+ 7  : GTO 00
+ 8  : GTO 00
+ 9  : GTO 00
+10  : GTO 00
+11  : GTO 00
+12  : GTO 00
+13  : GTO 00
+14  : GTO 00
+15  : GTO 00
+16  : GTO 00
+17  : GTO 00
+18  : GTO 00
+19  : GTO 00
+20  : GTO 00
+21  : GTO 00
+22  : GTO 00
+23  : GTO 00
+24  : GTO 00
+25  : GTO 00
+26  : GTO 00
+27  : GTO 00
+28  : GTO 00
+29  : GTO 00
+30  : GTO 00
+31  : GTO 00
+32  : GTO 00
+33  : GTO 00
+34  : GTO 00
+35  : GTO 00
+36  : GTO 00
+37  : GTO 00
+38  : GTO 00
+39  : GTO 00
+40  : GTO 00
+41  : GTO 00
+42  : GTO 00
+43  : GTO 00
+44  : GTO 00
+45  : GTO 00
+46  : GTO 00
+47  : GTO 00
+48  : GTO 00
+49  : GTO 00

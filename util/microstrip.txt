@@ -1,0 +1,61 @@
+#
+# PCB Microstrip impedance from Analog Devices MT-094
+# "Microstrip and Stripline Design"
+# Inputs:
+#  R0 - trace width
+#  R1 - trace thickness
+#  R2 - height above plane
+#  R3 - relative dielectric constant
+# Results:
+#  X  - single-ended impedance (also in R4)
+#  Y  - propagation speed ps/inch
+#
+ 1  : RCL 2      # calculate 5.98*h
+ 2  : 5
+ 3  : .
+ 4  : 9
+ 5  : 8
+ 6  : X
+ 7  : RCL 0      # calculate 0.8*w + t
+ 8  : .
+ 9  : 8
+10  : *
+11  : RCL 1
+12  : +
+13  : /
+14  : LN         # second term
+15  : 8
+16  : 7
+17  : ENTR
+18  : RCL 3
+19  : 2
+20  : SQRT
+21  : +
+22  : SQRT
+23  : /				    
+24  : X          # we have impedance				    
+25  : PSE        # pause with impedance
+26  : 8
+27  : 5
+28  : ENTR
+29  : 0
+30  : .
+31  : 4
+32  : 7
+33  : 5
+34  : RCL 3
+35  : X          # 0.475 * E(r)
+36  : .
+37  : 6
+38  : 7
+39  : +
+40  : SQRT
+41  : X         # now we have T(pd)
+42  : X/Y       # swap so X=Z0  Y=T(pd)
+43  : GTO 00
+44  : GTO 00
+45  : GTO 00
+46  : GTO 00
+47  : GTO 00
+48  : GTO 00
+49  : GTO 00
