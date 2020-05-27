@@ -20,6 +20,15 @@ command (arguments)  |   description
 `k                     ` |   scan keyboard
 `7 <addr>              ` |   update display from <addr>
 
+By default the monitor is built with origin `8100H` with stack growing down
+from the origin.  The monitor is small (1k or so) and comfortably fits below
+the calculator code which is at `9000H`.  Both can be resident simultaneously.
+
+Note that the calculator for historical reasons runs the serial port
+at 4800 baud while the EEPROM serial boot loader and the calculator serial
+interface are at 19200 baud.  This should be sorted out at some point, but
+tuning the serial port speed usually requires getting out the oscilloscope.
+
 Most commands are more or less self-explanatory.  A few may require
 some further explanation:
 
