@@ -31,10 +31,6 @@ MA 02111, USA.
 typedef uint8_t digit_t;
 typedef digit_t reg_t [WSIZE];
 
-//#ifndef ONLY_REG_T
-//typedef digit_t creg_t [WSIZE/2];
-//#endif
-
 #define C_LEFT_SCAN 	(WSIZE-1)
 #define C_RIGHT_SCAN	2
 

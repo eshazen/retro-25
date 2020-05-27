@@ -4,7 +4,7 @@
 
 all: main-9000.hex
 
-DEFINES = -DONLY_REG_T -DZ80PACK -DZ80 -DUPCO
+DEFINES = -DONLY_REG_T -DZ80PACK -DZ80 -DUPCO -DUMON_SERVER
 CFLAGS = +z80 --list $(DEFINES) -clib=sdcc_iy
 
 main.o: main.c np25_hack_standalone.h key_translate.h diskey.h
