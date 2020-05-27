@@ -75,6 +75,7 @@ The `R` command sends the 8 storage registers.
 In this example the registers contain various interesting constants
 (e, pi...).
 
+```
 >R03141592654000                                                               
 02718281828000                                                                  
 01602176634981                                                                  
