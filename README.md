@@ -15,6 +15,7 @@ Also, recommend to cut the trace to nWE on the EEPROM (U4, pin 27) and wire from
 
 ## Firmware
 
-See firmware/calc for calculator operating program
+See `firmware/calc` for calculator operating program
 
-See firmware/bootloader for boot loader supporting serial download and EEPROM load
+See `util` for assembler and loader utilities
+
