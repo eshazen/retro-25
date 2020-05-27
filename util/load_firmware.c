@@ -2,8 +2,8 @@
 // read an Intel MDS (hex) file and send to binary loader as:
 // 0x91, 0x57, addr_L, addr_H
 // ....data
-// usage:  hex_binary <file.hex> <baud>
-//   <baud> is baud rate for load or "test" for data dump
+// usage:  hex_binary <file.hex> <port>
+//   <port> is serial port for load or "test" for data dump
 //
 //
 
@@ -52,7 +52,7 @@ int main( int argc, char*argv[] )
   int test = 0;
 
   if( argc < 3) {
-    printf("usage:  hex_binary <file.hex> <baud>\n");
+    printf("usage:  hex_binary <file.hex> <port>\n");
     exit(1);
   }
 
@@ -60,32 +60,20 @@ int main( int argc, char*argv[] )
     yes = 1;
 
   char *fname = argv[1];
-  char *baud = argv[2];
+  char *port = argv[2];
 
-  if( !strcmp( baud, "test"))
+  baud_r = B19200;		/* hardwired for now */
+
+  if( !strcmp( port, "test"))
     test = 1;
-  else if( !strcmp( baud, "1200"))
-    baud_r = B1200;
-  else if( !strcmp( baud, "2400"))
-    baud_r = B2400;
-  else if( !strcmp( baud, "4800"))
-    baud_r = B4800;
-  else if( !strcmp( baud, "9600"))
-    baud_r = B9600;
-  else if( !strcmp( baud, "19200"))
-    baud_r = B19200;
-  else {
-    printf("Unknown baud rate.  Need 1200/2400/4800/9600\n");
-    exit(1);
-  }
-  
+
   if( !yes) {
     printf("Ready?  hit <CR>");
     fgets( buff, 10, stdin);
   }
 
   if( !test) {
-    if( (fd = sio_open("/dev/ttyUSB0", baud_r)) < 0) {
+    if( (fd = sio_open( port, baud_r)) < 0) {
       printf("Error opening serial port\n");
       exit( 1);
     }

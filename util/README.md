@@ -37,7 +37,7 @@ And a hex file
 f6c1f1d5010000
 ```
 
-## Loader
+## Program Loader
 
 `load_prog.c` is a C program to load HP-25 programs assembled with `asm25.pl` to the calculator.  For example:
 
@@ -45,3 +45,14 @@ f6c1f1d5010000
   $ ./load_prog /dev/ttyUSB0 P `cat count.hex`
 ```
 
+## Firmware Loader
+
+`load_firmware.c` is a C program to overwrite the operating firmware
+in the calculator with a new version.  Note that at the moment there
+is no ability to program the flash, so this is temporary until the next power-cycle, at which
+point the calculator will revert to the EEPROM version.
+
+```
+  # (push reset button, then within ~10 sec:)
+  $ ./load_firmware ../firmware/calc/main-9000.hex /dev/ttyUSB0
+```
