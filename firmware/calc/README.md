@@ -32,6 +32,15 @@ Command   | Description
  `Qdddd`  | write to program storage
  `J    `  | Jump to monitor
 
+After sending break, the calculator responds with `'>'`.
+For the display commands (the first four above) 8 registers
+with 14 hex digits each are displayed.  These correspond to
+4 bits each digit from a 56-bit internal register, with
+the most significant digit displayed first.
+
+The display is terminated with a `'$'` character.
+
+
 `I`
 
 Displays 3 4-digit hex values, which correspond to the starting
@@ -41,9 +50,13 @@ the storage registers and the program storage.
 This information is only useful if you have a monitor program
 loaded and can access the data directly.
 
-```
-S
+`S`
 
+The `S` command sends the stack, starting with register A.
+A and B together control the display which is showing "7777.00"
+in this example.
+
+```
 s0777700FFFFFFF                                                               
 20001000000000                                                                  
 07777000000003                                                                  
@@ -55,7 +68,84 @@ s0777700FFFFFFF
 $
 ```
 
-The `S` command sends the stack, starting with register A.
-A and B together control the display which is showing "7777.00"
-in this example.
+`R`
+
+The `R` command sends the 8 storage registers.
+
+In this example the registers contain various interesting constants
+(e, pi...).
+
+>R03141592654000                                                               
+02718281828000                                                                  
+01602176634981                                                                  
+02997924580008                                                                  
+06674300000989                                                                  
+06626070150966                                                                  
+01986445857975                                                                  
+09192631770009                                                                  
+$
+```
+
+`P`
+
+The `P` command displays the program memory, which is organized
+as 7 registers with 7 program steps (2 digits) each.
+
+```
+F6C1F1D5010000
+00000000000000
+00000000000000
+00000000000000
+00000000000000
+00000000000000
+00000000000000
+```
+
+The example above represents a simple counting program:
+
+```
+"31"       f6   1  : ENTR
+"01"       c1   2  : 1
+"51"       f1   3  : +
+"14 74"    d5   4  : PSE
+"13 01"    01   5  : GTO 01
+"13 00"    00   6  : GTO 00
+```
+
+`M`
+
+This command is used to overwrite the contents of the storage registers,
+starting with `R0`.  The format of the data is a continuous stream of
+hex digits exactly as displayed by the `R` command (but no line breaks).
+Terminate the load either by sending exactly 14*8 characters, or sending
+any control character to end.
+
+`Q`
+
+This command is used to overwrite the contents of the program memory.
+It works the same way as the `M` command.  Typically one would use
+the `load_prog` utility instead of doing this directly.
+
+`J`
+
+Finally, the `J` command allows transfer of control to a resident
+monitor.  A simple monitor called `umon` is supplied in this repository.
+One argument is passed in `HL` with the address of a data structure:
+
+```
+struct {
+  uint16_t jump_to;		/* UMON jump address 0x8121 */
+  uint16_t jump_back;		/* return address filled in by assembly */
+  uint16_t regs;		/* address of registers */
+  uint16_t ram;			/* address of RAM */
+} reg_info;
+
+`jump_to` is set to a constant 0x8121 which is the monitor entry point.
+
+`jump_back` is the return address to restart the calculator.
+
+`regs` is the address of the registers (first value from `I` command).
+
+`ram` is the address of the `LastX` register which precedes the program
+memory.
 
