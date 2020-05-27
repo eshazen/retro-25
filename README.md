@@ -17,25 +17,25 @@ RAM    | 8000-FFFF
 There are six decoded I/O ports:
 
 port | name          | bits  | description
---- | ------------- | ------ | ---------
+--- | -------------  | ----- | ---------
 00 | KB (write only) | bit 0 | KB column 1
-   |                 | bit 1 | KB column 2
-   |                 | bit 2 | KB column 3
-   |                 | bit 3 | KB column 4
-   |                 | bit 4 | KB column 5 and switches
-   |                 | bit 5 | -not used-
-   |                 | bit 6 | LED on CPU board
-   |                 | bit 7 | Serial output
+   | "                | bit 1 | KB column 2
+   | "                | bit 2 | KB column 3
+   | "                | bit 3 | KB column 4
+   | "                | bit 4 | KB column 5 and switches
+   | "                | bit 5 | -not used-
+   | "                | bit 6 | LED on CPU board
+   | "                | bit 7 | Serial output
 40 | Digits 0-7      | bits 0-7 | ICM7218 display data
 41 | Digits 0-7      | bits 0-7 | ICM7218 control data
 80 | KB (read only)  | bit 0 | KB row 1
-   |                 | bit 1 | KB row 2
-   |                 | bit 2 | KB row 3
-   |                 | bit 3 | KB row 4
-   |                 | bit 4 | KB row 5
-   |                 | bit 5 | KB row 6
-   |                 | bit 6 | KB row 7
-   |                 | bit 7 | Serial input
+   | "                | bit 1 | KB row 2
+   | "                | bit 2 | KB row 3
+   | "                | bit 3 | KB row 4
+   | "                | bit 4 | KB row 5
+   | "                | bit 5 | KB row 6
+   | "                | bit 6 | KB row 7
+   | "                | bit 7 | Serial input
 c0 | Digits 8-11     | bits 0-7 | ICM7218 display data
 c1 | Digits 8-11     | bits 0-7 | ICM7218 control data
 
