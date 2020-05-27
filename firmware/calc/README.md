@@ -140,6 +140,7 @@ struct {
   uint16_t regs;		/* address of registers */
   uint16_t ram;			/* address of RAM */
 } reg_info;
+```
 
 `jump_to` is set to a constant 0x8121 which is the monitor entry point.
 
