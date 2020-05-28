@@ -9,7 +9,8 @@ Some notes about the code:
 Pure C with a bit of assembly for keyboard / display control.
 
 Works great at 16MHz CPU clock with no wait states... within 20%
-or so of original hardware speed.  Runs original Z80 microcode.
+or so of original hardware speed.  Runs original HP-25 microcode
+in an emulated version of the HP CPU.
 
 Originally the code would also run under unix as a pure C application,
 or under a Z80 emulator.  There are some lingering `#ifdef UNIX_TERM`
