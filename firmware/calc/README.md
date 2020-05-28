@@ -2,14 +2,14 @@
 
 Compile using sdcc in z88dk per makefile.  Produces
 `main-9000.hex` which must be loaded by some sort of bootloader
-to `0x9000` in RAM.
+to `0x9000` in RAM.  (See bootloader elsewhere in the repository).
 
 Some notes about the code:
 
 Pure C with a bit of assembly for keyboard / display control.
 
 Works great at 16MHz CPU clock with no wait states... within 20%
-or so of original hardware speed.
+or so of original hardware speed.  Runs original Z80 microcode.
 
 Originally the code would also run under unix as a pure C application,
 or under a Z80 emulator.  There are some lingering `#ifdef UNIX_TERM`
@@ -20,7 +20,11 @@ only as a pure Z80 application on the target hardware.
 
 There is a very simple-minded serial port server included in the
 calculator code.  It polls for a "break" condition on the serial port
-and then expects to communicate at 19200 baud.  Commands are as follows:
+and then expects to communicate at 19200 baud.  The purpose is to support
+such things a saving/loading programs from a remote machine, and to
+allow for cut/paste from the stack to the X11 clipboard.
+
+Commands are as follows:
 
 Command   | Description
 -------   | -----------  
