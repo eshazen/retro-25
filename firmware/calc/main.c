@@ -41,12 +41,22 @@ MA 02111, USA.
 #include "diskey.h"
 #include "key_translate.h"
 
-// not sure if this is right!
+// not sure if this is right, since we only support the 25C,
+// but extra RAM won't hurt
 #define __USE_RAM	32	// our highest model 33c has 32 units
 
 // flag to turn display on and off with "power" switch
-// <FIXME> currently requires a keypress before it is recognized
+// or timeout
+static int last_display_enable = 1;
 static int global_display_enable = 1;
+
+// timeout counter for display blanking... clock is ~ 3kHz
+// this should be about 10 min
+#define DISPLAY_TIMEOUT (60L*10*3000)
+
+// 10s for testing
+// #define DISPLAY_TIMEOUT (10L*3000)
+static uint32_t display_timeout;
 
 #include "rom_25.h"
 
@@ -103,27 +113,10 @@ struct {
 } reg_info;
 #endif
 
-
 static volatile uint8_t _pgm_run=1;
 
-//________________________________________________________________________________
-
-void flash_write(uint8_t bank, char *src, int cnt) {
-  //  char buff[60];
-  //  sprintf( buff, "flash_write( %d, ..., %d)\r\n", bank, cnt);
-  //  putstr( buff);
-}
-
-void flash_read( uint8_t bank, char *dst, int cnt) {
-
-  //  char buff[60];
-  //  sprintf( buff, "flash_read( %d, ..., %d)\r\n", bank, cnt);
-  //  putstr( buff);
-}
-
-
   //________________________________________________________________________________
-  int main() {
+int main() {
 
 #define RAM_OFFSET	(7*9)
 #define RAM_SIZE	(7*7)		// 49 program steps
@@ -131,18 +124,6 @@ void flash_read( uint8_t bank, char *dst, int cnt) {
   woodstock_clear_memory();
   woodstock_set_rom( 2);
   woodstock_new_processor();
-
-#ifdef UNIX_TERM
-  //______ load from flash, we just need the status config, but we load everything since
-  //       we might need to write it back and flash always write in full blocks
-  uint8_t idx = RAM_SIZE + 1 + 12;	// 49 program steps + config byte + 12 byte greeting
-
-  // try to load from flash / file?
-  flash_read(0xfc00, (char*)&_act_reg, sizeof( _act_reg));
-
-  printf("Sizeof( _act_reg) = %d\n", sizeof( _act_reg));
-
-#endif
 
   uint8_t done=0;
   uint8_t c=0;
@@ -184,6 +165,10 @@ void flash_read( uint8_t bank, char *dst, int cnt) {
        *              M,Q  - write regs, program
        */
       switch( toupper( chr)) {
+      case 0x91:		/* reboot to EEPROM */
+	reg_info.jump_to = 0;
+	umon_jump( (uint16_t) &reg_info);
+	break;
       case 'J':
 	umon_jump( (uint16_t) &reg_info);	/* jump to umon state saver */
 	break;
@@ -238,9 +223,6 @@ void flash_read( uint8_t bank, char *dst, int cnt) {
       }
 #endif      
 
-#ifdef UMON_JUMP
-      umon_jump( (uint16_t) &reg_info);	/* jump to umon state saver */
-#endif
     }
 
     key = umon_kbscan();
@@ -256,8 +238,26 @@ void flash_read( uint8_t bank, char *dst, int cnt) {
     // handle PGM/RUN switch
     woodstock_set_ext_flag (3, switches & 1);
 
-    // power switch just controls display for now
-    global_display_enable = switches & 2;
+    // manage display with power switch and timeout
+    // if the switch is off, keep the display off
+
+    if( !(switches & 2)) {	// power/display set to "off"
+      global_display_enable = 0;
+      display_timeout = 0;
+    } else {			// power set to "on"
+      if( key)			// reset timeout on key press
+	display_timeout = 0;
+      if( ++display_timeout == DISPLAY_TIMEOUT)
+	global_display_enable = 0;
+      else
+	global_display_enable = 1;
+    }
+
+    // blank display here if it just turned off
+    if( !global_display_enable && last_display_enable)
+      	umon_blank();
+
+    last_display_enable = global_display_enable;
 
     last_sw = switches;
     if (!woodstock_execute_instruction()) break;

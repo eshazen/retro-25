@@ -31,6 +31,8 @@ int main( int argc, char*argv[] )
   char *cmd = argv[2];
   char *hex = argv[3];
   char ch;
+  FILE *fp;
+  char buff[256];
 
   if( (fd = sio_open( port, B19200)) < 0) {
     printf("Error opening serial port %s\n", port);
@@ -38,6 +40,12 @@ int main( int argc, char*argv[] )
   }
 
   flush( fd);
+
+  if( (fp = fopen( hex, "r"))) {
+    fgets( buff, 256, fp);
+    hex = buff;
+  }
+
 
   int nc = 0;
 

@@ -145,6 +145,8 @@ int main( int argc, char*argv[] )
 
   } else {
 
+    send_break( fd);
+
     do {
       send( fd,  0x91);
       ch = receive(fd);

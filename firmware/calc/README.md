@@ -31,6 +31,7 @@ Command   | Description
  `Mdddd`  | Write to storage registers
  `Qdddd`  | write to program storage
  `J    `  | Jump to monitor
+ `0x91`   | Reboot (jump to 0)
 
 After sending break, the calculator responds with `'>'`.
 For the display commands (the first four above) 8 registers
@@ -39,7 +40,6 @@ with 14 hex digits each are displayed.  These correspond to
 the most significant digit displayed first.
 
 The display is terminated with a `'$'` character.
-
 
 `I`
 
@@ -129,7 +129,7 @@ the `load_prog` utility instead of doing this directly.
 
 `J`
 
-Finally, the `J` command allows transfer of control to a resident
+The `J` command allows transfer of control to a resident
 monitor.  A simple monitor called `umon` is supplied in this repository.
 One argument is passed in `HL` with the address of a data structure:
 
@@ -151,3 +151,9 @@ struct {
 `ram` is the address of the `LastX` register which precedes the program
 memory.
 
+`0x91`
+
+This is the first byte sent by the `load_firmware` utility and this
+causes a jump to 0 to restart the EEPROM boot loader.  This will allow
+new firmware to be loaded directly while the calculator is running
+without needing to press the hardware reset button.
