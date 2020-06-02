@@ -56,3 +56,7 @@ point the calculator will revert to the EEPROM version.
   # (push reset button, then within ~10 sec:)
   $ ./load_firmware ../firmware/calc/main-9000.hex /dev/ttyUSB0
 ```
+
+The loader assumes that a bootloader like `ser_19200_boot.asm` is running and has been put in the 
+boot state by pressing reset.  It would be sensible to include the serial bootloader in the calculator code itself,
+but I haven't gotten around to this yet.
