@@ -7,10 +7,11 @@ Retro-tech HP-25 calculator clone using Z80
 
 `hardware` has the design files for the CPU and keyboard/display boards
 
-`firmware/bootloader` has a small serial/flash bootloader which should be programmed at $0000
-`firmware/calc` has the main calculator operating firmware
-`firmware/umon` has a simple Z80 monitor I wrote for debugging
-`firmware/basic` has a hacked version of MS BASIC (4K integer version from 1978)
+* `firmware/bootloader` has a small serial/flash bootloader which should be programmed at $0000
+* `firmware/calc` has the main calculator operating firmware
+* `firmware/umon` has a simple Z80 monitor I wrote for debugging
+* `firmware/basic` has a hacked version of MS BASIC (4K integer version from 1978)
+* `util` has some utility software, including:
 
 ## Hardware
 The hardware consists of two boards, a CPU board and an LED+display board.
