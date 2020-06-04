@@ -22,11 +22,12 @@ crlf:	ld	a,13
 	jr	putc
 
 ;;; output null-terminated string from HL
+;;; return with HL pointing past null
 puts:	ld	a,(hl)
+	inc	hl
 	or	a
 	ret	z
 	call	putc
-	inc	hl
 	jr	puts
 
 ;;; read string from console to HL

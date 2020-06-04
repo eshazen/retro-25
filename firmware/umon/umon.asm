@@ -3,22 +3,22 @@
 ;;;
 ;;; d <addr> <count>           dump memory
 ;;; e <addr> <dd> <dd>...      edit up to 16 bytes in memory
-;;; o <addr> <val>             output <val> to port <addr>
+;;; o <port> <val>             output <val> to <port>
 ;;; z <val>		       set port zero value bits 0-6
-;;; i <addr>                   input from <addr> and display
+;;; i <port>                   input from <port> and display
 ;;; g <addr>                   goto addr
+;;; b <addr>                   set breakpoint (currently 3-byte call)
 ;;; a <val1> <val2>            hex Arithmetic
-;;; h <addr>                   dump HP registers from <addr> (A)
-;;; c                          return to calculator if possible
-;;; b			       binary load
+;;; f <addr>                   dump HP registers from <addr> (A)
+;;; c                          continue from breakpoint
+;;; c <addr>                   continue, set new breakpoint
+;;; l			       binary load
 ;;; r			       repeat last command
 ;;; calculator hardware
 ;;; k                          scan keyboard
 ;;; 7 <addr>		       update display from <addr>
 ;;; 
-;;; deprecated commands
-;;; p ...		       dump argc / argv for debug
-;;; 
+
 
 	org	08100H
 
@@ -26,31 +26,38 @@ stak:	equ	$		;stack grows down from start
 
 ;;; jump table for useful entry points
 	jmp	main		;0000  cold start
-	jmp	getch		;0003  read serial input to HL [C]
-	jmp	putch		;0006  output serial from HL [C]
-	jmp	crlf		;0009  output CR/LF
-	jmp	puts		;000c  output string from HL
-	jmp	phex2		;000f  output hex byte from A
-	jmp	phex4		;0012  output hex word from HL
-	jmp	setpzero	;0015  set pzero mask from A
-	jmp	updpzero	;0018  update port from pzero
-	jmp	kbscan		;001b  scan keyboard to HL
-	jmp	display		;001e  update display from HL
-	jmp	savestate	;0021  save state and cold start
+	jmp	savestate	;0003  save state (breakpoint)
+	jmp	getc		;0006  read serial input to A
+	jmp	putc		;0009  output serial from A
+	jmp	crlf		;000c  output CR/LF
+	jmp	puts		;000f  output string from HL
+	jmp	phex2		;0012  output hex byte from A
+	jmp	phex4		;0015  output hex word from HL
 
 ;;; ---- data area ----
 
 ;;; save CPU state coming from extrnal prog
-savesp:	dw	0		;stack pointer
-state:	dw	0		;sentinel value
-	dw	0		;IY
-	dw	0		;IX
-	dw	0		;HL
-stater:	dw	0		;DE
-	dw	0		;BC
-	dw	0		;AF
-estate:	equ	$
+savein:	db	0,0,0		;instruction overwritten by breakpoint
+savead:	dw	0		;address of breakpoint
+savsp:	dw	0		;caller's stack pointer
+
+;;; saved registers
+saviy:	dw	0
+savix:	dw	0
+
+savhlp:	dw	0
+savdep:	dw	0
+savbcp:	dw	0
+savafp:	dw	0
 	
+savhl:	dw	0
+savde:	dw	0
+savbc:	dw	0
+savaf:	dw	0
+	
+savetop: equ	$
+	
+regnam:	db	'HL', 0, 'DE', 0, 'BC', 0, 'AF', 0
 
 pzero:	db	0		;port 0 value bits 0-6
 lastc:	db	0		;last command byte
@@ -72,20 +79,41 @@ iargv:	rept	maxarg*2
 	dw	0
 	endm
 
-	INCLUDE "s1200.asm"
+;	INCLUDE "s1200.asm"	
+	INCLUDE "s19200.asm"	
 	INCLUDE "console.asm"
 	INCLUDE "hex.asm"
 	INCLUDE "strings.asm"
 	INCLUDE "diskey.asm"
 	INCLUDE "c-link.asm"
 
-banner:	db	"UMON v0.5 ORG ",0
+banner:	db	"UMON v0.6 ORG ",0
 error:	db	"ERROR",0
+	
+usage:  db      "h                     print this help", 13, 10
+        db      "d <addr> <count", 13, 10
+        db      "d <addr> <count>      dump memory", 13, 10
+        db      "e <addr> <dd> <dd>... edit up to 16 bytes in memory", 13, 10
+        db      "o <addr> <val>        output <val> to port <addr>", 13, 10
+        db      "z <val>               set port zero value bits 0-6", 13, 10
+        db      "i <addr>              input from <addr> and display", 13, 10
+        db      "g <addr>              goto addr", 13, 10
+        db      "b <addr>              set breakpoint (currently 3-byte call)", 13, 10
+        db      "a <val1> <val2>       hex Arithmetic", 13, 10
+        db      "g <addr>              dump HP registers from <addr> (A)", 13, 10
+        db      "c                     return to calculator if possible", 13, 10
+        db      "l                     binary load", 13, 10
+        db      "r                     repeat last command", 13, 10
+        db      "k                     scan keyboard", 13, 10
+        db      "7 <addr>              update display from <addr>", 13, 10, 0
 
 main:	ld	sp,stak
 	ld	hl,banner
 	call	puts
 	ld	hl,stak
+	call	phex4
+	call	space
+	ld	hl,umontop
 	call	phex4
 	call	crlf
 	
@@ -126,10 +154,10 @@ not_r:	ld	hl,buff
 	cp	a,'D'		;dump memory
 	jz	dump
 
-	cp	a,'C'		;return to calc
-	jz	calc
-
 	cp	a,'H'
+	jz	help
+
+	cp	a,'F'
 	jz	hpdump
 	
 	cp	a,'A'
@@ -138,10 +166,16 @@ not_r:	ld	hl,buff
 	cp	a,'E'
 	jz	edit
 
+	cp	a,'B'
+	jz	brkpt
+
+	cp	a,'C'
+	jz	continu
+
 	cp	a,'G'
 	jz	goto
 
-	cp	a,'B'
+	cp	a,'L'
 	jz	binary
 	
 	cp	a,'O'
@@ -186,6 +220,10 @@ zero:	ld	a,(iargv+2)
 setpzero: ld (pzero),a
 	ret
 
+help:	ld	hl,usage
+	call	puts
+	jp	loop
+
 ;;; output to port
 output:	ld	a,(iargv+2)
 	ld	c,a
@@ -200,6 +238,131 @@ input:	ld	a,(iargv+2)
 	call	phex2
 	call	crlf
 	jp	loop
+
+	;; continue after breakpoint
+	;; check if there is one first
+	;; clears breakpoint as part of the process
+continu: ld	hl,(savead)
+	ld	a,l
+	or	h
+	jp	z,nobrk		;go if not set
+	ld	de,0
+	ld	(savead),de	;mark as cleared
+
+	ex	de,hl		;address to HL
+	
+	;; first restore the instruction saved
+	ld	hl,savein
+	ldi
+	ldi
+	ldi
+
+	;; optionally, set a new breakpoint
+	ld	a,(argc)
+	cp	2
+	jr	nz,nonew
+
+	;; set new breakpoint
+	ld	hl,(iargv+2)
+	call	brkat
+	
+	call	phex4
+	ld	hl,msgset
+	call	puts
+
+	;; restore the machine state
+nonew:	ld	sp,saviy
+
+	pop	iy
+	pop	ix
+
+	pop	hl
+	pop	de
+	pop	bc
+	pop	af
+	exx
+	ex	af,af'
+	
+	pop	hl
+	pop	de
+	pop	bc
+	pop	af
+
+	ld	sp,(savsp)	;get back caller's stack
+	ret			;should to back to BP locn
+
+	
+;;; set breakpoint
+brkpt:	ld	a,(argc)
+	cp	2		;single numeric argument?
+	jr	z,brkset
+
+	;; clear breakpoint if set
+brkclr:	ld	hl,(savead)
+	ld	a,l
+	or	h
+	jr	z,nobrk		;go if not set
+
+	call	phex4
+	ld	hl,msgclr
+	call	puts
+
+	ex	de,hl
+	ld	hl,savein
+	ldi
+	ldi
+	ldi
+
+	ld	hl,0
+	ld	(savead),hl	;erase saved address
+
+	jp	loop
+
+	;; check for breakpoint already set
+brkset:	ld	hl,(savead)
+	ld	a,h
+	or	l
+	jr	nz,brkovr	;attempt to overwrite breakpoint
+
+	ld	hl,(iargv+2)	;breakpoint goes here
+	call	brkat
+	call	phex4
+	ld	hl,msgset
+	call	puts
+
+	jp	loop
+
+brkat:	
+	push	hl		;save locn
+	ld	(savead),hl	;set brkpt locn
+	ld	de,savein	;save area for 3-byte instruction
+	ldi
+	ldi
+	ldi			;copy 3 bytes
+	pop	hl		;get locn back
+	push	hl
+	ld	(hl),0cdh	;CALL
+	inc	hl
+	ld	de,savestate	;target for call
+	ld	(hl),e
+	inc	hl
+	ld	(hl),d
+	pop	hl
+	ret
+
+brkovr:	ld	hl,msgovr
+	call	puts
+	jp	loop
+
+nobrk:	ld	hl,msgno
+	call	puts
+	jp	loop
+
+msgset:	db	' SET', 13, 10, 0
+msgno:	db	'NO BKPT', 13, 10, 0
+msgclr:	db	' CLEARED', 13, 10, 0
+msgovr:	db	'BKPT ALREADY SET CLEAR FIRST', 13, 10, 0
+
 
 ;;; start binary loader
 ;;; expect binary words (LSB first):
@@ -217,7 +380,7 @@ bin1:	call	getc
 	cp	0x91		;first magic byte?
 	jr	z,bin1a
 	djnz	bin1
-	jr	errz
+	jp	errz
 	
 	;; read chars, skipping repeat 0x91, wait for 0x57
 bin1a:	call	getc
@@ -225,7 +388,7 @@ bin1a:	call	getc
 	cp	0x91
 	jr	z,bin1a
 	cp	0x57
-	jr	nz,errz
+	jp	nz,errz
 	
 	;; get address to hl
 	call	getc
@@ -254,6 +417,14 @@ bin2:	call	getc
 	jr	nz,bin2
 
 	;; leave addr, count in iargv+2, iargv+4
+	;; display them too
+	ld	hl,(iargv)
+	call	phex4
+	call	crlf
+	ld	bc,(iargv+2)
+	add	hl,bc
+	call	phex4
+	call	crlf
 	jp	loop
 
 ;;; jump to 1st arg
@@ -291,24 +462,31 @@ dump:	ld	hl,(iargv+2)	;first arg
 
 ;;; hex dump B bytes from HL
 	;; see if we need to print the address
-hdump:	ld	a,l
+	;; either on 16-byte boundary, or first address
+hdump:	call	haddr		;always print first address
+	jr	bite		;skip the 16-byte test
+
+hdump2:	ld	a,l
 	and	0xf
-	jr	nz,bite
-	push	hl
+	call	z,haddr
+
+bite:	ld	a,(hl)
+	inc	hl
+	call	phex2
+	call	space
+
+noadr:	djnz	hdump2
+	call	crlf
+	ret
+
+;;; print address in HL
+haddr:	push	hl
 	call	crlf
 	call	phex4
 	ld	a,':'
 	call	putc
 	call	space
 	pop	hl
-	
-bite:	ld	a,(hl)
-	inc	hl
-	call	phex2
-	call	space
-
-noadr:	djnz	hdump
-	call	crlf
 	ret
 
 ;;; do hex arithmetic
@@ -364,58 +542,118 @@ hpr1:	dec	hl
 	call	crlf
 	ret
 
-;;;
-;;; arriving from e.g. calculator
-;;; save all primary regs and return address from (DE)
-;;; then cold start the monitor with a message
-altban:	db	"UMON RESTART ",0	
+altban:	db	"BREAK ",0	
 
-savestate:
-	ld	(savesp),sp	;save stack pointer
-	ld	sp,estate
+;;; ---------- breakpoint entry ----------
+;;; Save machine state and display it
+;;; Restore code at breakpoint
+;;; --------------------------------------
+savestate:	
+	;; get the return address and save it
+	ex	(sp),hl		;return address to HL
+	dec	hl
+	dec	hl
+	dec	hl		;back up over breakpoint call
+	ex	(sp),hl		;put back on caller's stack
+	ld	(savsp),sp	;save caller's SP
+	;; reset the stack to the save area
+	ld	sp,savetop
+	;; save primary regs
 	push	af
 	push	bc
 	push	de
 	push	hl
+	;; save alternate regs
+	exx
+	ex	af,af'
+	push	af
+	push	bc
+	push	de
+	push	hl
+	;; save IX, IY
 	push	ix
 	push	iy
-	ld	hl,0cafeh
-	push	hl
-
+	
 ;;; cold start with alternate banner, display struct address
-	ld	sp,stak
+	ld	sp,stak		;restore UMON stack
 	ld	hl,altban
 	call	puts
-	ld	hl,(stater)
+	;; display breakpoint location
+	ld	hl,(savead)
 	call	phex4
+	call	crlf
+	call	pstate		;display regs from state
+	jp	loop
+	
+;;; display machine state from stored values
+pstate:
+	ld	hl,(savaf)
+	ld	de,'AF'
+	call	pregn
+
+	ld	hl,(savbc)
+	ld	de,'BC'
+	call	pregn
+
+	ld	hl,(savde)
+	ld	de,'DE'
+	call	pregn
+
+	ld	hl,(savhl)
+	ld	de,'HL'
+	call	pregn
+
+	call	crlf
+
+	;; alternate regs
+	ld	hl,(savafp)
+	ld	de,'A'''
+	call	pregn
+
+	ld	hl,(savbcp)
+	ld	de,'B'''
+	call	pregn
+
+	ld	hl,(savdep)
+	ld	de,'D'''
+	call	pregn
+
+	ld	hl,(savhlp)
+	ld	de,'H'''
+	call	pregn
+	call	crlf
+
+	ld	hl,(savix)
+	ld	de,'IX'
+	call	pregn
+
+	ld	hl,(saviy)
+	ld	de,'IY'
+	call	pregn
+
+	ld	hl,(savsp)
+	ld	de,'SP'
+	call	pregn
+	
 	call	crlf
 	
 	jp	loop
 	
-;;;
-;;; try to return to calculator
-;;; 
-calc:	ld	sp,state
-	pop	hl		;get sentinel value, last pushed
-	or	a
-	ld	de,0cafeh
-	sbc	hl,de
-	jp	nz,main		;cold start on error
-	;; restore the state and jump, using (hl) for the jump
-	pop	iy
-	pop	ix
-	pop	hl
-	pop	de
-	pop	bc
-	pop	af
-	ex	de,hl		;HL points to struct
-	inc	hl
-	inc	hl		;HL points to return address
-	ld	e,(hl)
-	inc	hl
-	ld	d,(hl)
-	ld	sp,(savesp)
-	ex	de,hl
-	jp	(hl)
 
+;;; display reg name from de, value from hl
+pregn:	
+	call	space
+	ld	a,e
+	call	putc
+	ld	a,d
+	call	putc
+	ld	a,':'
+	call	putc
+	call	phex4
+	call	space
+	ret
+
+	
+umontop:	equ	$
+	
 	.end
