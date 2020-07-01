@@ -1,0 +1,956 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L VFD_Symbols:IV-6 U?
+U 1 1 5EFCE91F
+P 1000 2900
+F 0 "U?" H 912 2646 50  0000 R CNN
+F 1 "IV-6" H 912 2555 50  0000 R CNN
+F 2 "" H 1000 2900 50  0001 C CNN
+F 3 "" H 1000 2900 50  0001 C CNN
+	1    1000 2900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1450 3500 1450 3650
+Wire Wire Line
+	1200 3500 1200 3750
+Wire Wire Line
+	1850 3200 1850 3550
+$Comp
+L VFD_Symbols:IV-6 U?
+U 1 1 5EFD05A3
+P 2150 2900
+F 0 "U?" H 2062 2646 50  0000 R CNN
+F 1 "IV-6" H 2062 2555 50  0000 R CNN
+F 2 "" H 2150 2900 50  0001 C CNN
+F 3 "" H 2150 2900 50  0001 C CNN
+	1    2150 2900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2600 3500 2600 3650
+Wire Wire Line
+	2350 3500 2350 3750
+Wire Wire Line
+	3000 3200 3000 3550
+Connection ~ 3000 3550
+Connection ~ 2600 3650
+Connection ~ 2350 3750
+Wire Wire Line
+	1850 3550 3000 3550
+Wire Wire Line
+	1450 3650 2600 3650
+Wire Wire Line
+	1200 3750 2350 3750
+Wire Wire Line
+	3750 3500 3750 3650
+Wire Wire Line
+	3500 3500 3500 3750
+Wire Wire Line
+	4150 3200 4150 3550
+Connection ~ 4150 3550
+Connection ~ 3750 3650
+Connection ~ 3500 3750
+$Comp
+L VFD_Symbols:IV-6 U?
+U 1 1 5EFD1075
+P 4450 2900
+F 0 "U?" H 4362 2646 50  0000 R CNN
+F 1 "IV-6" H 4362 2555 50  0000 R CNN
+F 2 "" H 4450 2900 50  0001 C CNN
+F 3 "" H 4450 2900 50  0001 C CNN
+	1    4450 2900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4900 3500 4900 3650
+Wire Wire Line
+	4650 3500 4650 3750
+Wire Wire Line
+	5300 3200 5300 3550
+Connection ~ 5300 3550
+Wire Wire Line
+	4150 3550 5300 3550
+Wire Wire Line
+	3750 3650 4900 3650
+Wire Wire Line
+	3500 3750 4650 3750
+Wire Wire Line
+	3000 3550 4150 3550
+Wire Wire Line
+	2600 3650 3750 3650
+Wire Wire Line
+	2350 3750 3500 3750
+$Comp
+L VFD_Symbols:IV-6 U?
+U 1 1 5EFD2C31
+P 5700 2900
+F 0 "U?" H 5612 2646 50  0000 R CNN
+F 1 "IV-6" H 5612 2555 50  0000 R CNN
+F 2 "" H 5700 2900 50  0001 C CNN
+F 3 "" H 5700 2900 50  0001 C CNN
+	1    5700 2900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6150 3500 6150 3650
+Wire Wire Line
+	5900 3500 5900 3750
+Wire Wire Line
+	6550 3200 6550 3550
+Wire Wire Line
+	5300 3550 6550 3550
+Wire Wire Line
+	4900 3650 6150 3650
+Connection ~ 4900 3650
+Wire Wire Line
+	4650 3750 5900 3750
+Connection ~ 4650 3750
+$Comp
+L VFD_Symbols:HV5812 U?
+U 1 1 5EFDA117
+P 1800 750
+F 0 "U?" V 2354 -544 50  0000 R CNN
+F 1 "HV5812" V 2445 -544 50  0000 R CNN
+F 2 "" H 2000 850 50  0001 C CNN
+F 3 "" H 2000 850 50  0001 C CNN
+	1    1800 750 
+	0    -1   1    0   
+$EndComp
+Wire Wire Line
+	1000 2900 1000 1750
+Wire Wire Line
+	1100 2900 1100 1750
+Wire Wire Line
+	1200 2900 1200 1750
+Wire Wire Line
+	1300 2900 1300 1750
+Wire Wire Line
+	1400 2900 1400 1750
+Wire Wire Line
+	1500 2900 1500 1750
+Wire Wire Line
+	1600 2900 1600 1750
+Wire Wire Line
+	1700 2900 1700 1750
+Wire Wire Line
+	1800 1750 1800 2900
+Wire Wire Line
+	1800 2900 2150 2900
+Wire Wire Line
+	2250 2800 2250 2900
+Wire Wire Line
+	1900 2800 1900 1750
+Wire Wire Line
+	1900 2800 2250 2800
+Wire Wire Line
+	2000 1750 2000 2700
+Wire Wire Line
+	2000 2700 2350 2700
+Wire Wire Line
+	2350 2700 2350 2900
+Wire Wire Line
+	2100 1750 2100 2600
+Wire Wire Line
+	2100 2600 2450 2600
+Wire Wire Line
+	2450 2600 2450 2900
+Wire Wire Line
+	2200 1750 2200 2500
+Wire Wire Line
+	2200 2500 2550 2500
+Wire Wire Line
+	2550 2500 2550 2900
+Wire Wire Line
+	2300 1750 2300 2400
+Wire Wire Line
+	2300 2400 2650 2400
+Wire Wire Line
+	2650 2400 2650 2900
+Wire Wire Line
+	2400 1750 2400 2300
+Wire Wire Line
+	2400 2300 2750 2300
+Wire Wire Line
+	2750 2300 2750 2900
+Wire Wire Line
+	2500 1750 2500 2200
+Wire Wire Line
+	2500 2200 2850 2200
+Wire Wire Line
+	2850 2200 2850 2900
+Wire Wire Line
+	2600 1750 2600 2100
+Wire Wire Line
+	2600 2100 3300 2100
+Wire Wire Line
+	3300 2100 3300 2900
+Wire Wire Line
+	2700 1750 2700 2000
+Wire Wire Line
+	2700 2000 3400 2000
+Wire Wire Line
+	3400 2000 3400 2900
+Wire Wire Line
+	2800 1750 2800 1900
+Wire Wire Line
+	2800 1900 3500 1900
+Wire Wire Line
+	3500 1900 3500 2900
+Wire Wire Line
+	2900 1750 2900 1800
+Wire Wire Line
+	2900 1800 3600 1800
+Wire Wire Line
+	3600 1800 3600 2900
+$Comp
+L VFD_Symbols:HV5812 U?
+U 1 1 5F000E6D
+P 4850 750
+F 0 "U?" V 5404 -544 50  0000 R CNN
+F 1 "HV5812" V 5495 -544 50  0000 R CNN
+F 2 "" H 5050 850 50  0001 C CNN
+F 3 "" H 5050 850 50  0001 C CNN
+	1    4850 750 
+	0    -1   1    0   
+$EndComp
+$Comp
+L VFD_Symbols:IV-6 U?
+U 1 1 5EFD1062
+P 3300 2900
+F 0 "U?" H 3212 2646 50  0000 R CNN
+F 1 "IV-6" H 3212 2555 50  0000 R CNN
+F 2 "" H 3300 2900 50  0001 C CNN
+F 3 "" H 3300 2900 50  0001 C CNN
+	1    3300 2900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4050 1750 4050 1800
+Wire Wire Line
+	4050 1800 3700 1800
+Wire Wire Line
+	3700 1800 3700 2900
+Wire Wire Line
+	4150 1750 4150 1900
+Wire Wire Line
+	4150 1900 3800 1900
+Wire Wire Line
+	3800 1900 3800 2900
+Wire Wire Line
+	4250 1750 4250 2000
+Wire Wire Line
+	4250 2000 3900 2000
+Wire Wire Line
+	3900 2000 3900 2900
+Wire Wire Line
+	4350 1750 4350 2100
+Wire Wire Line
+	4350 2100 4000 2100
+Wire Wire Line
+	4000 2100 4000 2900
+Wire Wire Line
+	4450 1750 4450 2900
+Wire Wire Line
+	4550 1750 4550 2900
+Wire Wire Line
+	4650 1750 4650 2900
+Wire Wire Line
+	4750 1750 4750 2900
+Wire Wire Line
+	4850 1750 4850 2900
+Wire Wire Line
+	4950 1750 4950 2900
+Wire Wire Line
+	5050 1750 5050 2900
+Wire Wire Line
+	5150 1750 5150 2900
+Wire Wire Line
+	5250 1750 5250 2900
+Wire Wire Line
+	5250 2900 5700 2900
+Wire Wire Line
+	5350 1750 5350 2800
+Wire Wire Line
+	5350 2800 5800 2800
+Wire Wire Line
+	5800 2800 5800 2900
+Wire Wire Line
+	5450 1750 5450 2700
+Wire Wire Line
+	5450 2700 5900 2700
+Wire Wire Line
+	5900 2700 5900 2900
+Wire Wire Line
+	5550 1750 5550 2600
+Wire Wire Line
+	5550 2600 6000 2600
+Wire Wire Line
+	6000 2600 6000 2900
+Wire Wire Line
+	5650 1750 5650 2500
+Wire Wire Line
+	5650 2500 6100 2500
+Wire Wire Line
+	6100 2500 6100 2900
+Wire Wire Line
+	5750 1750 5750 2400
+Wire Wire Line
+	5750 2400 6200 2400
+Wire Wire Line
+	6200 2400 6200 2900
+Wire Wire Line
+	5850 1750 5850 2300
+Wire Wire Line
+	5850 2300 6300 2300
+Wire Wire Line
+	6300 2300 6300 2900
+Wire Wire Line
+	5950 1750 5950 2200
+Wire Wire Line
+	5950 2200 6400 2200
+Wire Wire Line
+	6400 2200 6400 2900
+$Comp
+L VFD_Symbols:IV-6 U?
+U 1 1 5F0852F3
+P 1000 6250
+F 0 "U?" H 912 5996 50  0000 R CNN
+F 1 "IV-6" H 912 5905 50  0000 R CNN
+F 2 "" H 1000 6250 50  0001 C CNN
+F 3 "" H 1000 6250 50  0001 C CNN
+	1    1000 6250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1450 6850 1450 7000
+Wire Wire Line
+	1200 6850 1200 7100
+Wire Wire Line
+	1850 6550 1850 6900
+Wire Wire Line
+	800  6900 1850 6900
+Connection ~ 1850 6900
+Wire Wire Line
+	800  7000 1450 7000
+Connection ~ 1450 7000
+Wire Wire Line
+	800  7100 1200 7100
+Connection ~ 1200 7100
+$Comp
+L VFD_Symbols:IV-6 U?
+U 1 1 5F085306
+P 2150 6250
+F 0 "U?" H 2062 5996 50  0000 R CNN
+F 1 "IV-6" H 2062 5905 50  0000 R CNN
+F 2 "" H 2150 6250 50  0001 C CNN
+F 3 "" H 2150 6250 50  0001 C CNN
+	1    2150 6250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2600 6850 2600 7000
+Wire Wire Line
+	2350 6850 2350 7100
+Wire Wire Line
+	3000 6550 3000 6900
+Connection ~ 3000 6900
+Connection ~ 2600 7000
+Connection ~ 2350 7100
+Wire Wire Line
+	1850 6900 3000 6900
+Wire Wire Line
+	1450 7000 2600 7000
+Wire Wire Line
+	1200 7100 2350 7100
+Wire Wire Line
+	3750 6850 3750 7000
+Wire Wire Line
+	3500 6850 3500 7100
+Wire Wire Line
+	4150 6550 4150 6900
+Connection ~ 4150 6900
+Connection ~ 3750 7000
+Connection ~ 3500 7100
+$Comp
+L VFD_Symbols:IV-6 U?
+U 1 1 5F08531F
+P 4450 6250
+F 0 "U?" H 4362 5996 50  0000 R CNN
+F 1 "IV-6" H 4362 5905 50  0000 R CNN
+F 2 "" H 4450 6250 50  0001 C CNN
+F 3 "" H 4450 6250 50  0001 C CNN
+	1    4450 6250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4900 6850 4900 7000
+Wire Wire Line
+	4650 6850 4650 7100
+Wire Wire Line
+	5300 6550 5300 6900
+Connection ~ 5300 6900
+Wire Wire Line
+	4150 6900 5300 6900
+Wire Wire Line
+	3750 7000 4900 7000
+Wire Wire Line
+	3500 7100 4650 7100
+Wire Wire Line
+	3000 6900 4150 6900
+Wire Wire Line
+	2600 7000 3750 7000
+Wire Wire Line
+	2350 7100 3500 7100
+$Comp
+L VFD_Symbols:IV-6 U?
+U 1 1 5F085333
+P 5700 6250
+F 0 "U?" H 5612 5996 50  0000 R CNN
+F 1 "IV-6" H 5612 5905 50  0000 R CNN
+F 2 "" H 5700 6250 50  0001 C CNN
+F 3 "" H 5700 6250 50  0001 C CNN
+	1    5700 6250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6150 6850 6150 7000
+Wire Wire Line
+	5900 6850 5900 7100
+Wire Wire Line
+	6550 6550 6550 6900
+Wire Wire Line
+	5300 6900 6550 6900
+Wire Wire Line
+	4900 7000 6150 7000
+Connection ~ 4900 7000
+Wire Wire Line
+	4650 7100 5900 7100
+Connection ~ 4650 7100
+$Comp
+L VFD_Symbols:HV5812 U?
+U 1 1 5F085345
+P 1800 4100
+F 0 "U?" V 2354 2806 50  0000 R CNN
+F 1 "HV5812" V 2445 2806 50  0000 R CNN
+F 2 "" H 2000 4200 50  0001 C CNN
+F 3 "" H 2000 4200 50  0001 C CNN
+	1    1800 4100
+	0    -1   1    0   
+$EndComp
+Wire Wire Line
+	1000 6250 1000 5100
+Wire Wire Line
+	1100 6250 1100 5100
+Wire Wire Line
+	1200 6250 1200 5100
+Wire Wire Line
+	1300 6250 1300 5100
+Wire Wire Line
+	1400 6250 1400 5100
+Wire Wire Line
+	1500 6250 1500 5100
+Wire Wire Line
+	1600 6250 1600 5100
+Wire Wire Line
+	1700 6250 1700 5100
+Wire Wire Line
+	1800 5100 1800 6250
+Wire Wire Line
+	1800 6250 2150 6250
+Wire Wire Line
+	2250 6150 2250 6250
+Wire Wire Line
+	1900 6150 1900 5100
+Wire Wire Line
+	1900 6150 2250 6150
+Wire Wire Line
+	2000 5100 2000 6050
+Wire Wire Line
+	2000 6050 2350 6050
+Wire Wire Line
+	2350 6050 2350 6250
+Wire Wire Line
+	2100 5100 2100 5950
+Wire Wire Line
+	2100 5950 2450 5950
+Wire Wire Line
+	2450 5950 2450 6250
+Wire Wire Line
+	2200 5100 2200 5850
+Wire Wire Line
+	2200 5850 2550 5850
+Wire Wire Line
+	2550 5850 2550 6250
+Wire Wire Line
+	2300 5100 2300 5750
+Wire Wire Line
+	2300 5750 2650 5750
+Wire Wire Line
+	2650 5750 2650 6250
+Wire Wire Line
+	2400 5100 2400 5650
+Wire Wire Line
+	2400 5650 2750 5650
+Wire Wire Line
+	2750 5650 2750 6250
+Wire Wire Line
+	2500 5100 2500 5550
+Wire Wire Line
+	2500 5550 2850 5550
+Wire Wire Line
+	2850 5550 2850 6250
+Wire Wire Line
+	2600 5100 2600 5450
+Wire Wire Line
+	2600 5450 3300 5450
+Wire Wire Line
+	3300 5450 3300 6250
+Wire Wire Line
+	2700 5100 2700 5350
+Wire Wire Line
+	2700 5350 3400 5350
+Wire Wire Line
+	3400 5350 3400 6250
+Wire Wire Line
+	2800 5100 2800 5250
+Wire Wire Line
+	2800 5250 3500 5250
+Wire Wire Line
+	3500 5250 3500 6250
+Wire Wire Line
+	2900 5100 2900 5150
+Wire Wire Line
+	2900 5150 3600 5150
+Wire Wire Line
+	3600 5150 3600 6250
+$Comp
+L VFD_Symbols:HV5812 U?
+U 1 1 5F08537A
+P 4850 4100
+F 0 "U?" V 5404 2806 50  0000 R CNN
+F 1 "HV5812" V 5495 2806 50  0000 R CNN
+F 2 "" H 5050 4200 50  0001 C CNN
+F 3 "" H 5050 4200 50  0001 C CNN
+	1    4850 4100
+	0    -1   1    0   
+$EndComp
+$Comp
+L VFD_Symbols:IV-6 U?
+U 1 1 5F085384
+P 3300 6250
+F 0 "U?" H 3212 5996 50  0000 R CNN
+F 1 "IV-6" H 3212 5905 50  0000 R CNN
+F 2 "" H 3300 6250 50  0001 C CNN
+F 3 "" H 3300 6250 50  0001 C CNN
+	1    3300 6250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4050 5100 4050 5150
+Wire Wire Line
+	4050 5150 3700 5150
+Wire Wire Line
+	3700 5150 3700 6250
+Wire Wire Line
+	4150 5100 4150 5250
+Wire Wire Line
+	4150 5250 3800 5250
+Wire Wire Line
+	3800 5250 3800 6250
+Wire Wire Line
+	4250 5100 4250 5350
+Wire Wire Line
+	4250 5350 3900 5350
+Wire Wire Line
+	3900 5350 3900 6250
+Wire Wire Line
+	4350 5100 4350 5450
+Wire Wire Line
+	4350 5450 4000 5450
+Wire Wire Line
+	4000 5450 4000 6250
+Wire Wire Line
+	4450 5100 4450 6250
+Wire Wire Line
+	4550 5100 4550 6250
+Wire Wire Line
+	4650 5100 4650 6250
+Wire Wire Line
+	4750 5100 4750 6250
+Wire Wire Line
+	4850 5100 4850 6250
+Wire Wire Line
+	4950 5100 4950 6250
+Wire Wire Line
+	5050 5100 5050 6250
+Wire Wire Line
+	5150 5100 5150 6250
+Wire Wire Line
+	5250 5100 5250 6250
+Wire Wire Line
+	5250 6250 5700 6250
+Wire Wire Line
+	5350 5100 5350 6150
+Wire Wire Line
+	5350 6150 5800 6150
+Wire Wire Line
+	5800 6150 5800 6250
+Wire Wire Line
+	5450 5100 5450 6050
+Wire Wire Line
+	5450 6050 5900 6050
+Wire Wire Line
+	5900 6050 5900 6250
+Wire Wire Line
+	5550 5100 5550 5950
+Wire Wire Line
+	5550 5950 6000 5950
+Wire Wire Line
+	6000 5950 6000 6250
+Wire Wire Line
+	5650 5100 5650 5850
+Wire Wire Line
+	5650 5850 6100 5850
+Wire Wire Line
+	6100 5850 6100 6250
+Wire Wire Line
+	5750 5100 5750 5750
+Wire Wire Line
+	5750 5750 6200 5750
+Wire Wire Line
+	6200 5750 6200 6250
+Wire Wire Line
+	5850 5100 5850 5650
+Wire Wire Line
+	5850 5650 6300 5650
+Wire Wire Line
+	6300 5650 6300 6250
+Wire Wire Line
+	5950 5100 5950 5550
+Wire Wire Line
+	5950 5550 6400 5550
+Wire Wire Line
+	6400 5550 6400 6250
+$Comp
+L VFD_Symbols:IV-6 U?
+U 1 1 5F17ACDA
+P 6950 2900
+F 0 "U?" H 6862 2646 50  0000 R CNN
+F 1 "IV-6" H 6862 2555 50  0000 R CNN
+F 2 "" H 6950 2900 50  0001 C CNN
+F 3 "" H 6950 2900 50  0001 C CNN
+	1    6950 2900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7400 3500 7400 3650
+Wire Wire Line
+	7150 3500 7150 3750
+Wire Wire Line
+	7800 3200 7800 3550
+Wire Wire Line
+	6550 3550 7800 3550
+Connection ~ 7800 3550
+Wire Wire Line
+	6150 3650 7400 3650
+Connection ~ 7400 3650
+Wire Wire Line
+	5900 3750 7150 3750
+Connection ~ 7150 3750
+$Comp
+L VFD_Symbols:IV-6 U?
+U 1 1 5F17ACED
+P 8100 2900
+F 0 "U?" H 8012 2646 50  0000 R CNN
+F 1 "IV-6" H 8012 2555 50  0000 R CNN
+F 2 "" H 8100 2900 50  0001 C CNN
+F 3 "" H 8100 2900 50  0001 C CNN
+	1    8100 2900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8550 3500 8550 3650
+Wire Wire Line
+	8300 3500 8300 3750
+Wire Wire Line
+	8950 3200 8950 3550
+Wire Wire Line
+	7800 3550 8950 3550
+Wire Wire Line
+	7400 3650 8550 3650
+Wire Wire Line
+	7150 3750 8300 3750
+$Comp
+L VFD_Symbols:HV5812 U?
+U 1 1 5F17AD03
+P 7750 750
+F 0 "U?" V 8304 -544 50  0000 R CNN
+F 1 "HV5812" V 8395 -544 50  0000 R CNN
+F 2 "" H 7950 850 50  0001 C CNN
+F 3 "" H 7950 850 50  0001 C CNN
+	1    7750 750 
+	0    -1   1    0   
+$EndComp
+Wire Wire Line
+	6950 2900 6950 1750
+Wire Wire Line
+	7050 2900 7050 1750
+Wire Wire Line
+	7150 2900 7150 1750
+Wire Wire Line
+	7250 2900 7250 1750
+Wire Wire Line
+	7350 2900 7350 1750
+Wire Wire Line
+	7450 2900 7450 1750
+Wire Wire Line
+	7550 2900 7550 1750
+Wire Wire Line
+	7650 2900 7650 1750
+Wire Wire Line
+	7750 1750 7750 2900
+Wire Wire Line
+	7750 2900 8100 2900
+Wire Wire Line
+	8200 2800 8200 2900
+Wire Wire Line
+	7850 2800 7850 1750
+Wire Wire Line
+	7850 2800 8200 2800
+Wire Wire Line
+	7950 1750 7950 2700
+Wire Wire Line
+	7950 2700 8300 2700
+Wire Wire Line
+	8300 2700 8300 2900
+Wire Wire Line
+	8050 1750 8050 2600
+Wire Wire Line
+	8050 2600 8400 2600
+Wire Wire Line
+	8400 2600 8400 2900
+Wire Wire Line
+	8150 1750 8150 2500
+Wire Wire Line
+	8150 2500 8500 2500
+Wire Wire Line
+	8500 2500 8500 2900
+Wire Wire Line
+	8250 1750 8250 2400
+Wire Wire Line
+	8250 2400 8600 2400
+Wire Wire Line
+	8600 2400 8600 2900
+Wire Wire Line
+	8350 1750 8350 2300
+Wire Wire Line
+	8350 2300 8700 2300
+Wire Wire Line
+	8700 2300 8700 2900
+Wire Wire Line
+	8450 1750 8450 2200
+Wire Wire Line
+	8450 2200 8800 2200
+Wire Wire Line
+	8800 2200 8800 2900
+Connection ~ 6550 3550
+Connection ~ 6150 3650
+Connection ~ 5900 3750
+Wire Wire Line
+	2200 950  2200 900 
+Wire Wire Line
+	2200 900  5050 900 
+Wire Wire Line
+	5050 900  5050 950 
+Wire Wire Line
+	5250 950  5250 900 
+Wire Wire Line
+	5250 900  7950 900 
+Wire Wire Line
+	7950 900  7950 950 
+Wire Wire Line
+	2200 4300 2200 4250
+Wire Wire Line
+	2200 4250 5050 4250
+Wire Wire Line
+	5050 4250 5050 4300
+Wire Wire Line
+	5250 4300 5250 3850
+Wire Wire Line
+	5250 3850 700  3850
+Wire Wire Line
+	700  900  2000 900 
+Wire Wire Line
+	2000 900  2000 950 
+Wire Wire Line
+	2000 4300 2000 4250
+Wire Wire Line
+	2000 4250 950  4250
+Text Label 950  4250 0    50   ~ 0
+DIN
+Wire Wire Line
+	8150 950  8150 900 
+Wire Wire Line
+	8150 900  8650 900 
+Text Label 8300 900  0    50   ~ 0
+DOUT
+$Comp
+L power:+5V #PWR?
+U 1 1 5F2B74FC
+P 3750 1200
+F 0 "#PWR?" H 3750 1050 50  0001 C CNN
+F 1 "+5V" H 3765 1373 50  0000 C CNN
+F 2 "" H 3750 1200 50  0001 C CNN
+F 3 "" H 3750 1200 50  0001 C CNN
+	1    3750 1200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3850 1200 3750 1200
+$Comp
+L power:VPP #PWR?
+U 1 1 5F2CEA09
+P 3550 1200
+F 0 "#PWR?" H 3550 1050 50  0001 C CNN
+F 1 "VPP" H 3565 1373 50  0000 C CNN
+F 2 "" H 3550 1200 50  0001 C CNN
+F 3 "" H 3550 1200 50  0001 C CNN
+	1    3550 1200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3550 1200 3550 1350
+Wire Wire Line
+	3550 1350 3850 1350
+$Comp
+L power:+5V #PWR?
+U 1 1 5F31437A
+P 6650 1200
+F 0 "#PWR?" H 6650 1050 50  0001 C CNN
+F 1 "+5V" H 6665 1373 50  0000 C CNN
+F 2 "" H 6650 1200 50  0001 C CNN
+F 3 "" H 6650 1200 50  0001 C CNN
+	1    6650 1200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6750 1200 6650 1200
+$Comp
+L power:VPP #PWR?
+U 1 1 5F314385
+P 6450 1200
+F 0 "#PWR?" H 6450 1050 50  0001 C CNN
+F 1 "VPP" H 6465 1373 50  0000 C CNN
+F 2 "" H 6450 1200 50  0001 C CNN
+F 3 "" H 6450 1200 50  0001 C CNN
+	1    6450 1200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6450 1200 6450 1350
+Wire Wire Line
+	6450 1350 6750 1350
+$Comp
+L power:+5V #PWR?
+U 1 1 5F32CC0F
+P 700 4550
+F 0 "#PWR?" H 700 4400 50  0001 C CNN
+F 1 "+5V" H 715 4723 50  0000 C CNN
+F 2 "" H 700 4550 50  0001 C CNN
+F 3 "" H 700 4550 50  0001 C CNN
+	1    700  4550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	800  4550 700  4550
+$Comp
+L power:VPP #PWR?
+U 1 1 5F32CC1A
+P 550 4650
+F 0 "#PWR?" H 550 4500 50  0001 C CNN
+F 1 "VPP" H 565 4823 50  0000 C CNN
+F 2 "" H 550 4650 50  0001 C CNN
+F 3 "" H 550 4650 50  0001 C CNN
+	1    550  4650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	550  4650 550  4700
+Wire Wire Line
+	550  4700 800  4700
+$Comp
+L power:+5V #PWR?
+U 1 1 5F377372
+P 3750 4550
+F 0 "#PWR?" H 3750 4400 50  0001 C CNN
+F 1 "+5V" H 3765 4723 50  0000 C CNN
+F 2 "" H 3750 4550 50  0001 C CNN
+F 3 "" H 3750 4550 50  0001 C CNN
+	1    3750 4550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3850 4550 3750 4550
+$Comp
+L power:VPP #PWR?
+U 1 1 5F37737D
+P 3600 4650
+F 0 "#PWR?" H 3600 4500 50  0001 C CNN
+F 1 "VPP" H 3615 4823 50  0000 C CNN
+F 2 "" H 3600 4650 50  0001 C CNN
+F 3 "" H 3600 4650 50  0001 C CNN
+	1    3600 4650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3600 4650 3600 4700
+Wire Wire Line
+	3600 4700 3850 4700
+$Comp
+L power:+5V #PWR?
+U 1 1 5F3908F7
+P 750 700
+F 0 "#PWR?" H 750 550 50  0001 C CNN
+F 1 "+5V" H 765 873 50  0000 C CNN
+F 2 "" H 750 700 50  0001 C CNN
+F 3 "" H 750 700 50  0001 C CNN
+	1    750  700 
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:VPP #PWR?
+U 1 1 5F390902
+P 600 800
+F 0 "#PWR?" H 600 650 50  0001 C CNN
+F 1 "VPP" H 615 973 50  0000 C CNN
+F 2 "" H 600 800 50  0001 C CNN
+F 3 "" H 600 800 50  0001 C CNN
+	1    600  800 
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	700  3850 700  900 
+Wire Wire Line
+	750  700  750  1200
+Wire Wire Line
+	750  1200 800  1200
+Wire Wire Line
+	600  800  600  1350
+Wire Wire Line
+	600  1350 800  1350
+$EndSCHEMATC
