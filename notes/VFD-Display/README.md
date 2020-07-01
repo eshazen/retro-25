@@ -2,6 +2,12 @@
 
 <img src="https://github.com/eshazen/retro-25/blob/master/notes/VFD-Display/vfd-display-stock-photo.jpg" width=300>
 
+## Progress!
+
+Schematic created under ```hardware/vfd-display```.  Plugs in to display connector on CPU.  Includes 5 HV5812 drivers for 12 digits of VFD, 2 LEDs and 3 jumper/switch/GPIO inputs.  Buffered/latched from the CPU bus.
+
+## Notes
+
 I've been thinking about a Nixie tube version of an HP calculator
 clone for a while, but there are a few problems:  need a 180V power
 supply, no decimal point or sign options.
