@@ -19,6 +19,15 @@ having a serial interface and 20 HV output drivers in a friendly DIP28.
 The tubes would project vertically up from the new board, which would
 be mounted at a nice viewing angle.
 
+There are a few issues:
+
+* Need a 25V supply, but << 1A total current
+* Need to power the filaments at 1.2V each, 50mA (total 0.6A if parallel,
+or 14.4V if series).
+
+Driving the long shift register with 96 segments is easy and could be
+done directly by the Z80.
+
 <a href="https://github.com/eshazen/retro-25/blob/master/notes/VFD-Display/new-pcb-top-view.png">
   <img src="https://github.com/eshazen/retro-25/blob/master/notes/VFD-Display/new-pcb-top-view.png" width=200>
   <br>Sketch of the idea</a>
