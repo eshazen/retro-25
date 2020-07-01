@@ -7,6 +7,13 @@ Retro-tech HP-25 calculator clone using Z80
       <td><img src=https://github.com/eshazen/retro-25/blob/master/photos/boards.jpg width=300>
 </table>
 
+## News!
+
+Starting on a new version with VFD display tubes!
+
+<img src="https://github.com/eshazen/retro-25/blob/master/notes/VFD-Display/vfd-display-stock-photo.jpg" width=300>
+See <a href="https://github.com/eshazen/retro-25/tree/master/notes/VFD-Display">notes</a>.
+
 ## What's here
 
 `hardware` has the design files for the CPU and keyboard/display boards
