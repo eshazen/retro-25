@@ -1,10 +1,15 @@
 # VFD display
 
-<img src="https://github.com/eshazen/retro-25/blob/master/notes/VFD-Display/vfd-display-stock-photo.jpg" width=300>
+<table>
+  <tr><td><img src="https://github.com/eshazen/retro-25/blob/master/notes/VFD-Display/vfd-display-stock-photo.jpg" width=300>
+    <td><img src="https://github.com/eshazen/retro-25/blob/master/hardware/vfd-display/3D/render_board.png" width=300>
+</table>
 
 ## Progress!
 
-Schematic created under ```hardware/vfd-display```.  Plugs in to display connector on CPU.  Includes 5 HV5812 drivers for 12 digits of VFD, 2 LEDs and 3 jumper/switch/GPIO inputs.  Buffered/latched from the CPU bus.
+PCB design created under ```hardware/vfd-display```.  Plugs in to display connector on CPU.  Includes 5 HV5812 drivers for 12 digits of VFD, 2 LEDs and 3 jumper/switch/GPIO inputs.  Buffered/latched from the CPU bus.  Ordered from JLCPCB on 7/2/20.
+
+
 
 ## Notes
 
