@@ -1520,17 +1520,6 @@ F 3 "" H 9350 5700 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Regulator_Linear:LM1084-3.3 U16
-U 1 1 5F95F319
-P 7700 4250
-F 0 "U16" H 7700 4492 50  0000 C CNN
-F 1 "LM317" H 7700 4401 50  0000 C CNN
-F 2 "Package_TO_SOT_THT:TO-220-3_Vertical" H 7700 4500 50  0001 C CIN
-F 3 "http://www.ti.com/lit/gpn/sn74LS125" H 7700 4250 50  0001 C CNN
-	1    7700 4250
-	1    0    0    -1  
-$EndComp
-$Comp
 L Device:CP1 C10
 U 1 1 5F963375
 P 8150 4450
@@ -1735,19 +1724,6 @@ F 3 "" H 8800 6150 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	8800 6150 8650 6150
-$Comp
-L power:GND #PWR021
-U 1 1 5FC2D484
-P 7700 4650
-F 0 "#PWR021" H 7700 4400 50  0001 C CNN
-F 1 "GND" H 7705 4477 50  0000 C CNN
-F 2 "" H 7700 4650 50  0001 C CNN
-F 3 "" H 7700 4650 50  0001 C CNN
-	1    7700 4650
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	7700 4650 7700 4550
 $Comp
 L power:GND #PWR018
 U 1 1 5FC7EAFC
@@ -2090,4 +2066,20 @@ Text Notes 7050 6850 0    200  ~ 0
 Retro-25 Calculator
 Text Notes 7100 7100 0    100  ~ 0
 VFD Display Expansion Board
+$Comp
+L Regulator_Linear:LM1084-ADJ U16
+U 1 1 5F03E4EB
+P 7700 4250
+F 0 "U16" H 7700 4492 50  0000 C CNN
+F 1 "LM1084-ADJ" H 7700 4401 50  0000 C CNN
+F 2 "Package_TO_SOT_THT:TO-220-3_Vertical" H 7700 4500 50  0001 C CIN
+F 3 "http://www.ti.com/lit/ds/symlink/lm1084.pdf" H 7700 4250 50  0001 C CNN
+	1    7700 4250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8000 4250 8000 4550
+Wire Wire Line
+	8000 4550 7700 4550
+Connection ~ 8000 4250
 $EndSCHEMATC
