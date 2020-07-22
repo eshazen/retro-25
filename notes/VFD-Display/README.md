@@ -10,6 +10,8 @@
 
 PCB design created under ```hardware/vfd-display```.  Plugs in to display connector on CPU.  Includes 5 HV5812 drivers for 12 digits of VFD, 2 LEDs and 3 jumper/switch/GPIO inputs.  Buffered/latched from the CPU bus.  Ordered from JLCPCB on 7/2/20.  Delivered 7/9/20.  Quick service!
 
+Now for almost 1 month I'm waiting for VFD tubes from Ukraine.  Eventually I may give up and pay more to try to get some shipped from the USA.
+
 
 ## Notes
 
