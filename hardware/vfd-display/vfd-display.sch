@@ -128,6 +128,7 @@ F 0 "U3" V 2354 -544 50  0000 R CNN
 F 1 "HV5812" V 2445 -544 50  0000 R CNN
 F 2 "Package_DIP:DIP-28_W15.24mm_LongPads" H 2000 850 50  0001 C CNN
 F 3 "http://www.ti.com/lit/gpn/sn74LS125" H 2000 850 50  0001 C CNN
+F 4 "HV5812P-G-ND" V 2350 1000 50  0000 C CNN "CatNo"
 	1    1800 750 
 	0    -1   1    0   
 $EndComp
@@ -225,6 +226,7 @@ F 0 "U11" V 5404 -544 50  0000 R CNN
 F 1 "HV5812" V 5495 -544 50  0000 R CNN
 F 2 "Package_DIP:DIP-28_W15.24mm_LongPads" H 5050 850 50  0001 C CNN
 F 3 "http://www.ti.com/lit/gpn/sn74LS125" H 5050 850 50  0001 C CNN
+F 4 "HV5812P-G-ND" V 4850 750 50  0001 C CNN "CatNo"
 	1    4850 750 
 	0    -1   1    0   
 $EndComp
@@ -449,6 +451,7 @@ F 0 "U4" V 2354 2806 50  0000 R CNN
 F 1 "HV5812" V 2445 2806 50  0000 R CNN
 F 2 "Package_DIP:DIP-28_W15.24mm_LongPads" H 2000 4200 50  0001 C CNN
 F 3 "http://www.ti.com/lit/gpn/sn74LS125" H 2000 4200 50  0001 C CNN
+F 4 "HV5812P-G-ND" V 1800 4100 50  0001 C CNN "CatNo"
 	1    1800 4100
 	0    -1   1    0   
 $EndComp
@@ -546,6 +549,7 @@ F 0 "U12" V 5404 2806 50  0000 R CNN
 F 1 "HV5812" V 5495 2806 50  0000 R CNN
 F 2 "Package_DIP:DIP-28_W15.24mm_LongPads" H 5050 4200 50  0001 C CNN
 F 3 "http://www.ti.com/lit/gpn/sn74LS125" H 5050 4200 50  0001 C CNN
+F 4 "HV5812P-G-ND" V 4850 4100 50  0001 C CNN "CatNo"
 	1    4850 4100
 	0    -1   1    0   
 $EndComp
@@ -703,6 +707,7 @@ F 0 "U17" V 8000 -350 50  0000 R CNN
 F 1 "HV5812" V 8000 0   50  0000 R CNN
 F 2 "Package_DIP:DIP-28_W15.24mm_LongPads" H 7950 850 50  0001 C CNN
 F 3 "http://www.ti.com/lit/gpn/sn74LS125" H 7950 850 50  0001 C CNN
+F 4 "HV5812P-G-ND" V 7750 750 50  0001 C CNN "CatNo"
 	1    7750 750 
 	0    -1   1    0   
 $EndComp
@@ -1164,6 +1169,7 @@ F 0 "C1" H 6815 5396 50  0000 L CNN
 F 1 ".01uF" H 6815 5305 50  0000 L CNN
 F 2 "Capacitor_THT:C_Disc_D3.8mm_W2.6mm_P2.50mm" H 6738 5200 50  0001 C CNN
 F 3 "~" H 6700 5350 50  0001 C CNN
+F 4 "399-9824-ND" V 6550 5550 50  0000 C CNN "CatNo"
 	1    6700 5350
 	1    0    0    -1  
 $EndComp
@@ -1176,6 +1182,7 @@ F 0 "C2" H 7165 5396 50  0000 L CNN
 F 1 ".01uF" H 7165 5305 50  0000 L CNN
 F 2 "Capacitor_THT:C_Disc_D3.8mm_W2.6mm_P2.50mm" H 7088 5200 50  0001 C CNN
 F 3 "~" H 7050 5350 50  0001 C CNN
+F 4 "399-9824-ND" H 7050 5350 50  0001 C CNN "CatNo"
 	1    7050 5350
 	1    0    0    -1  
 $EndComp
@@ -1190,6 +1197,7 @@ F 0 "C5" H 7515 5396 50  0000 L CNN
 F 1 ".01uF" H 7515 5305 50  0000 L CNN
 F 2 "Capacitor_THT:C_Disc_D3.8mm_W2.6mm_P2.50mm" H 7438 5200 50  0001 C CNN
 F 3 "~" H 7400 5350 50  0001 C CNN
+F 4 "399-9824-ND" H 7400 5350 50  0001 C CNN "CatNo"
 	1    7400 5350
 	1    0    0    -1  
 $EndComp
@@ -1204,6 +1212,7 @@ F 0 "C7" H 7865 5396 50  0000 L CNN
 F 1 ".01uF" H 7865 5305 50  0000 L CNN
 F 2 "Capacitor_THT:C_Disc_D3.8mm_W2.6mm_P2.50mm" H 7788 5200 50  0001 C CNN
 F 3 "~" H 7750 5350 50  0001 C CNN
+F 4 "399-9824-ND" H 7750 5350 50  0001 C CNN "CatNo"
 	1    7750 5350
 	1    0    0    -1  
 $EndComp
@@ -1216,6 +1225,7 @@ F 0 "C9" H 8215 5396 50  0000 L CNN
 F 1 ".01uF" H 8215 5305 50  0000 L CNN
 F 2 "Capacitor_THT:C_Disc_D3.8mm_W2.6mm_P2.50mm" H 8138 5200 50  0001 C CNN
 F 3 "~" H 8100 5350 50  0001 C CNN
+F 4 "399-9824-ND" H 8100 5350 50  0001 C CNN "CatNo"
 	1    8100 5350
 	1    0    0    -1  
 $EndComp
@@ -1240,6 +1250,7 @@ F 0 "C3" H 7215 6096 50  0000 L CNN
 F 1 "1uF 50V" H 6950 5750 50  0000 L CNN
 F 2 "Capacitor_THT:C_Disc_D3.8mm_W2.6mm_P2.50mm" H 7138 5900 50  0001 C CNN
 F 3 "~" H 7100 6050 50  0001 C CNN
+F 4 "399-14394-1-ND" H 7100 5650 50  0000 C CNN "CatNo"
 	1    7100 6050
 	1    0    0    -1  
 $EndComp
@@ -1251,6 +1262,7 @@ F 0 "C6" H 7565 6096 50  0000 L CNN
 F 1 "1uF 50V" H 7350 5750 50  0000 L CNN
 F 2 "Capacitor_THT:C_Disc_D3.8mm_W2.6mm_P2.50mm" H 7488 5900 50  0001 C CNN
 F 3 "~" H 7450 6050 50  0001 C CNN
+F 4 "399-14394-1-ND" H 7450 6050 50  0001 C CNN "CatNo"
 	1    7450 6050
 	1    0    0    -1  
 $EndComp
@@ -1259,7 +1271,7 @@ Wire Wire Line
 Connection ~ 7100 5900
 Wire Wire Line
 	7100 6200 7450 6200
-Text Notes 6900 5100 0    50   ~ 0
+Text Notes 6900 5150 0    50   ~ 0
 5V power for chips, low current
 Text Notes 8450 4300 0    50   ~ 0
 Filaments
@@ -1289,6 +1301,7 @@ F 0 "U20" H 10200 2300 50  0000 C CNN
 F 1 "74LS174" H 10100 2200 50  0000 C CNN
 F 2 "Package_DIP:DIP-16_W7.62mm_LongPads" H 10400 1600 50  0001 C CNN
 F 3 "" H 10400 1600 50  0001 C CNN
+F 4 "296-3664-5-ND" H 9950 900 50  0000 C CNN "CatNo"
 	1    10400 1600
 	-1   0    0    -1  
 $EndComp
@@ -1339,6 +1352,7 @@ F 0 "C11" H 8565 5396 50  0000 L CNN
 F 1 ".01uF" H 8565 5305 50  0000 L CNN
 F 2 "Capacitor_THT:C_Disc_D3.8mm_W2.6mm_P2.50mm" H 8488 5200 50  0001 C CNN
 F 3 "~" H 8450 5350 50  0001 C CNN
+F 4 "399-9824-ND" H 8450 5350 50  0001 C CNN "CatNo"
 	1    8450 5350
 	1    0    0    -1  
 $EndComp
@@ -1350,6 +1364,7 @@ F 0 "C12" H 8915 5396 50  0000 L CNN
 F 1 ".01uF" H 8915 5305 50  0000 L CNN
 F 2 "Capacitor_THT:C_Disc_D3.8mm_W2.6mm_P2.50mm" H 8838 5200 50  0001 C CNN
 F 3 "~" H 8800 5350 50  0001 C CNN
+F 4 "399-9824-ND" H 8800 5350 50  0001 C CNN "CatNo"
 	1    8800 5350
 	1    0    0    -1  
 $EndComp
@@ -1395,6 +1410,7 @@ F 0 "D1" V 9300 950 50  0000 L CNN
 F 1 "LED" V 9400 950 50  0000 L CNN
 F 2 "LED_THT:LED_D3.0mm" H 9350 1200 50  0001 C CNN
 F 3 "~" H 9350 1200 50  0001 C CNN
+F 4 "1516-1344-ND" H 9750 1150 50  0000 C CNN "CatNo"
 	1    9350 1200
 	0    1    1    0   
 $EndComp
@@ -1406,6 +1422,7 @@ F 0 "D2" V 9600 1000 50  0000 L CNN
 F 1 "LED" V 9700 950 50  0000 L CNN
 F 2 "LED_THT:LED_D3.0mm" H 9650 1200 50  0001 C CNN
 F 3 "~" H 9650 1200 50  0001 C CNN
+F 4 "1516-1344-ND" V 9650 1200 50  0001 C CNN "CatNo"
 	1    9650 1200
 	0    1    1    0   
 $EndComp
@@ -1469,6 +1486,7 @@ F 0 "U19" H 10100 3150 50  0000 C CNN
 F 1 "74LS125" H 10500 3150 50  0000 C CNN
 F 2 "Package_DIP:DIP-14_W7.62mm_LongPads" H 10400 3000 50  0001 C CNN
 F 3 "http://www.ti.com/lit/gpn/sn74LS125" H 10400 3000 50  0001 C CNN
+F 4 "296-3664-5-ND" H 10400 3000 50  0001 C CNN "CatNo"
 	1    10400 3000
 	1    0    0    -1  
 $EndComp
@@ -1490,6 +1508,7 @@ F 0 "J2" H 10050 6300 50  0000 R CNN
 F 1 "Conn_01x06_Male" H 10350 5250 50  0000 R CNN
 F 2 "Connector_Molex:Molex_KK-396_A-41791-0006_1x06_P3.96mm_Vertical" H 9850 5850 50  0001 C CNN
 F 3 "~" H 9850 5850 50  0001 C CNN
+F 4 "WM4624-ND" H 9900 5450 50  0000 C CNN "CatNo"
 	1    9850 5850
 	-1   0    0    -1  
 $EndComp
@@ -1559,6 +1578,7 @@ F 0 "U19" H 9500 2850 50  0000 L CNN
 F 1 "74LS125" V 9300 2300 50  0000 L CNN
 F 2 "Package_DIP:DIP-14_W7.62mm_LongPads" H 9450 2450 50  0001 C CNN
 F 3 "http://www.ti.com/lit/gpn/sn74LS125" H 9450 2450 50  0001 C CNN
+F 4 "296-3664-5-ND" V 9700 2450 50  0000 C CNN "CatNo"
 	5    9450 2450
 	1    0    0    -1  
 $EndComp
@@ -1592,7 +1612,7 @@ L power:+5V #PWR032
 U 1 1 5FA012C9
 P 9450 1950
 F 0 "#PWR032" H 9450 1800 50  0001 C CNN
-F 1 "+5V" H 9300 2000 50  0000 C CNN
+F 1 "+5V" H 9550 1950 50  0000 C CNN
 F 2 "" H 9450 1950 50  0001 C CNN
 F 3 "" H 9450 1950 50  0001 C CNN
 	1    9450 1950
@@ -1755,6 +1775,7 @@ F 0 "C8" H 8065 6196 50  0000 L CNN
 F 1 "10nF 50V" H 8065 6105 50  0000 L CNN
 F 2 "Capacitor_THT:C_Disc_D3.8mm_W2.6mm_P2.50mm" H 7988 6000 50  0001 C CNN
 F 3 "~" H 7950 6150 50  0001 C CNN
+F 4 "399-9824-ND" H 7950 6150 50  0001 C CNN "CatNo"
 	1    7950 6150
 	1    0    0    -1  
 $EndComp
@@ -1798,6 +1819,7 @@ F 0 "U19" H 10100 3700 50  0000 C CNN
 F 1 "74LS125" H 10500 3700 50  0000 C CNN
 F 2 "Package_DIP:DIP-14_W7.62mm_LongPads" H 10400 3550 50  0001 C CNN
 F 3 "http://www.ti.com/lit/gpn/sn74LS125" H 10400 3550 50  0001 C CNN
+F 4 "296-3664-5-ND" H 10400 3550 50  0001 C CNN "CatNo"
 	2    10400 3550
 	1    0    0    -1  
 $EndComp
@@ -1817,6 +1839,7 @@ F 0 "U19" H 10100 4250 50  0000 C CNN
 F 1 "74LS125" H 10500 4250 50  0000 C CNN
 F 2 "Package_DIP:DIP-14_W7.62mm_LongPads" H 10400 4100 50  0001 C CNN
 F 3 "http://www.ti.com/lit/gpn/sn74LS125" H 10400 4100 50  0001 C CNN
+F 4 "296-3664-5-ND" H 10400 4100 50  0001 C CNN "CatNo"
 	3    10400 4100
 	1    0    0    -1  
 $EndComp
@@ -1836,6 +1859,7 @@ F 0 "U19" H 10100 4800 50  0000 C CNN
 F 1 "74LS125" H 10500 4800 50  0000 C CNN
 F 2 "Package_DIP:DIP-14_W7.62mm_LongPads" H 10400 4650 50  0001 C CNN
 F 3 "http://www.ti.com/lit/gpn/sn74LS125" H 10400 4650 50  0001 C CNN
+F 4 "296-3664-5-ND" H 10400 4650 50  0001 C CNN "CatNo"
 	4    10400 4650
 	1    0    0    -1  
 $EndComp
@@ -1972,6 +1996,7 @@ F 0 "J3" H 10550 6367 50  0000 C CNN
 F 1 "Conn_02x08_Odd_Even" H 10750 6300 50  0000 C CNN
 F 2 "Connector_PinHeader_2.54mm:PinHeader_2x08_P2.54mm_Vertical" H 10500 5850 50  0001 C CNN
 F 3 "~" H 10500 5850 50  0001 C CNN
+F 4 "732-5299-ND" H 10550 5350 50  0000 C CNN "CatNo"
 	1    10500 5850
 	1    0    0    -1  
 $EndComp
@@ -2074,6 +2099,7 @@ F 0 "U16" H 7700 4492 50  0000 C CNN
 F 1 "LM1084-ADJ" H 7700 4401 50  0000 C CNN
 F 2 "Package_TO_SOT_THT:TO-220-3_Vertical" H 7700 4500 50  0001 C CIN
 F 3 "http://www.ti.com/lit/ds/symlink/lm1084.pdf" H 7700 4250 50  0001 C CNN
+F 4 "LM1084IT-ADJ/NOPB-ND" H 7700 4650 50  0000 C CNN "CatNo"
 	1    7700 4250
 	1    0    0    -1  
 $EndComp
@@ -2082,4 +2108,30 @@ Wire Wire Line
 Wire Wire Line
 	8000 4550 7700 4550
 Connection ~ 8000 4250
+Text Notes 8700 3500 0    50   ~ 0
+Digit 1
+Text Notes 7500 3500 0    50   ~ 0
+Digit 2
+Text Notes 6200 3500 0    50   ~ 0
+Digit 3
+Text Notes 4950 3500 0    50   ~ 0
+Digit 4
+Text Notes 3800 3500 0    50   ~ 0
+Digit 5
+Text Notes 2650 3500 0    50   ~ 0
+Digit 6
+Text Notes 1500 3500 0    50   ~ 0
+Digit 7
+Text Notes 6200 6850 0    50   ~ 0
+Digit 8
+Text Notes 4950 6850 0    50   ~ 0
+Digit 9
+Text Notes 3800 6850 0    50   ~ 0
+Digit 10
+Text Notes 2650 6850 0    50   ~ 0
+Digit 11
+Text Notes 1500 6850 0    50   ~ 0
+Digit 12
+Text Notes 7350 4800 0    50   ~ 0
+OOPS Adj\nshould be GND
 $EndSCHEMATC
