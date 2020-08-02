@@ -1,7 +1,7 @@
 # VFD display
 
 <table>
-  <tr><td><img src="https://github.com/eshazen/retro-25/blob/master/notes/VFD-Display/vfd-display-stock-photo.jpg" width=300>
+  <tr><td><img src="https://github.com/eshazen/retro-25/blob/master/photos/display_11.jpg" width=300>
     <td><img src="https://github.com/eshazen/retro-25/blob/master/hardware/vfd-display/3D/render_board.png" width=300>
     <td><img src="https://github.com/eshazen/retro-25/blob/master/photos/vfd_bare_pcb.jpg" width=300>
 </table>

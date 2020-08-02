@@ -11,7 +11,7 @@ Retro-tech HP-25 calculator clone using Z80
 
 Starting on a new version with VFD display tubes!
 
-<img src="https://github.com/eshazen/retro-25/blob/master/notes/VFD-Display/vfd-display-stock-photo.jpg" width=300>
+<img src="https://github.com/eshazen/retro-25/blob/master/photos/display_11.jpg" width=300>
 See <a href="https://github.com/eshazen/retro-25/tree/master/notes/VFD-Display">notes</a>.
 
 ## What's here
