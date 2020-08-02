@@ -17,10 +17,11 @@ Tubes arrived from Kiev after about 5 weeks, but one is missing a pin.  Ordered 
 Voltage | Current | Notes
 ------- | ------- | -----
   2.5V  |   0.6A  | Filaments (reg to 1.2V)
-  5.0V  |   0.03A | Logic
+  5.0V  |   0.03A | Logic (comes from CPU board)
  20.0V  |   0.6A  | Grids
-
-Need a power supply.  Features:  power-up sequence:  (1) 2.5V and 5V on, delay  (2) 20V on.  Reverse for power-down.  20V should be easily adjustable by the user, and should be controlled by CPU or a timer so it goes off to save the tubes.  
+  9.0v  |  ~1.A   | CPU board
+  
+Need a power supply.  Features:  power-up sequence:  (1) 2.5V and 5V(9V) on, delay  (2) 20V on.  Reverse for power-down.  20V should be easily adjustable by the user, and should be controlled by CPU or a timer so it goes off to save the tubes.  
 
 ## Notes
 
