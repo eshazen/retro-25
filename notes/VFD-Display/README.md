@@ -10,8 +10,17 @@
 
 PCB design created under ```hardware/vfd-display```.  Plugs in to display connector on CPU.  Includes 5 HV5812 drivers for 12 digits of VFD, 2 LEDs and 3 jumper/switch/GPIO inputs.  Buffered/latched from the CPU bus.  Ordered from JLCPCB on 7/2/20.  Delivered 7/9/20.  Quick service!
 
-Now for almost 1 month I'm waiting for VFD tubes from Ukraine.  Eventually I may give up and pay more to try to get some shipped from the USA.
+_8/2/20_
 
+Tubes arrived from Kiev after about 5 weeks, but one is missing a pin.  Ordered another batch of 6 so I have some spares.  Assembled the display board and connected to an Arduino for testing.  It works!  Some segments are a bit dim, but at 20V everything seems ok. Power measure below
+
+Voltage | Current | Notes
+------- | ------- | -----
+  2.5V  |   0.6A  | Filaments (reg to 1.2V)
+  5.0V  |   0.03A | Logic
+ 20.0V  |   0.6A  | Grids
+
+Need a power supply.  Features:  power-up sequence:  (1) 2.5V and 5V on, delay  (2) 20V on.  Reverse for power-down.  20V should be easily adjustable by the user, and should be controlled by CPU or a timer so it goes off to save the tubes.  
 
 ## Notes
 
