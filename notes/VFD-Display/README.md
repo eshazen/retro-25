@@ -19,9 +19,17 @@ Voltage | Current | Notes
   2.5V  |   0.6A  | Filaments (reg to 1.2V)
   5.0V  |   0.03A | Logic (comes from CPU board)
  20.0V  |   0.6A  | Grids
-  9.0v  |  ~1.A   | CPU board
+  9.0v  |  ~1.6A  | 1.6A no LEDs, "0.00" = 2.3A, 8's = 3.8A
   
-Need a power supply.  Features:  power-up sequence:  (1) 2.5V and 5V(9V) on, delay  (2) 20V on.  Reverse for power-down.  20V should be easily adjustable by the user, and should be controlled by CPU or a timer so it goes off to save the tubes.  
+Need a power supply.  Features:  power-up sequence:  (1) 2.5V and 5V(9V) on, delay  (2) 20V on.  Reverse for power-down.  20V should be easily adjustable by the user, and should be controlled by CPU or a timer so it goes off to save the tubes.  After a longer delay the filaments should power down.
+
+Ordered some XL6009 boost modules which should do the job for the 20V.  Would want to add an enable and remote the voltage adjust pot.  Assuming 80% efficiency, need 1.6A at 9V to power, plus CPU at ~1.6A is 3.2A.  Possibly the "2A" 9V converters we have would work, since the VFD display uses about the same power as the LEDs.
+
+Have an LM2586 buck module.  No external enable but looks as if one could unsolder the enable pin and add a wire.
+
+The two LED outputs on the VFD board could be used to control the filament and grid supplies, making for a self-contained unit.
+
+Need to build a breadboard or PCB thing to hold the boost and buck converters and the connectors for power.
 
 ## Notes
 
