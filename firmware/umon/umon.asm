@@ -16,8 +16,8 @@
 ;;; r			       repeat last command
 ;;; calculator hardware
 ;;; k                          scan keyboard
-;;; 7 <addr>		       update display from <addr>
-;;; 
+;;; 7 <addr>		       update 7-segment display from <addr>
+;;; V <addr>                   update VFD display from <addr>
 
 
 	org	08100H
@@ -106,7 +106,9 @@ usage:  db      "h                     print this help", 13, 10
         db      "l                     binary load", 13, 10
         db      "r                     repeat last command", 13, 10
         db      "k                     scan keyboard", 13, 10
-        db      "7 <addr>              update display from <addr>", 13, 10, 0
+        db      "7 <addr>              update LED display from <addr>", 13, 10
+        db      "V <addr>              update VFD display (0=blank)", 13, 10
+	db	0
 
 main:	ld	sp,stak
 	ld	hl,banner
@@ -193,6 +195,9 @@ not_r:	ld	hl,buff
 
 	cp	a,'7'
 	jz	dptest
+
+	cp	a,'V'
+	jz	vfdtest
 	
 errz:	ld	hl,error
 	call	puts
@@ -211,6 +216,14 @@ dptest:	ld	hl,(iargv+2)
 	call	display
 	jp	loop
 
+vfdtest: call	vfd_init	;initialize (and blank) VFD display
+ 	ld	hl,(iargv+2)	;get address to display from
+	ld	a,h		;check for zero (blank)
+	or	l
+	jp	z,loop		;zero, leave display blanked
+	
+	call	vfd_display	;else update the display
+	jp	loop
 
 ;;; set port zero value
 zero:	ld	a,(iargv+2)
