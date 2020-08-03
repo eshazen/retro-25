@@ -22,11 +22,11 @@
 ;;; this requires bare unencoded mode on the 7218
 
 	;;         0     1     2     3     4     5     6
-s7tbl:	db	0, 0deh, 082h, 0ech, 0e6h, 0b2h, 076h, 07eh
+vs7tbl:	db	0, 0deh, 082h, 0ech, 0e6h, 0b2h, 076h, 07eh
 	;;      7     8     9     r     F     o     p     E
 	db	0c2h, 0feh, 0f6h, 028h, 078h, 02eh, 0f8h, 07eh
 
-minus:	equ	020h		;code for "-" with no decimal
+vminus:	equ	020h		;code for "-" with no decimal
 	;; or maybe 08h?
 
 vfd_prt:	equ	40h		;display controller port
@@ -42,12 +42,12 @@ vfd_digits: equ	12		;number of digits
 vfd_extra: equ	4		;extra clocks
 	
 ;;; initialize the display hardware
-dpy_init:	
+vfd_init:	
 	ld	a,vfd_bl	;blank display by default
 	out	(vfd_prt),a
 	ret
 
-display:
+vfd_display:	
 	push	ix
 	push	bc
 	push	de
@@ -58,15 +58,18 @@ display:
 	pop	ix
 
 dpyb:	ld	a,(ix)		;get display byte
-	and	7fh		;strip decimal
+	and	0fh		;only want low  bits
 	ld	d,0
 	ld	e,(ix)
-	ld	hl,s7tbl	;look up in table
+	ld	hl,vs7tbl	;look up in table
 	add	hl,de
 	ld	a,(hl)
 	bit	7,(ix)		;decimal?
 	jr	z,nodp
 	or	a,1		;set decimal bit if so
+	bit	6,(ix)		;check minus flag
+	jr	z,nodp
+	ld	a,vminus	;yes, replace with "-" code
 
 	;; shift out bits 
 nodp:	ld	b,8

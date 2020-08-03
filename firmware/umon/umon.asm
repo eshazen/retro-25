@@ -86,6 +86,7 @@ iargv:	rept	maxarg*2
 	INCLUDE "strings.asm"
 	INCLUDE "diskey.asm"
 	INCLUDE "c-link.asm"
+	INCLUDE "vfd.asm"
 
 banner:	db	"UMON v0.6 ORG ",0
 error:	db	"ERROR",0
