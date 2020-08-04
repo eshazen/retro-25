@@ -142,7 +142,7 @@ int main() {
   woodstock_set_ext_flag (3, _pgm_run);		// set run mode
 
 #ifdef UMON_SERVER
-  reg_info.jump_to = 0x8121;
+  reg_info.jump_to = 0x8103;	/* UMON breakpoint entry */
   reg_info.jump_back = 0x9000;
   reg_info.regs = (uint16_t) & _act_reg;
   reg_info.ram = (uint16_t) & _act_reg.ram;

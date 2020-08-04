@@ -754,9 +754,17 @@ static void display_scan_advance () {
       //
 
       if( (_act_reg.flags & F_DISPLAY_ON) && global_display_enable) {
+#ifdef VFD
+	vfd_display( _display_segments);
+#else	
 	umon_display( _display_segments);
+#endif
       } else {
+#ifdef VFD
+	vfd_init();
+#else	
 	umon_blank();
+#endif
       }
     }//if
 

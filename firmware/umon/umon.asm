@@ -20,7 +20,7 @@
 ;;; V <addr>                   update VFD display from <addr>
 
 
-	org	08100H
+	org	09100H
 
 stak:	equ	$		;stack grows down from start
 

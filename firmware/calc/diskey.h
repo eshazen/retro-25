@@ -3,6 +3,8 @@
 // hardware keyboard/display function interface
 // declarations for assembly functions in diskey_sw.asm
 //
+void vfd_display( unsigned char* hl) __z88dk_fastcall;
+void vfd_init()  __z88dk_fastcall;
 void umon_display( unsigned char* hl) __z88dk_fastcall;
 void umon_hex( unsigned char* hl) __z88dk_fastcall;
 int umon_kbscan()  __z88dk_fastcall;

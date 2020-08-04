@@ -57,37 +57,43 @@ vfd_display:
 	push	hl		;display data pointer to IX
 	pop	ix
 
+	;; extra clocks
+	ld	b,vfd_extra
+	call	vfd_shifty
+
 dpyb:	ld	a,(ix)		;get display byte
+
+;;; comment out below for raw data
 	and	0fh		;only want low  bits
 	ld	d,0
-	ld	e,(ix)
+	ld	e,a
 	ld	hl,vs7tbl	;look up in table
 	add	hl,de
 	ld	a,(hl)
 	bit	7,(ix)		;decimal?
 	jr	z,nodp
 	or	a,1		;set decimal bit if so
-	bit	6,(ix)		;check minus flag
-	jr	z,nodp
+nodp:	bit	6,(ix)		;check minus flag
+	jr	z,nomi
 	ld	a,vminus	;yes, replace with "-" code
 
 	;; shift out bits 
-nodp:	ld	b,8
+nomi:	ld	b,8
 	call	vfd_shifty
 
 	inc	ix
 	dec	c
 	jr	nz,dpyb
 
-	;; extra clocks
-	ld	b,vfd_extra
-	call	vfd_shifty
-
 ;;; cycle the strobe to update the display, and un-blank
 	ld	a,vfd_stb
 	out	(vfd_prt),a
+	nop
+	nop
 	xor	a
 	out	(vfd_prt),a
+	nop
+	nop
 	
 	pop	de
 	pop	bc
@@ -104,10 +110,16 @@ vfd_sh:	xor	a		;clear a
 	rrc	l		;data bit to CY
 	adc	a,h		;data bit to A bit 0
 	out	(vfd_prt),a
+	nop
+	nop
 	or	a,vfd_clk	;assert CLK
 	out	(vfd_prt),a
+	nop
+	nop
 	and	a,1		;deassert CLK
 	out	(vfd_prt),a
+	nop
+	nop
 	djnz	vfd_sh
 
 	ret
