@@ -8,7 +8,18 @@
 
 ## Progress!
 
-PCB design created under ```hardware/vfd-display```.  Plugs in to display connector on CPU.  Includes 5 HV5812 drivers for 12 digits of VFD, 2 LEDs and 3 jumper/switch/GPIO inputs.  Buffered/latched from the CPU bus.  Ordered from JLCPCB on 7/2/20.  Delivered 7/9/20.  Quick service!
+_8/12/20_
+
+Finally have all 12 tube installed plus 5 spares.  Calculator software runs!  Key caps in hand.  Designed and ordered a plywood+acrylic box from Ponoko, parts due 9/1/20.
+
+Software status:
+
+* EEPROM has ```umon``` at 8100H
+* Calculator builds for VFD if ```VFD``` is defined in ```Makefile```.
+* Load with ```L``` command in ```umon```, then 
+```
+  $ ../../util/load_firmware main-9000.hex /dev/ttyACM0
+```
 
 _8/2/20_
 
@@ -30,6 +41,10 @@ Have an LM2586 buck module.  No external enable but looks as if one could unsold
 The two LED outputs on the VFD board could be used to control the filament and grid supplies, making for a self-contained unit.
 
 Need to build a breadboard or PCB thing to hold the boost and buck converters and the connectors for power.
+
+_7/2/20_
+
+PCB design created under ```hardware/vfd-display```.  Plugs in to display connector on CPU.  Includes 5 HV5812 drivers for 12 digits of VFD, 2 LEDs and 3 jumper/switch/GPIO inputs.  Buffered/latched from the CPU bus.  Ordered from JLCPCB on 7/2/20.  Delivered 7/9/20.  Quick service!
 
 ## Notes
 
