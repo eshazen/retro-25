@@ -1,4 +1,4 @@
-	GLOBAL _umon_display
+GLOBAL _umon_display
 	GLOBAL _umon_kbscan
 	GLOBAL _umon_kbuff
 	GLOBAL _umon_hex
@@ -37,9 +37,12 @@ _umon_jump:
 	ld	(hl),b
 	pop	hl
 	ex	de,hl		;DE points to struct, HL is address
-	jp	(hl)
+	call	ucall		;indirect call trick
+	ret
 jump_back:
 	ret
+
+ucall:	jp	(hl)
 
 ;;; buffer for keyboard scan data
 kbuff:	db	0,0,0,0,0,0,0,0
@@ -161,7 +164,7 @@ _umon_serial:
 ;;;   12   = "F"
 ;;;   13   = "o"
 ;;;   14   = "p"
-;;;   15   = "e"
+;;;   15   = "E"
 ;;; bit 6 -> replace digit with "-"
 ;;; bit 7 -> turn on decimal after
 ;;;

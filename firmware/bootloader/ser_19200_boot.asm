@@ -1,4 +1,7 @@
+;;; 
 ;;; Retro-25 Boostrap loader
+;;; Eric Hazen - 2020
+;;; 
 ;;; Tries for serial port load for 10s, then
 ;;; loads flash code (see flashtable below)
 ;;;
@@ -15,6 +18,11 @@
 ;;; by sending '*' again
 ;;;
 ;;; echo back all received bytes
+;;;
+;;; Mods:
+;;; 17 Jun 2020, hazen - reflect RST vectors to $8000
+;;; add second flash image:
+;;;    UMON in EEPROM at $5000, org $8100
 ;;; ------------------------------------------------
 
 ;;; expects to be stored at 0000 in flash, then
@@ -22,7 +30,10 @@
 
 ;;; can be non-zero for testing
 rom:	equ	0
-	
+
+;;; base of system RAM (RST vectors)
+ramb: 	equ	$8000
+;;; RAM location where the boot loader relocates to
 ram:	equ	0f800h
 	
 off	equ	ram-rom
@@ -32,7 +43,29 @@ off	equ	ram-rom
 start:	jp	mover
 	jp	flashtable	;dummy jump to locate flash table	
 
-	org	rom+40h		;skip past restart vectors
+;	org	rom+40h		;skip past restart vectors
+
+	;; reflect the vectors up to bottom of RAM (normally $8000)
+	org	$0008
+	jp	ramb+$0008
+
+	org	$0010
+	jp	ramb+$0010
+
+	org	$0018
+	jp	ramb+$0018
+
+	org	$0020
+	jp	ramb+$0020
+
+	org	$0028
+	jp	ramb+$0028
+
+	org	$0030
+	jp	ramb+$0030
+
+	org	$0038
+	jp	ramb+$0038
 
 mover:	ld	sp,ram
 
@@ -51,15 +84,21 @@ mover:	ld	sp,ram
 ;;; 
 flashtable:	
 	dw	0xcafe		;magic number marks start of table
-;;; first flash image
-	dw	0x1000		;start address in ROM
-	dw	0x9000		;RAM target address
-	dw	0x4000		;size in bytes
-	dw	0x9000		;entry point
+;;--;;; first flash image (calculator)
+;;--	dw	0x1000		;start address in ROM
+;;--	dw	0x9000		;RAM target address
+;;--	dw	0x4000		;size in bytes (plenty big, now 0x2e00 or so)
+;;--	dw	0x9000		;entry point
+
+;;; second flash image (umon)
+	dw	0x5000		;above the first image
+	dw	0x8100		;RAM target address
+	dw	0x1000		;size in bytes
+	dw	0x8100		;entry point
 
 	dw	0,0,0,0		;table ends with zeroes
 
-	org	rom+200h
+	org	rom+200h	;above flash table
 	
 	
 ;;;----------------------------------------------------
