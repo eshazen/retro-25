@@ -194,7 +194,7 @@ int main() {
 	nregs = 7;		/* PGM is only 7 regs */
 	adrs = (unsigned char *) &_act_reg.ram + 14*9;
       }
-      
+
       if( adrs) {
 	for( uint8_t i=0; i<nregs; i++) {
 	  adrs += 14;
@@ -254,8 +254,13 @@ int main() {
     }
 
     // blank display here if it just turned off
-    if( !global_display_enable && last_display_enable)
-      	umon_blank();
+    if( !global_display_enable && last_display_enable) {
+#ifdef VFD
+      vfd_init();
+#else	
+      umon_blank();
+#endif
+    }
 
     last_display_enable = global_display_enable;
 
