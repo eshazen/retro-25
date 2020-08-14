@@ -6,4 +6,6 @@
 *.lis
 *.lst
 *.lib
+*.bck
+*.dcm
 *.o
