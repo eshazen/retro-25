@@ -1,5 +1,1 @@
-*.hex
-*.bin
-*.map
-*.def
-zout/**
+**/zout/**
