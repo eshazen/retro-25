@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name ebay_dc)(type KiCad)(uri ${KIPRJMOD}/ebay_dc.pretty)(options "")(descr ""))
+)
