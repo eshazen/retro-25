@@ -40,6 +40,7 @@ MA 02111, USA.
 
 #include "diskey.h"
 #include "key_translate.h"
+#include "vfd_control.h"
 
 // not sure if this is right, since we only support the 25C,
 // but extra RAM won't hurt
@@ -53,9 +54,9 @@ static int global_display_enable = 1;
 // timeout counter for display blanking... clock is ~ 3kHz
 // this should be about 10 min
 #define DISPLAY_TIMEOUT (60L*10*3000)
-
 // 10s for testing
 // #define DISPLAY_TIMEOUT (10L*3000)
+
 static uint32_t display_timeout;
 
 #include "rom_25.h"
@@ -148,6 +149,11 @@ int main() {
   reg_info.ram = (uint16_t) & _act_reg.ram;
 #endif
   
+  // initialize hardware
+#ifdef VFD
+  vfd_power_up();
+#endif  
+
   while(1) {
     if( umon_serial()) {	/* check for serial action (break) */
       while( umon_serial())	/* wait for break to end */
@@ -247,24 +253,33 @@ int main() {
     } else {			// power set to "on"
       if( key)			// reset timeout on key press
 	display_timeout = 0;
-      if( ++display_timeout == DISPLAY_TIMEOUT)
+      if( display_timeout == DISPLAY_TIMEOUT) {
 	global_display_enable = 0;
-      else
+      } else {
 	global_display_enable = 1;
+	++display_timeout;
+      }
     }
 
-    // blank display here if it just turned off
-    if( !global_display_enable && last_display_enable) {
+    // handle display blanking
+
 #ifdef VFD
-      vfd_init();
+    // see if display state changed
+    if( global_display_enable != last_display_enable) {
+      if( global_display_enable)
+	vfd_power_up();
+      else
+	vfd_power_down();
+    }
 #else	
+    // blank display here if it just turned off
+    if( !global_display_enable && last_display_enable)
       umon_blank();
 #endif
-    }
-
+    
     last_display_enable = global_display_enable;
-
     last_sw = switches;
+
     if (!woodstock_execute_instruction()) break;
 
   }

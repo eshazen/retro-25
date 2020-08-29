@@ -4,9 +4,19 @@
   <tr><td><img src="https://github.com/eshazen/retro-25/blob/master/photos/display_11.jpg" width=300>
     <td><img src="https://github.com/eshazen/retro-25/blob/master/hardware/vfd-display/3D/render_board.png" width=300>
     <td><img src="https://github.com/eshazen/retro-25/blob/master/photos/vfd_bare_pcb.jpg" width=300>
+  <tr><td><img src="https://github.com/eshazen/retro-25/blob/master/photos/top_with_ps.jpg" width=300>
+    <td><img src="https://github.com/eshazen/retro-25/blob/master/photos/power_supply.jpg" width=300>
 </table>
 
 ## Progress!
+
+_8/29/20_
+
+Installed new power supply board.  This board provides +18V for VFD
+anodes and +2.5V for VFD filaments (regulated to 1.25V on the display
+board itself).  Each output is switchable and controlled by the Z80.
+This is so that the tubes can power down after a timeout to extend
+their life.
 
 _8/12/20_
 

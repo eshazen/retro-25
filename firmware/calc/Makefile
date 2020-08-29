@@ -23,11 +23,15 @@ main_vfd.o: $(SOURCES)
 main_led.o: $(SOURCES)
 	zcc $(CFLAGS) -c main.c -pragma-define:CRT_ORG_CODE=0x9000
 
+vfd_control.o: vfd_control.c vfd_control.h
+	zcc $(CFLAGS) -c vfd_control.c -pragma-define:CRT_ORG_CODE=0x9000
+
 diskey_sw_vfd.o: diskey_sw_vfd.asm
 	z80asm diskey_sw_vfd.asm
 
-main_vfd.bin: main_vfd.o diskey_sw_vfd.o
-	zcc +z80 -m -O3 -startup=1 -clib=sdcc_iy main.o diskey_sw_vfd.o \
+main_vfd.bin: main_vfd.o diskey_sw_vfd.o vfd_control.o
+	zcc +z80 -m -O3 -startup=1 -clib=sdcc_iy \
+	main.o diskey_sw_vfd.o vfd_control.o \
         -o main_vfd -lm -create-app -startup=0 -pragma-define:CRT_ORG_CODE=0x9000
 
 main_led.bin: main_led.o diskey_sw_vfd.o

@@ -15,6 +15,8 @@
 	GLOBAL _umon_jump
 	GLOBAL _vfd_init
 	GLOBAL _vfd_display
+	GLOBAL _vfd_set_state
+	GLOBAL _vfd_clr_state
 
 ;;; ------------------------------------------------------------
 ;;; display / keyboard support
@@ -317,25 +319,70 @@ vminus:	equ	020h		;code for "-" with no decimal
 vfd_prt: equ	40h		;display controller port
 
 vfd_d:	 equ	1		;VFD data bit
+vfd_d_bit: equ	0
+	
 vfd_stb: equ	2		;VFD strobe bit
+vfd_stb_bit: equ 1
+
 vfd_clk: equ	4		;VFD shift clock
+vfd_clk_bit: equ 2
+
 vfd_bl:	equ	8		;VFD blanking
-vfd_led2: equ	10h		;VFD LED2 (power supply control?)
-vfd_led1: equ	20h		;VFD LED1 (power supply control?)
+vfd_led2: equ	10h		;VFD LED2 (HV supply control)
+vfd_led1: equ	20h		;VFD LED1 (Filament supply control)
+
+;;; mask for hardware status bits stored in vfd_ctrl
+vfd_cmask: equ	(vfd_bl+vfd_led1+vfd_led2)
+vfd_imask: equ	0ffh-vfd_cmask
 
 vfd_digits: equ	12		;number of digits
 vfd_extra: equ	4		;extra clocks
-	
-;;; initialize the display hardware
+
+vfd_ctrl: db 	0		;VFD control port state
+				;keep power supply control
+				;settings here, set with
+				;_vfd_power
+
+;;; set VFD state bits
+;;;   bit 3 - display blank
+;;;   bit 4 - enable HV power
+;;;   bit 5 - enable filament power
+_vfd_set_state:
+	ld	a,(vfd_ctrl)
+	or	l
+	and	vfd_cmask	;only 3 used bits should be set
+	ld	(vfd_ctrl),a
+	ret
+
+;;; clear VFD state bits
+_vfd_clr_state:
+	ld	a,l		;get bits to clear
+	xor	vfd_cmask	;toggle them to zero
+	and	vfd_cmask	;mask only used bits
+	ld	l,a		;new mask to l
+	ld	a,(vfd_ctrl)	;get current value
+	and	l		;preserve non-reset bits
+	ld	(vfd_ctrl),a	;store new value
+	ret
+
+;;; initialize the display hardware to programmed state
 _vfd_init:	
-	ld	a,vfd_bl	;blank display by default
+	ld	a,(vfd_ctrl)
 	out	(vfd_prt),a
 	ret
 
 _vfd_display:	
+	push	iy
 	push	ix
 	push	bc
 	push	de
+
+	;; force display blanking off
+	ld	a,(vfd_ctrl)
+	and	0ffh-vfd_bl
+	ld	(vfd_ctrl),a
+
+	ld	iy,vfd_ctrl	;point to control port value
 
 	ld	c,vfd_digits	;digit count
 
@@ -374,10 +421,11 @@ nomi:	ld	b,8
 
 ;;; cycle the strobe to update the display, and un-blank
 	ld	a,vfd_stb
+	or	(iy)		;merge control bits
 	out	(vfd_prt),a
 	nop
 	nop
-	xor	a
+	res	vfd_stb_bit,a
 	out	(vfd_prt),a
 	nop
 	nop
@@ -385,6 +433,7 @@ nomi:	ld	b,8
 	pop	de
 	pop	bc
 	pop	ix
+	pop	iy
 	ret
 
 ;;; shift B bits to display from A, LSB first
@@ -393,17 +442,17 @@ vfd_shifty:
 	ld	l,a
 	ld	h,0
 	
-vfd_sh:	xor	a		;clear a
+vfd_sh:	ld	a,(iy)		;control bits only
 	rrc	l		;data bit to CY
 	adc	a,h		;data bit to A bit 0
 	out	(vfd_prt),a
 	nop
 	nop
-	or	a,vfd_clk	;assert CLK
+	set	vfd_clk_bit,a	;assert CLK
 	out	(vfd_prt),a
 	nop
 	nop
-	and	a,1		;deassert CLK
+	res	vfd_clk_bit,a	;deassert CLK, 
 	out	(vfd_prt),a
 	nop
 	nop
@@ -547,7 +596,7 @@ _umon_putc:
 	push	bc
 	push	de
 	push	af
-	ld	c,l
+	ld	c,l		;character to c
 
 	ld	e,8		;bit counter
 	

@@ -17,6 +17,21 @@ or under a Z80 emulator.  There are some lingering `#ifdef UNIX_TERM`
 and such, but most of this code has been removed and it now works
 only as a pure Z80 application on the target hardware.
 
+## Display Support
+
+Both an LED display (using ICM7218 drivers on the keyboard) and VFD
+display (on a separate board) are supported.  ```make vfd``` or
+```make led``` to build the appropriate hex file.
+
+The display blanks after about 10 minutes to save power.
+For the VFD display, the power supplies (filament and HV) are turned
+off to save tube wear.
+
+There is support in assembly language (```diskey_sw_vfd.asm```) for
+low-level operations on the VFD display, with higher-level support
+in ```vfd_control.c``` which has functions ```vfd_blank()```,
+```vfd_power_up()``` and ```vfd_power_down()```.
+
 ## Serial Port Support
 
 There is a very simple-minded serial port server included in the

@@ -761,7 +761,7 @@ static void display_scan_advance () {
 #endif
       } else {
 #ifdef VFD
-	vfd_init();
+	vfd_blank();
 #else	
 	umon_blank();
 #endif
