@@ -15,8 +15,9 @@ command (arguments)  |   description
 `a <val1> <val2>       ` |   hex Arithmetic
 `m <adr1> <adr2> <num> ` |   memory compare
 `p <adr1> <adr2> <num> ` |   memory copy
-`c                     ` |   return to calculator if possible
-`b                     ` |   binary load
+`b <addr>              ` |   set breakpoint at <addr>
+`c                     ` |   continue from breakpoint
+`l                     ` |   binary load
 `r                     ` |   repeat last command
 `k                     ` |   scan keyboard
 `7 <addr>              ` |   update display from <addr>
