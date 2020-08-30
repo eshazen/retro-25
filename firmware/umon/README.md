@@ -13,7 +13,8 @@ command (arguments)  |   description
 `i <addr>              ` |   input from <addr> and display
 `g <addr>              ` |   goto addr
 `a <val1> <val2>       ` |   hex Arithmetic
-`h <addr>              ` |   dump HP registers from <addr> (A)
+`m <adr1> <adr2> <num> ` |   memory compare
+`p <adr1> <adr2> <num> ` |   memory copy
 `c                     ` |   return to calculator if possible
 `b                     ` |   binary load
 `r                     ` |   repeat last command
