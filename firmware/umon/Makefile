@@ -1,10 +1,15 @@
 all: umon.hex
 
-# Z80ASM = /home/hazen/work/z88dk/bin/z80asm
 Z80ASM = /home/hazen/bin/zmac
+base=xxx
 
-umon.hex: umon.asm console.asm hex.asm s19200.asm diskey.asm c-link.asm vfd.asm
-	$(Z80ASM) umon.asm
+umon.hex: umon_nobase.asm console.asm hex.asm s19200.asm diskey.asm c-link.asm vfd.asm
+ifeq ($(base),xxx)
+	echo "Missing base=value"
+	exit 1
+endif
+	sed s/UMON_ORIGIN/$(base)/ <umon_nobase.asm >umon_$(base).asm
+	$(Z80ASM) umon_$(base).asm
 
 # umon.hex: umon.bin
 #	srec_cat umon.bin -binary -o umon.hex -intel

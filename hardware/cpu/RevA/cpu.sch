@@ -1,6 +1,5 @@
 EESchema Schematic File Version 4
-LIBS:cpu-cache
-EELAYER 26 0
+EELAYER 30 0
 EELAYER END
 $Descr A 11000 8500
 encoding utf-8
@@ -1806,6 +1805,7 @@ F 0 "RN1" V 3150 4250 50  0000 C CNN
 F 1 "RPACK_SIP_8" H 3675 4500 50  0000 C CNN
 F 2 "Resistor_THT:R_Array_SIP9" V 4150 4300 50  0001 C CNN
 F 3 "" H 3675 4300 50  0001 C CNN
+F 4 "4609X-AP1-103LFCT-ND" H 3725 4625 50  0000 C CNN "CatNo"
 	1    3675 4300
 	0    1    1    0   
 $EndComp

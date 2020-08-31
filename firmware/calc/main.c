@@ -246,11 +246,11 @@ int main() {
 
     // manage display with power switch and timeout
     // if the switch is off, keep the display off
-
-    if( !(switches & 2)) {	// power/display set to "off"
+    
+    if( !(switches & 2)) {	// power sw set to "off"
       global_display_enable = 0;
       display_timeout = 0;
-    } else {			// power set to "on"
+    } else {			// power sw set to "on"
       if( key)			// reset timeout on key press
 	display_timeout = 0;
       if( display_timeout == DISPLAY_TIMEOUT) {
@@ -259,6 +259,9 @@ int main() {
 	global_display_enable = 1;
 	++display_timeout;
       }
+      // if power sw just turned on, reset timeout
+      if( !(last_sw & 2))
+	display_timeout = 0;
     }
 
     // handle display blanking

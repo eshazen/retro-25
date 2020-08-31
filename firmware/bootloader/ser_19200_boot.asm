@@ -19,6 +19,9 @@
 ;;;
 ;;; echo back all received bytes
 ;;;
+;;; After serial timeout, copy flash images using flashtable
+;;; to RAM, and jump to 'flashentry'
+;;; 
 ;;; Mods:
 ;;; 17 Jun 2020, hazen - reflect RST vectors to $8000
 ;;; add second flash image:
@@ -82,19 +85,24 @@ mover:	ld	sp,ram
 ;;;
 ;;; table of flash images
 ;;; 
+flashentry:
+	dw	0x9000		;entry point
+
+fimgsiz: equ	8		;size of one entry in bytes
+	
 flashtable:	
 	dw	0xcafe		;magic number marks start of table
-;;--;;; first flash image (calculator)
-;;--	dw	0x1000		;start address in ROM
-;;--	dw	0x9000		;RAM target address
-;;--	dw	0x4000		;size in bytes (plenty big, now 0x2e00 or so)
-;;--	dw	0x9000		;entry point
+;;; first flash image (calculator)
+	dw	0x1000		;start address in ROM
+	dw	0x9000		;RAM target address
+	dw	0x4000		;size in bytes (plenty big, now 0x2e00 or so)
+	dw	0x9000		;entry point (ignored, see flashentry)
 
 ;;; second flash image (umon)
 	dw	0x5000		;above the first image
 	dw	0x8100		;RAM target address
-	dw	0x1000		;size in bytes
-	dw	0x8100		;entry point
+	dw	0x0f00		;size in bytes (must fit below 9000)
+	dw	0x8100		;entry point (ignored, see flashentry)
 
 	dw	0,0,0,0		;table ends with zeroes
 
@@ -265,6 +273,7 @@ schk:	in	a,(serial_port) ; read serial line
 	djnz	schk
 
 ;;; EEPROM loader
+;;; load all images from the flash table
 	ld	hl,(flashtable)
 	ld	a,h		;check for 0xcafe
 	cp	0xca
@@ -272,18 +281,26 @@ schk:	in	a,(serial_port) ; read serial line
 	ld	a,l
 	cp	0xfe
 	jr	nz,main
-
 	ld	ix,flashtable+2	;first image
+flashy:	
 	ld	l,(ix)		;start address
 	ld	h,(ix+1)
+	;; check for zero = end
+	ld	a,h
+	or	l
+	jr	z,flash_done
 	ld	e,(ix+2)	;target address
 	ld	d,(ix+3)
 	ld	c,(ix+4)	;count
 	ld	b,(ix+5)
 	ldir			;move it
 
-	ld	l,(ix+6)	;start address
-	ld	h,(ix+7)
+	ld	bc,fimgsiz
+	add	ix,bc
+	jr	flashy
+
+flash_done:	
+	ld	hl,(flashentry)	;start address
 
 	jp	(hl)
 
