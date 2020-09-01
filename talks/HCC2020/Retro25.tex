@@ -48,7 +48,7 @@
   \parbox{\linewidth}{\vspace*{-8pt}
     ~~~ Slide \insertframenumber/\inserttotalframenumber
     ~~~ 2020-10-10 ~~~
-    E.~Gastler}
+    E.~Hazen}
 }
 
 % Move footnotes above footline
@@ -70,7 +70,7 @@
    \includegraphics[height=3cm]{figs/vfd_over.jpg}
  \end{center}
 E.~Hazen \\
-representing himself
+representing myself only
 }
 
 \newcommand{\spage}[1]{
@@ -87,14 +87,24 @@ representing himself
 \frame{\titlepage}
 
 \begin{frame}
-  \frametitle{A bit of personal (HP-Related) history...}
-
+  \frametitle{Personal and Professional History...}
+  \vskip -0.2in
+  
   \begin{tabular}{p{0.7\textwidth}c}
+  \scriptsize
+  I've been fascinated by electronics since I was very young! & \\
     \scriptsize
     At age 13 (in 1973) I lived briefly in Leeds, England and worked
-    at the Uni as an unpaid physics graduate student.  I encountered an HP-9100 and
+    at the Uni as an unpaid physics ``graduate assistant''.
+    I encountered an HP-9100 and
     taught myself to program it.  I was immediately hooked! &
     \raisebox{-0.6\height}{\includegraphics[width=1in]{figs/9100aqs.jpg}} \\
+  \scriptsize
+  In High School I made the acquaintance of an HP-2100 series
+  computer running HP timeshare BASIC.  We played various games
+  (some legit, like TREK73) and others (posting the administrator password
+  on the chalkboard) not so legit.  &
+    \raisebox{-0.8\height}{\includegraphics[width=1in]{figs/hp2100.jpg}} \\
     \scriptsize
     In 1975 my father bought an HP-25.
     I devoted myself to delivering the {\em Ann Arbor News}
@@ -106,27 +116,18 @@ representing himself
     the piranhas while I was away and my roomies were scared to
     retrieve it!  My father's died when the batteries lost contact. &
     \raisebox{-0.6\height}{\includegraphics[width=1in]{figs/piranha.jpg}} \\    
-    \scriptsize
-    Since then I have become somewhat of a collector, acquiring a 10C,
-    11C, 15C, 16C and 67.  The 10C and 15C were filched, the 11C and 16C
-    I use almost daily.
+
   \end{tabular}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Educational and Professional History...}
-
+  \frametitle{...more history}
+  \vskip -0.2in
 
   \begin{tabular}{p{0.7\textwidth}c}
   \scriptsize
-  In High School I made the acquaintance of an HP-2100 series
-  computer running HP timeshare BASIC.  We played various games
-  (some legit, like TREK73) and others (posting the administrator password
-  on the chalkboard) not so legit.  &
-    \raisebox{-0.8\height}{\includegraphics[width=1in]{figs/hp2100.jpg}} \\
-  \scriptsize
   I studied computer science for a while at Michigan and
-  became expert with the model 29 (I hated that thing!)
+  became expert with the model 29 keypunch (I hated that thing!)
   I did learn a few other things (ALGOL and S/370 assembly) &
     \raisebox{-0.8\height}{\includegraphics[width=0.7in]{figs/punch.jpg}} \\
   \scriptsize
@@ -137,13 +138,22 @@ representing himself
   kernel and FORTH system. &
     \raisebox{-0.8\height}{\includegraphics[width=0.7in]{figs/model1.jpg}} \\  
   \scriptsize
-  I parlayed my Z80 skills into a job a ETC (theatre lighting)
-  and designed their Idea and Vision lighting consoles, and wrote
+  I parlayed my Z80 skills into a job at ETC (theatre lighting).
+  I designed their Idea$^{TM}$ and Vision$^{TM}$ lighting consoles, and wrote
   much of the low-level software in Z80 assembly (using my trusty
   TRS-80, now decked out with dual 8 inch floppies) as a dev system. &
     \raisebox{-0.8\height}{\includegraphics[width=1in]{figs/vision.jpg}} \\    
+    \scriptsize
+  Since then I've worked at Boston University building electronics
+  mostly for the LHC at CERN.
+  I've also become somewhat of an HP collector, acquiring a 10C,
+    11C, 15C, 16C and 67.  The 10C and 15C were filched, the 11C and 16C
+    I use almost daily.
+&
+  \raisebox{-0.8\height}{\includegraphics[width=1in]{figs/Tunnel.jpg}} \\    
   \end{tabular}
 \end{frame}
+
 
 \begin{frame}
   \frametitle{Why? Why? Why?}
@@ -174,21 +184,121 @@ representing himself
     \tblue{Why the HECK VFD displays?}
     \begin{itemize}
     \scriptsize
-    \item Because they are {\em cool!}
+    \item Because they are {\em cool!} \\
+     (and nixies are a lot of trouble)
     \end{itemize}
 
   \column{0.3\textwidth}
 
-    \includegraphics[width=0.5in]{figs/hp-25.jpg}
-    \vskip 0.3in
+    \includegraphics[width=0.7in]{figs/hp-25.jpg}
+    \vskip 0.1in
     \includegraphics[width=1in]{figs/z80.jpg}
     \vskip 0.3in
-    \includegraphics[width=0.7in]{figs/vfd.png}
-    
+    \includegraphics[width=1in]{figs/vfd.png}
 
   \end{columns}
-        
+\end{frame}
+
+\begin{frame}
+  \frametitle{Specification}
+
+  Well, this is a hobby project so no spec needed, but I had goals:
+    \begin{itemize}
+    \item Big, clicky buttons; display I can read without glasses
+    \item Simple hardware I could solder easily
+    \item Cross-development from my Linux machine
+    \end{itemize}
 
 \end{frame}
+
+\begin{frame}
+  \frametitle{Parts! Parts! Parts!}
+
+  I always start with the parts.  
+
+    \scriptsize
+  \begin{tabular}{p{0.7\textwidth}c}
+    CPU: The Z80 is a no-brainer (initially Z80A, 4MHz) & 
+     \raisebox{-0.5\height}{\includegraphics[width=1in]{figs/z80_black.jpg}} \\
+    Memory:  briefly thought about UV-EEPROMs, but nah... 
+    chose AT28C256-15 EEPROM and 62256LP-70 RAM (both 32k, DIP-28) & 
+     \raisebox{-0.5\height}{\includegraphics[width=0.7in]{figs/uveprom.jpg}} \\
+    Display:  10mm red common anode 7-segment &
+     \raisebox{-0.5\height}{\includegraphics[width=0.7in]{figs/led7seg.png}} \\
+    Driver:  ICM7218A MUX driver.  I used these for
+    theatre lighting consoles back in the day and they work well. & \\
+    Switches:  Cherry MX1A mechanical.  These are my favorites! &
+     \raisebox{-0.3\height}{\includegraphics[width=0.7in]{figs/cherry.jpg}} \\
+  \end{tabular}
+
+  Otherwise, I have drawers full of 74LS and 74S series TTL at work
+  because we can't bear to throw anything....
+
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Boards!}
+
+  \scriptsize
+  How many boards?  Started with a ``toy'' layout in ExpressPCB to
+  see how everything fit.  Looked like about 120x170mm.  So, I fired
+  up KiCAD and made a schematic and did a layout.
+
+  \includegraphics[width=1.5in]{figs/sample_epcb.png}
+
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Schematics (KB, Display)}  
+
+  \vskip -0.2in
+  \includegraphics[width=\textwidth]{figs/led-display-crop.pdf}
+
+  \scriptsize
+  \begin{columns}
+  \column{0.5\textwidth}
+  \tblue{Keyboard is standard matrix}
+  \column{0.5\textwidth}
+  \tred{Display handled by two ICM7218A.  \\ Almost no additional parts}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{PCB (KB, Display)}
+
+  \vskip -0.2in
+  \scriptsize
+  \begin{columns}
+  \column{0.5\textwidth}
+    \includegraphics[width=\textwidth]{figs/led-gerbers.png}        
+  \column{0.5\textwidth}
+  
+    Placement and routing pretty simple. \\
+    Two header connectors, one for KB and one for LEDs
+    \vskip 0.2in
+    \tviolet{Top Cu area to GND} \\
+    \tred{Bottom Cu area to VCC} \\
+    \vskip 0.2in
+    Design rules based on what JLCPCB could do easily: \\
+    \tgreen{
+    ~~ 6 mil line/space (0.15 mm)\\
+    ~~ 20 mil via with 10 mil hole \\ ~~~~(0.5mm / 0.25mm)} \\
+    \vskip 0.2in
+    \tblue{Switches and LEDs take up most of front} \\
+    \vskip 0.2in
+    \tred{Diodes and LED drivers on back} \\
+\end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Schematics (CPU)}
+
+  \vskip -0.2in
+  \includegraphics[width=\textwidth]{figs/cpu-sch-crop.pdf}
+
+\end{frame}
+
 
 \end{document}
