@@ -1,0 +1,194 @@
+%------------------------------------------------------------
+% Retro-25 calculators
+%------------------------------------------------------------
+
+\pdfminorversion=4   % fix Acrobat error
+\documentclass{beamer}
+\usepackage{graphicx}
+\usepackage{tikz}    % for logo onlyh
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{makecell}
+\usepackage{array}
+
+\definecolor{my-red}{RGB}{128,0,0}
+\definecolor{my-green}{RGB}{0,96,0}
+\definecolor{my-blue}{RGB}{0,0,128}
+\definecolor{my-orange}{RGB}{160,83,0}
+\definecolor{my-violet}{RGB}{142,0,209}
+\definecolor{my-aqua}{RGB}{0,96,96}
+\definecolor{my-olive}{RGB}{89,124,0}
+
+\newcommand{\tred}[1]{\textcolor{my-red}{#1}}
+\newcommand{\tgreen}[1]{\textcolor{my-green}{#1}}
+\newcommand{\tblue}[1]{\textcolor{my-blue}{#1}}
+\newcommand{\torange}[1]{\textcolor{my-orange}{#1}}
+\newcommand{\tviolet}[1]{\textcolor{my-violet}{#1}}
+\newcommand{\taqua}[1]{\textcolor{my-aqua}{#1}}
+\newcommand{\tolive}[1]{\textcolor{my-olive}{#1}}
+
+\renewcommand{\indent}{\hspace*{2em}}
+\renewcommand{\arraystretch}{1.5}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+ 
+\urlstyle{same}
+
+\begin{document}
+
+% Add footer text
+\addtobeamertemplate{footline}{
+  \parbox{\linewidth}{\vspace*{-8pt}
+    ~~~ Slide \insertframenumber/\inserttotalframenumber
+    ~~~ 2020-10-10 ~~~
+    E.~Gastler}
+}
+
+% Move footnotes above footline
+\addtobeamertemplate{footnote}{}{\vspace{0.1in}}
+
+% add BU + ATLAS logo
+\addtobeamertemplate{frametitle}{}{%
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=north east,yshift=2pt] at (current page.north east)
+%{\includegraphics[height=0.8cm]{figs/BU_LOGO.png}};
+{\includegraphics[height=0.8cm]{figs/retro.jpg}};
+\end{tikzpicture}}
+
+\title{The Retro-25 DIY Calculators}
+\author
+{
+ \begin{center}
+   \includegraphics[height=3cm]{figs/led_front.jpg} 
+   \includegraphics[height=3cm]{figs/vfd_over.jpg}
+ \end{center}
+E.~Hazen \\
+representing himself
+}
+
+\newcommand{\spage}[1]{
+\begin{frame}
+  \begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=north]at(current page.north){
+     \includegraphics[width=0.95\paperwidth]{#1}
+  };
+  \end{tikzpicture}
+\end{frame}
+}
+%% 
+%% %---------- Title
+\frame{\titlepage}
+
+\begin{frame}
+  \frametitle{A bit of personal (HP-Related) history...}
+
+  \begin{tabular}{p{0.7\textwidth}c}
+    \scriptsize
+    At age 13 (in 1973) I lived briefly in Leeds, England and worked
+    at the Uni as an unpaid physics graduate student.  I encountered an HP-9100 and
+    taught myself to program it.  I was immediately hooked! &
+    \raisebox{-0.6\height}{\includegraphics[width=1in]{figs/9100aqs.jpg}} \\
+    \scriptsize
+    In 1975 my father bought an HP-25.
+    I devoted myself to delivering the {\em Ann Arbor News}
+    faithfully to about 60 subscribers, and eventually I could afford my
+    own HP-25 at \$195.00 (about \pounds 663 today) &
+    \raisebox{-0.6\height}{\includegraphics[width=0.5in]{figs/hp-25.jpg}} \\
+    \scriptsize
+    Unfortunately both HP-25 are now dead; mine fell in the fish tank with
+    the piranhas while I was away and my roomies were scared to
+    retrieve it!  My father's died when the batteries lost contact. &
+    \raisebox{-0.6\height}{\includegraphics[width=1in]{figs/piranha.jpg}} \\    
+    \scriptsize
+    Since then I have become somewhat of a collector, acquiring a 10C,
+    11C, 15C, 16C and 67.  The 10C and 15C were filched, the 11C and 16C
+    I use almost daily.
+  \end{tabular}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Educational and Professional History...}
+
+
+  \begin{tabular}{p{0.7\textwidth}c}
+  \scriptsize
+  In High School I made the acquaintance of an HP-2100 series
+  computer running HP timeshare BASIC.  We played various games
+  (some legit, like TREK73) and others (posting the administrator password
+  on the chalkboard) not so legit.  &
+    \raisebox{-0.8\height}{\includegraphics[width=1in]{figs/hp2100.jpg}} \\
+  \scriptsize
+  I studied computer science for a while at Michigan and
+  became expert with the model 29 (I hated that thing!)
+  I did learn a few other things (ALGOL and S/370 assembly) &
+    \raisebox{-0.8\height}{\includegraphics[width=0.7in]{figs/punch.jpg}} \\
+  \scriptsize
+  What really changed my life was working at Radio Shack.
+  They introduced the TRS-80 and I immediately bought one
+  (well, honestly, I put it on ``lay-a-way'' at my house!)
+  I taught myself Z80 assembly language and wrote a simple multi-tasking
+  kernel and FORTH system. &
+    \raisebox{-0.8\height}{\includegraphics[width=0.7in]{figs/model1.jpg}} \\  
+  \scriptsize
+  I parlayed my Z80 skills into a job a ETC (theatre lighting)
+  and designed their Idea and Vision lighting consoles, and wrote
+  much of the low-level software in Z80 assembly (using my trusty
+  TRS-80, now decked out with dual 8 inch floppies) as a dev system. &
+    \raisebox{-0.8\height}{\includegraphics[width=1in]{figs/vision.jpg}} \\    
+  \end{tabular}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Why? Why? Why?}
+
+  \begin{columns}
+  \column{0.7\textwidth}
+  \tblue{Why a DIY HP-25?}
+
+    \begin{itemize}
+    \scriptsize
+    \item The HP-25 is my favorite calculator
+    \item The display and keyboard are too small for middle-aged eyes
+    \item I hate mouse- and touchscreen-based emulators \\ (no tactile feel)
+    \item I have a bunch of time on my hands ({\em NOT!})
+    \end{itemize}
+    \vskip 0.1in
+  
+    \tblue{Why use a Z80?}
+  
+    \begin{itemize}
+    \scriptsize
+    \item I know them inside-out
+    \item They were released about when the HP-25 came out
+    \item I like designing and assemblying good old thru-hole DIP boards
+    \end{itemize}
+    \vskip 0.1in
+  
+    \tblue{Why the HECK VFD displays?}
+    \begin{itemize}
+    \scriptsize
+    \item Because they are {\em cool!}
+    \end{itemize}
+
+  \column{0.3\textwidth}
+
+    \includegraphics[width=0.5in]{figs/hp-25.jpg}
+    \vskip 0.3in
+    \includegraphics[width=1in]{figs/z80.jpg}
+    \vskip 0.3in
+    \includegraphics[width=0.7in]{figs/vfd.png}
+    
+
+  \end{columns}
+        
+
+\end{frame}
+
+\end{document}
