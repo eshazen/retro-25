@@ -11,6 +11,7 @@
 \usepackage[absolute,overlay]{textpos}
 \usepackage{makecell}
 \usepackage{array}
+\usepackage{makecell}
 
 \definecolor{my-red}{RGB}{128,0,0}
 \definecolor{my-green}{RGB}{0,96,0}
@@ -69,8 +70,8 @@
    \includegraphics[height=3cm]{figs/led_front.jpg} 
    \includegraphics[height=3cm]{figs/vfd_over.jpg}
  \end{center}
-E.~Hazen \\
-representing myself only
+E.~Hazen % \\
+% representing myself only
 }
 
 \newcommand{\spage}[1]{
@@ -177,7 +178,7 @@ representing myself only
     \scriptsize
     \item I know them inside-out
     \item They were released about when the HP-25 came out
-    \item I like designing and assemblying good old thru-hole DIP boards
+    \item I like designing and assembling good old thru-hole DIP boards
     \end{itemize}
     \vskip 0.1in
   
@@ -211,26 +212,37 @@ representing myself only
 
 \end{frame}
 
-\begin{frame}
+\begin{frame}[shrink=5]
   \frametitle{Parts! Parts! Parts!}
 
-  I always start with the parts.  
+  \vskip -0.15in
+  \tgreen{I always start with the parts.}
 
     \scriptsize
   \begin{tabular}{p{0.7\textwidth}c}
     CPU: The Z80 is a no-brainer (initially Z80A, 4MHz) & 
      \raisebox{-0.5\height}{\includegraphics[width=1in]{figs/z80_black.jpg}} \\
-    Memory:  briefly thought about UV-EEPROMs, but nah... 
-    chose AT28C256-15 EEPROM and 62256LP-70 RAM (both 32k, DIP-28) & 
+     \hline
+     \makecell[l]{Memory: first considered UV EPROM (nah!) \\
+    AT28C256-15 EEPROM and 62256LP-70 RAM (both 32k, DIP-28)} & 
      \raisebox{-0.5\height}{\includegraphics[width=0.7in]{figs/uveprom.jpg}} \\
-    Display:  10mm red common anode 7-segment &
-     \raisebox{-0.5\height}{\includegraphics[width=0.7in]{figs/led7seg.png}} \\
+     \hline
+     \makecell[l]{Display: \\ 
+                        V1: 10mm red 10mm red common anode 7-segment \\
+                        V2: IV-6 green vacuum fluorescent display tubes}
+     &
+     \raisebox{-0.5\height}{\includegraphics[width=1.3in]{figs/displays.png}} \\
+     \hline
     Driver:  ICM7218A MUX driver.  I used these for
-    theatre lighting consoles back in the day and they work well. & \\
+    theatre lighting consoles back in the day and they work well. & 
+     \raisebox{-0.5\height}{\includegraphics[width=0.7in]{figs/icm7218_ckt.png}} \\
+     \hline
     Switches:  Cherry MX1A mechanical.  These are my favorites! &
      \raisebox{-0.3\height}{\includegraphics[width=0.7in]{figs/cherry.jpg}} \\
+     \hline
   \end{tabular}
 
+  \vskip 0.15in
   Otherwise, I have drawers full of 74LS and 74S series TTL at work
   because we can't bear to throw anything....
 
@@ -244,6 +256,8 @@ representing myself only
   How many boards?  Started with a ``toy'' layout in ExpressPCB to
   see how everything fit.  Looked like about 120x170mm.  So, I fired
   up KiCAD and made a schematic and did a layout.
+
+  \vskip 0.15in
 
   \includegraphics[width=1.5in]{figs/sample_epcb.png}
 
@@ -299,6 +313,32 @@ representing myself only
   \includegraphics[width=\textwidth]{figs/cpu-sch-crop.pdf}
 
 \end{frame}
+
+
+
+\begin{frame}
+  \frametitle{PCB (CPU)}
+
+  \vskip -0.2in
+  \scriptsize
+  \begin{columns}
+  \column{0.5\textwidth}
+    \includegraphics[width=\textwidth]{figs/cpu-board.png}
+  \column{0.5\textwidth}
+  
+    Placement and routing pretty simple. \\
+    Two header connectors, one for KB and one for LEDs \\
+    All components on the top.
+    \vskip 0.2in
+    \tviolet{Top and bottom Cu areas to GND} \\
+    \vskip 0.2in
+    \tblue CPU, RAM, EEPROM in top row
+    \vskip 0.2in
+\end{columns}
+\end{frame}
+
+
+
 
 
 \end{document}
