@@ -409,7 +409,7 @@ E.~Hazen % \\
   \begin{columns}
   \column{0.75\textwidth}
   \scriptsize
-  \vskip -0.1in
+  \vskip -0.2in
   \tgreen{Lots of loose ends...} \\
   \vskip 0.1in
   \tblue{First, write a serial boot loader} \\
@@ -439,11 +439,122 @@ E.~Hazen % \\
 \end{Verbatim}
   \tred{I eventually needed all of those commands...} \\
   \vskip 0.1in
-  \tgreen{Finally, start to load and debug the calculator}
+  \tgreen{Finally, start to load and debug the calculator} \\
+  \tgreen{Before long, it works!!}
   \column{0.25\textwidth}
 
   \includegraphics[width=\textwidth]{figs/led-close.jpg}
 
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Wrapping it Up}
+  \framesubtitle{}
+  \begin{tabular}{cp{0.5\textwidth}{c}}
+    \raisebox{-0.6\height}
+      {\includegraphics[width=0.3\textwidth]{figs/side_view.jpg}} &
+    \scriptsize
+    Stack the boards, add ``on/off'' and ``prgm/run'' switches,
+    Make a simple wood box, it's done!
+    \\
+    \includegraphics[width=0.3\textwidth]{figs/display-board.jpg} &
+    \includegraphics[width=0.3\textwidth]{figs/box_view.jpg} \\
+  \end{tabular}
+\end{frame}
+
+\begin{frame}
+  \frametitle{What Next?}
+  \framesubtitle{S/N 2, of course!}
+
+  \scriptsize
+
+  \begin{columns}
+  \column{0.3\textwidth}
+    \tgreen{LEDs are boring! \\ Nixies are troublesome!} \\
+    \vskip 0.1in
+    \tred{Let's try VFDs... never used them before} \\
+    \vskip 0.5in
+    \includegraphics[width=0.7\textwidth]{figs/vfd-closeup.jpg}
+  \column{0.75\textwidth}
+    \tblue{My Russian isn't so good, but Google Translate to the rescue...} \\
+    \vskip 0.2in
+    \includegraphics[width=0.45\textwidth]{figs/iv-6-datasheet.jpg}
+    \includegraphics[width=0.45\textwidth]{figs/iv-6-datasheet-translated.png}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{VFD Display Board}
+  \framesubtitle{Schematic}
+  \includegraphics[width=\textwidth]{figs/vfd-schem-ann.pdf}
+\end{frame}
+
+\begin{frame}
+  \frametitle{VFD Display Board}
+  \framesubtitle{PCB Design}
+  \begin{columns}
+  \column{0.7\textwidth}
+    \includegraphics[width=\textwidth]{figs/vfd-layout.jpg} \\ 
+    \vskip 0.2in
+    \includegraphics[width=\textwidth]{figs/render_board.png}
+  \column{0.4\textwidth}
+    \begin{itemize}
+    \scriptsize
+    \item 12 display tubes
+    \item 5 HV5812 driver chips
+    \item 2 TTL chips
+    \item 1.2V @ ~1A for filaments
+    \item Power connector (5V, 2.5V, 20V)
+    \item Ribbon cable compatible with LED board
+    \item Two layer, pretty simple layout
+    \item Fun with 3D modeling!
+    \end{itemize}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{VFD Power Supply}
+  \vskip -0.2in
+  \includegraphics[width=0.7\textwidth]{figs/vfd-ps-schem.png} \\
+  \scriptsize
+  \tblue{VFD require noticeable power:} \\
+  \tred{1.2V @ 0.6A (filaments), 20V @ 0.6A (plates)} \\
+  \tgreen{So, another board!}
+\end{frame}
+
+\begin{frame}
+  \frametitle{VFD Power Supply}
+
+  \begin{columns}
+  \column{0.5\textwidth}
+  \includegraphics[width=\textwidth]{figs/vfd-ps-layout.png} \\
+  \vskip 0.2in
+  \includegraphics[width=\textwidth]{figs/power_supply2.jpg}
+  \column{0.5\textwidth}
+    \begin{itemize}
+    \scriptsize
+    \item Use Buck / Boost modules from China
+    \item Simple switching logic to control from Z80
+    \item Add a power switch for the whole unit
+    \end{itemize}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Putting it All Together}
+
+
+  \begin{columns}
+  \column{0.5\textwidth}
+    \includegraphics[width=\textwidth]{figs/display_11.jpg}
+    \begin{itemize}
+    \scriptsize
+    \item Test the display using an Arduino
+    \item Putting it all together!
+    \end{itemize}
+  \column{0.5\textwidth}
+    \includegraphics[width=\textwidth]{figs/top_with_ps.jpg} \\
   \end{columns}
         
 
