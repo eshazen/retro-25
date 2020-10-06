@@ -12,6 +12,7 @@
 \usepackage{makecell}
 \usepackage{array}
 \usepackage{makecell}
+\usepackage{fancyvrb}
 
 \definecolor{my-red}{RGB}{128,0,0}
 \definecolor{my-green}{RGB}{0,96,0}
@@ -338,7 +339,114 @@ E.~Hazen % \\
 \end{frame}
 
 
+\begin{frame}
+  \frametitle{Bringing it Up! (hardware)}
+  \begin{columns}
+  \column{0.5\textwidth}
+    \includegraphics[width=\textwidth]{figs/bench.jpg}
+  \column{0.5\textwidth}
+    \tgreen{The boards and parts are here!}
+    \begin{itemize}
+    \scriptsize
+    \item Easy soldering (all thru-hole) \\
+      But then what?  Software?
+    \item Brief diversion to make a junk-box EEPROM programmer
+    \item First program:  delay, then HLT \\
+       i.e. {\tt 2B 7C B5 20 FB 76} \\
+       (glad I put a HALT LED on the board!)
+    \item Then a struggle with bit-bang serial \\
+       (next time use a UART!)
+    \item Then write a debug monitor... ``umon2''.
+    \end{itemize}
+    \tred{Two months later...}
+\end{columns}
+\end{frame}
 
+\begin{frame}
+  \frametitle{Bringing it Up!  (software)}
+  \begin{columns}
+  \column{0.4\textwidth}
+    \scriptsize
+    \includegraphics[width=\textwidth]{figs/nonpareil.png} \\
+    \url{http://nonpareil.brouhaha.com} \\
+    \vskip 0.1in
+    \includegraphics[width=\textwidth]{figs/np25.png} \\
+    \url{http://simpleavr.github.io/NP25/} \\
+    \vskip 0.1in
+    \includegraphics[width=0.3\textwidth]{figs/z88dk.png} \\
+    \url{https://github.com/z88dk/z88dk}
+    \vskip 0.1in
+    \includegraphics[width=\textwidth]{figs/z80-sim.png} \\
+    \url{https://www.autometer.de/unix4fun/z80pack/}
+  \column{0.6\textwidth}
+    \tgreen{Download and study...}
+      \begin{itemize}
+      \scriptsize
+      \item Nonpareil by Eric Smith \\
+        Very complete, but quite complex as it supports
+        many models
+      \item NP25 ``Nonpareil Physical'' by Chris Chung \\
+        Woodstock-only emulator for MSP430 \\
+        Much more promising
+      \end{itemize}
+    \scriptsize
 
+    \vskip 0.1in
+    \tblue{In the end I took some of both, and got an HP-25 only
+      simulation running in plain C under linux, using a tty
+      for input and output.} \\
+
+    \vskip 0.1in
+    \tviolet{Then, I built it using {\tt sdcc} in Z88DK and tested
+      it under the {\tt z80pack} simulator.}
+%    \tgreen{
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Bringing it Up!  (hardware+software)}
+
+  \begin{columns}
+  \column{0.75\textwidth}
+  \scriptsize
+  \vskip -0.1in
+  \tgreen{Lots of loose ends...} \\
+  \vskip 0.1in
+  \tblue{First, write a serial boot loader} \\
+  \vskip 0.1in
+  \tblue{Then write a C program to send hex files} \\
+  \vskip 0.1in
+  \tblue{Then, work on the monitor...} \\
+\begin{Verbatim}[fontsize=\tiny]
+  d <addr> <count>         dump memory
+  e <addr> <dd> <dd>...    edit up to 16 bytes in memory
+  o <port> <val>           output <val> to <port>
+  z <val>                  set port zero value bits 0-6
+  i <port>                 input from <port> and display
+  g <addr>                 goto addr
+  b <addr>                 set breakpoint (currently 3-byte call)
+  a <val1> <val2>          hex Arithmetic
+  c                        continue from breakpoint
+  c <addr>                 continue, set new breakpoint
+  m <start> <end> <size>   memory region compare
+  p <start> <end> <size>   memory region copy
+  l                        binary load from serial
+  r                        repeat last command
+  k                        scan HP keyboard
+  f <addr>                 dump HP registers from <addr> (A)
+  7 <addr>                 update 7-segment display from <addr>
+  V <addr>                 update VFD display from <addr>
+\end{Verbatim}
+  \tred{I eventually needed all of those commands...} \\
+  \vskip 0.1in
+  \tgreen{Finally, start to load and debug the calculator}
+  \column{0.25\textwidth}
+
+  \includegraphics[width=\textwidth]{figs/led-close.jpg}
+
+  \end{columns}
+        
+
+\end{frame}
 
 \end{document}
