@@ -45,6 +45,9 @@
 
 \begin{document}
 
+\hypersetup{urlcolor=my-blue}
+\urlstyle{tt}
+
 % Add footer text
 \addtobeamertemplate{footline}{
   \parbox{\linewidth}{\vspace*{-8pt}
@@ -256,11 +259,23 @@ E.~Hazen % \\
   \scriptsize
   How many boards?  Started with a ``toy'' layout in ExpressPCB to
   see how everything fit.  Looked like about 120x170mm.  So, I fired
-  up KiCAD and made a schematic and did a layout.
+  up KiCAD and made a schematic and did a layout for a Display/Keyboard.
 
   \vskip 0.15in
 
-  \includegraphics[width=1.5in]{figs/sample_epcb.png}
+\begin{columns}
+\column{0.33\textwidth}
+  \includegraphics[width=\textwidth]{figs/sample_epcb.png}
+\column{0.33\textwidth}
+  \includegraphics[width=\textwidth]{figs/side_view.jpg} 
+\column{0.33\textwidth}
+    \begin{itemize}
+    \scriptsize
+    \item Doesn't look like the CPU etc will fit
+    \item Planning for a two-board stack
+    \end{itemize}
+\end{columns}
+  
 
 \end{frame}
 
@@ -362,23 +377,23 @@ E.~Hazen % \\
 \end{columns}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[shrink=10]
   \frametitle{Bringing it Up!  (software)}
   \begin{columns}
-  \column{0.4\textwidth}
+  \column{0.5\textwidth}
     \scriptsize
-    \includegraphics[width=\textwidth]{figs/nonpareil.png} \\
+    \includegraphics[width=0.7\textwidth]{figs/nonpareil.png} \\
     \url{http://nonpareil.brouhaha.com} \\
     \vskip 0.1in
-    \includegraphics[width=\textwidth]{figs/np25.png} \\
+    \includegraphics[width=0.7\textwidth]{figs/np25.png} \\
     \url{http://simpleavr.github.io/NP25/} \\
     \vskip 0.1in
-    \includegraphics[width=0.3\textwidth]{figs/z88dk.png} \\
+    \includegraphics[width=0.2\textwidth]{figs/z88dk.png} \\
     \url{https://github.com/z88dk/z88dk}
     \vskip 0.1in
-    \includegraphics[width=\textwidth]{figs/z80-sim.png} \\
+    \includegraphics[width=0.7\textwidth]{figs/z80-sim.png} \\
     \url{https://www.autometer.de/unix4fun/z80pack/}
-  \column{0.6\textwidth}
+  \column{0.5\textwidth}
     \tgreen{Download and study...}
       \begin{itemize}
       \scriptsize
@@ -516,11 +531,7 @@ E.~Hazen % \\
 \begin{frame}
   \frametitle{VFD Power Supply}
   \vskip -0.2in
-  \includegraphics[width=0.7\textwidth]{figs/vfd-ps-schem.png} \\
-  \scriptsize
-  \tblue{VFD require noticeable power:} \\
-  \tred{1.2V @ 0.6A (filaments), 20V @ 0.6A (plates)} \\
-  \tgreen{So, another board!}
+    \includegraphics[width=\textwidth]{figs/vfd-power-schem-ann.pdf}
 \end{frame}
 
 \begin{frame}
@@ -551,13 +562,81 @@ E.~Hazen % \\
     \begin{itemize}
     \scriptsize
     \item Test the display using an Arduino
-    \item Putting it all together!
+    \item It works!
     \end{itemize}
   \column{0.5\textwidth}
     \includegraphics[width=\textwidth]{figs/top_with_ps.jpg} \\
   \end{columns}
-        
+\end{frame}
 
+\begin{frame}
+  \frametitle{Summary, Extras}
+
+  \begin{columns}
+  \column{0.5\textwidth}
+    \begin{itemize}
+    \scriptsize
+    \item I've built two HP-25 replicas using Z80 CPUs
+    \item One with 10mm LEDs, one with IV-6 VFDs
+    \item Both run HP-25 microcode at normal speed
+    \end{itemize}
+    \vskip 0.2in
+    \scriptsize
+    I currently have no plans to sell kits or finished
+    units, but all documentation and firmware are here:
+    \url{https://github.com/eshazen/retro-25}
+
+  \column{0.5\textwidth}
+    \includegraphics[width=0.5\textwidth]{figs/led-close.jpg}
+    \vskip 0.2in
+    \includegraphics[width=0.5\textwidth]{figs/vfd-zoom.jpg}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+        BACKUP
+\end{frame}
+
+\begin{frame}
+  \frametitle{Extras!}
+  \framesubtitle{Simple ``assembler'' and program loader}
+  \vskip -0.3in
+  \tred{\scriptsize \tt \$./asm25.pl microstrip.txt} \\
+  Source code entered by user ~~~~~~~ Listing with display codes \\
+  \includegraphics[width=\textwidth]{figs/microstrip-list.png} \\
+  \vskip 0.1in
+  \scriptsize
+  \tblue{Loader program (via USB):}\\
+  \tred{\tt ~~~ \$./load\_prog /dev/ttyUSB0 microstrip.hex}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Extras!}
+  \framesubtitle{Emacs integration}
+
+  \vskip -0.3in
+  \includegraphics[width=\textwidth]{figs/emacs-toolbar.png}
+  \vskip 0.2in
+
+  \begin{columns}
+  \column{0.4\textwidth}
+    \includegraphics[width=0.75\textwidth]{figs/emacs-table.png}
+    \vskip 0.2in
+    \includegraphics[width=\textwidth]{figs/retro-25.el.png}
+  \column{0.5\textwidth}
+    \scriptsize
+    \tblue{Cut/paste to/from Emacs buffer via USB interface} \\
+    \tgreen{Example:  calculate PCB trace impedance}
+      \begin{itemize}
+      \scriptsize
+      \item Perform calculation on Retro-25
+      \item Press {\tt F1} key on keyboard in Emacs
+      \item Type {\tt C-Y} to yank result to buffer
+      \end{itemize}
+    \vskip 0.3in
+    Implemented as a C++ program ({\tt clip\_stack}) which can retrieve
+    any stack level or storage register, plus a bit of Emacs lisp.
+  \end{columns}
 \end{frame}
 
 \end{document}

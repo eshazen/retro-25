@@ -50,8 +50,8 @@
 38  : 7
 39  : +
 40  : SQRT
-41  : X         # now we have T(pd)
-42  : X/Y       # swap so X=Z0  Y=T(pd)
+41  : X         # now we have X=T(pd)  Y=Z0
+42  : GTO 00
 43  : GTO 00
 44  : GTO 00
 45  : GTO 00
