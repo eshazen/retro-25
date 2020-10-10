@@ -53,7 +53,8 @@
   \parbox{\linewidth}{\vspace*{-8pt}
     ~~~ Slide \insertframenumber/\inserttotalframenumber
     ~~~ 2020-10-10 ~~~
-    E.~Hazen}
+    Eric~Hazen
+}
 }
 
 % Move footnotes above footline
@@ -68,14 +69,16 @@
 \end{tikzpicture}}
 
 \title{The Retro-25 DIY Calculators}
+\date{2020-10-10 RevB}
 \author
 {
  \begin{center}
    \includegraphics[height=3cm]{figs/led_front.jpg} 
    \includegraphics[height=3cm]{figs/vfd_over.jpg}
  \end{center}
-E.~Hazen % \\
-% representing myself only
+Eric~Hazen \\
+\scriptsize
+\tblue{from (but not representing) Boston University}
 }
 
 \newcommand{\spage}[1]{
@@ -307,18 +310,18 @@ E.~Hazen % \\
   
     Placement and routing pretty simple. \\
     Two header connectors, one for KB and one for LEDs
-    \vskip 0.2in
+    \vskip 0.1in
     \tviolet{Top Cu area to GND} \\
     \tred{Bottom Cu area to VCC} \\
-    \vskip 0.2in
+    \vskip 0.1in
     Design rules based on what JLCPCB could do easily: \\
     \tgreen{
     ~~ 6 mil line/space (0.15 mm)\\
     ~~ 20 mil via with 10 mil hole \\ ~~~~(0.5mm / 0.25mm)} \\
-    \vskip 0.2in
-    \tblue{Switches and LEDs take up most of front} \\
-    \vskip 0.2in
-    \tred{Diodes and LED drivers on back} \\
+    \vskip 0.1in
+
+    \includegraphics[width=0.5\textwidth]{figs/led-board-stuffed.jpg}
+
 \end{columns}
 \end{frame}
 
@@ -350,6 +353,7 @@ E.~Hazen % \\
     \vskip 0.2in
     \tblue CPU, RAM, EEPROM in top row
     \vskip 0.2in
+    \includegraphics[width=0.5\textwidth]{figs/cpu-board-stuffed.jpg}
 \end{columns}
 \end{frame}
 
@@ -508,12 +512,13 @@ E.~Hazen % \\
 \begin{frame}
   \frametitle{VFD Display Board}
   \framesubtitle{PCB Design}
+  \vskip -0.2in
   \begin{columns}
-  \column{0.7\textwidth}
+  \column{0.6\textwidth}
     \includegraphics[width=\textwidth]{figs/vfd-layout.jpg} \\ 
-    \vskip 0.2in
-    \includegraphics[width=\textwidth]{figs/render_board.png}
-  \column{0.4\textwidth}
+    \vskip 0.4in
+    \includegraphics[width=\textwidth]{figs/render_board.png} \\
+  \column{0.5\textwidth}
     \begin{itemize}
     \scriptsize
     \item 12 display tubes
@@ -525,6 +530,10 @@ E.~Hazen % \\
     \item Two layer, pretty simple layout
     \item Fun with 3D modeling!
     \end{itemize}
+    \vskip 0.1in
+
+    \includegraphics[width=\textwidth]{figs/vfd-board-bare.jpg}
+
   \end{columns}
 \end{frame}
 
@@ -562,6 +571,7 @@ E.~Hazen % \\
     \begin{itemize}
     \scriptsize
     \item Test the display using an Arduino
+    \item Integrate the VFD code
     \item It works!
     \end{itemize}
   \column{0.5\textwidth}
@@ -595,6 +605,30 @@ E.~Hazen % \\
 
 \begin{frame}
         BACKUP
+\end{frame}
+
+\begin{frame}
+  \frametitle{Laser-Cut Case}
+  \framesubtitle{Manufactured in plywood and acrylic at Ponoko}
+  \vskip -0.2in
+  \begin{columns}
+  \column{0.5\textwidth}
+    \includegraphics[width=0.9\textwidth]{figs/case-800.jpg}
+  \column{0.5\textwidth}
+    \includegraphics[width=0.9\textwidth]{figs/case-parts.png} \\
+    \vskip 0.2in
+      \begin{itemize}
+      \scriptsize
+      \item Design all parts in LibreCAD
+      \item Print each 1:1 and glue on foam core
+      \item Fix mistakes on foam prototype
+      \item \tgreen{It all fit first time!} \\
+        \tblue{(total price US\$60 shipped, not bad)}
+      \end{itemize}
+  \end{columns}
+  
+
+
 \end{frame}
 
 \begin{frame}
@@ -637,6 +671,33 @@ E.~Hazen % \\
     Implemented as a C++ program ({\tt clip\_stack}) which can retrieve
     any stack level or storage register, plus a bit of Emacs lisp.
   \end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Final Tidbits}
+
+  \tgreen{Speed}
+  \begin{itemize}
+  \scriptsize
+  \item The original C version running on Z80 @ 4MHz was {\em really slow}! \\
+  (maybe 25\% of HP-25 speed)
+  \item I started to re-write the emulator in Z80 assembly \\
+  {\em I would love to finish this someday, but...}
+  \item Then I noticed that CMOS Z80 are available rated up to 20MHz
+  \item I ended up running the Z80 at 16MHz, which results in an
+  emulated speed within about 10\% of the original HP-25.  Not bad.
+  \end{itemize}
+
+  \vskip 0.2in
+  
+  \tviolet{What Next?}
+  \scriptsize
+  \begin{itemize}
+  \item Finish Emacs integration
+  \item Consider upgrade to HP-29C firmware
+  \item Build a Nixie$^{TM}$ version?
+  \end{itemize}
+
 \end{frame}
 
 \end{document}
