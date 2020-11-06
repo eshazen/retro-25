@@ -9,6 +9,9 @@ Retro-tech HP-25 calculator clone using Z80
 
 ## News!
 
+I gave a talk at the HPCC 2020 conference on these calculators.  You can see my slides here:
+http://www.hpcc.org/conferences/HPCC2020/HPCC2020_04_Retro_25_revC.pdf
+
 Built a new version with VFD display tubes!
 
 <img src="https://github.com/eshazen/retro-25/blob/master/photos/display_11.jpg" width=300>
