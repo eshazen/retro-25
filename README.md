@@ -4,9 +4,9 @@ Retro-tech HP-25 calculator clone using Z80
 <img src=https://github.com/eshazen/retro-25/blob/master/talks/HCC2020/figs/all3_800.jpg width=600>
 
 <table>
-  <tr><td><img src=https://github.com/eshazen/retro-25/blob/master/photos/quarter.jpg width=300>
-      <td><img src=https://github.com/eshazen/retro-25/blob/master/photos/real_vs_retro.jpg width=300>
-      <td><img src=https://github.com/eshazen/retro-25/blob/master/photos/boards.jpg width=300>
+  <tr><td><img src=https://github.com/eshazen/retro-25/blob/master/photos/quarter.jpg width=100>
+      <td><img src=https://github.com/eshazen/retro-25/blob/master/photos/real_vs_retro.jpg width=100>
+      <td><img src=https://github.com/eshazen/retro-25/blob/master/photos/boards.jpg width=100>
 </table>
 
 ## News!
