@@ -1,5 +1,5 @@
 # retro-25
-Retro-tech HP-25 calculator clone using Z80
+Retro-tech HP-25 calculator clones using Z80
 
 <img src=https://github.com/eshazen/retro-25/blob/master/talks/HCC2020/figs/all3_800.jpg width=600>
 
