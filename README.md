@@ -11,6 +11,15 @@ Retro-tech HP-25 calculator clones using Z80
 
 ## News!
 
+**2021-01-01**
+
+Time for something new!  The VFD HP-25 is cool and all, but I've lusted after an HP-97 most of my life, plus I love nixie tubes!  Starting to think about a nixie-display HP-97 emulator.  Probably no card reader, but a small printer is certainly doable.  Inspiration from Oliver De Smet (archived elswhere in this repository just in case):
+
+* https://www.hpmuseum.org/cgi-sys/cgiwrap/hpmuseum/archv020.cgi?read=204526
+* https://sites.google.com/site/olivier2smet2/hp_projects/hp97
+
+**2020-10-10**
+
 I gave a talk at the HPCC 2020 conference on these calculators.  You can see my slides here:
 http://www.hpcc.org/conferences/HPCC2020/HPCC2020_04_Retro_25_revC.pdf
 
