@@ -1,5 +1,5 @@
 #
-# Regression
+# Logarithmic Regression
 # See https://www.hpmuseum.org/software/25linreg.htm
 #
 # use:  f PGM f REG
@@ -11,13 +11,13 @@
 # log          y = a0 + a1 ln( x)
 # power        y = a0 * x^a1
 #
- 1  : LN           # NOP for linear or log, LN for exp or power
+ 1  : NOP          # NOP for linear or log, LN for exp or power
  2  : ENT
  3  : X^2
  4  : STO + 2
  5  : RDN
  6  : X/Y
- 7  : NOP          # NOP for linear or exp, LN for log or power
+ 7  : LN           # NOP for linear or exp, LN for log or power
  8  : E+
  9  : GTO 00
 10  : RCL 5
@@ -47,16 +47,16 @@
 34  : -
 35  : RCL 3
 36  : /
-37  : EXP       # NOP for linear or log, EXP for exp or power
+37  : NOP       # NOP for linear or log, EXP for exp or power
 38  : STO 0
 39  : RCL 1
 40  : X/Y
 41  : R/S
-42  : NOP       # NOP for linear or exp, LN for log or power
+42  : LN        # NOP for linear or exp, LN for log or power
 43  : RCL 1
 44  : *
 45  : RCL 0
-46  : LN        # NOP for linear or log, LN for exp or power
+46  : NOP       # NOP for linear or log, LN for exp or power
 47  : +
-48  : EXP       # NOP for linear or log, EXP for exp or power
+48  : NOP       # NOP for linear or log, EXP for exp or power
 49  : GTO 41

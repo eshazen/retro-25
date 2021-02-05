@@ -1,5 +1,5 @@
 #
-# Regression
+# LINEAR Regression (customized from regression.txt)
 # See https://www.hpmuseum.org/software/25linreg.htm
 #
 # use:  f PGM f REG
@@ -11,7 +11,7 @@
 # log          y = a0 + a1 ln( x)
 # power        y = a0 * x^a1
 #
- 1  : LN           # NOP for linear or log, LN for exp or power
+ 1  : NOP          # NOP for linear or log, LN for exp or power
  2  : ENT
  3  : X^2
  4  : STO + 2
@@ -47,7 +47,7 @@
 34  : -
 35  : RCL 3
 36  : /
-37  : EXP       # NOP for linear or log, EXP for exp or power
+37  : NOP       # NOP for linear or log, EXP for exp or power
 38  : STO 0
 39  : RCL 1
 40  : X/Y
@@ -56,7 +56,7 @@
 43  : RCL 1
 44  : *
 45  : RCL 0
-46  : LN        # NOP for linear or log, LN for exp or power
+46  : NOP       # NOP for linear or log, LN for exp or power
 47  : +
-48  : EXP       # NOP for linear or log, EXP for exp or power
+48  : NOP       # NOP for linear or log, EXP for exp or power
 49  : GTO 41
