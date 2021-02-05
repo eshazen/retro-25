@@ -1,0 +1,53 @@
+#
+# Regression
+# See https://www.hpmuseum.org/software/25linreg.htm
+#
+ 1  : LN
+ 2  : ENT
+ 3  : X^2
+ 4  : STO + 2
+ 5  : RDN
+ 6  : X/Y
+ 7  : NOP
+ 8  : E+
+ 9  : GTO 00
+10  : RCL 5
+11  : MEAN
+12  : RCL 4
+13  : *
+14  : -
+15  : RCL 6
+16  : RCL 7
+17  : MEAN
+18  : *
+19  : -
+20  : /
+21  : STO 1
+22  : *
+23  : RCL 2
+24  : RCL 4
+25  : X^2
+26  : RCL 3
+27  : /
+28  : -
+29  : /
+30  : RCL 4
+31  : RCL 7
+32  : RCL 1
+33  : *
+34  : -
+35  : RCL 3
+36  : /
+37  : EXP
+38  : STO 0
+39  : RCL 1
+40  : X/Y
+41  : R/S
+42  : NOP
+43  : RCL 1
+44  : *
+45  : RCL 0
+46  : LN
+47  : +
+48  : EXP
+49  : GTO 41
