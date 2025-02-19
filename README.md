@@ -11,6 +11,10 @@ Retro-tech HP-25 calculator clones using Z80
 
 ## News!
 
+**2023-01-02**
+
+This is **branch "ScopeClock"**.  Building up another CPU board for used as a general purpose computer for the scope clock, along with the DAC/Interface board from that project, which (whew!) has an actual UART for the serial port.
+
 **2021-01-01**
 
 Time for something new!  The VFD HP-25 is cool and all, but I've lusted after an HP-97 most of my life, plus I love nixie tubes!  Starting to think about a nixie-display HP-97 emulator.  Probably no card reader, but a small printer is certainly doable.  Inspiration from Oliver De Smet (archived elswhere in this repository just in case):
